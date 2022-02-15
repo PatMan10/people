@@ -2,7 +2,7 @@ import { Router, Response } from "express";
 import { StatusCodes, ReasonPhrases } from "http-status-codes";
 import { Urls, Messages } from "./utils";
 import { errCat } from "./middleware";
-import { people } from "./models";
+import { Name, people, Person, validPerson } from "./models";
 
 function respond<T>(status: number, data: T, res: Response) {
   res.set("content-type", "application/json");
@@ -19,6 +19,7 @@ controller.get(Urls.INDEX, (_req, res) => {
 controller.get(
   Urls.people.GET_ALL,
   errCat((_req, res) => {
+    //200 success
     respond(StatusCodes.OK, Array.from(people.values()), res);
   })
 );
@@ -43,11 +44,31 @@ controller.get(
       respond(StatusCodes.NOT_FOUND, { message: Messages.fail.NOT_FOUND }, res);
       return;
     }
+    //200 success
     respond(StatusCodes.OK, person, res);
   })
 );
 
 /* POST */
+controller.post(Urls.people.ADD, (req, res) => {
+  // 400 invalid data
+  const { name, birthday } = req.body;
+  const person = new Person(
+    new Name(name.first, name.middle, name.last),
+    birthday
+  );
+  if (!validPerson(person)) {
+    respond(
+      StatusCodes.BAD_REQUEST,
+      { message: Messages.fail.INVALID_DATA },
+      res
+    );
+    return;
+  }
+  // 200 success
+  people.set(person.id, person);
+  respond(StatusCodes.CREATED, person, res);
+});
 
 controller.get(Urls.WILD, (_req, res) => {
   respond(StatusCodes.NOT_FOUND, { message: ReasonPhrases.NOT_FOUND }, res);
