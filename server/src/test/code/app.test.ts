@@ -83,4 +83,34 @@ describe("*-*-*-*-*-*-*-*-*-*- People API *-*-*-*-*-*-*-*-*-*-", () => {
       expect(person.birthday).toBe(newPerson.birthday);
     });
   });
+
+  describe(`---------- DELETE ${Urls.people.DELETE} ----------`, () => {
+    const exec = (id: string) => req(app).delete(Urls.people.delete(id));
+
+    it("400 invalid id", async () => {
+      const res = await exec("2");
+      const { message } = res.body;
+
+      expect(res.status).toBe(StatusCodes.BAD_REQUEST);
+      expect(message).toBe(Messages.fail.INVALID_ID);
+    });
+
+    it("404 person not found", async () => {
+      const res = await exec(nanoid());
+      const { message } = res.body;
+
+      expect(res.status).toBe(StatusCodes.NOT_FOUND);
+      expect(message).toBe(Messages.fail.NOT_FOUND);
+    });
+
+    it("200 return person", async () => {
+      const res = await exec(pac.id);
+      const person: Person = res.body;
+
+      expect(res.status).toBe(StatusCodes.OK);
+      expect(person.id).toBe(pac.id);
+      expect(person.name.first).toBe(pac.name.first);
+      expect(person.name.last).toBe(pac.name.last);
+    });
+  });
 });
