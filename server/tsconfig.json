@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "module": "CommonJS",
+    "noImplicitReturns": true,
+    "noUnusedLocals": true,
+    "outDir": "./dist",
+    "sourceMap": true,
+    "strict": true,
+    "target": "ES5",
+    "esModuleInterop": true
+  },
+  "compileOnSave": true,
+  "include": [
+    "./src"
+  ]
+}
