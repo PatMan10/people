@@ -2,15 +2,15 @@
   "name": "people-server",
   "scripts": {
     "build": "tsc",
-    "start": "node ./dist/main/code/app.js",
-    "watch:dev": "nodemon -w ./dist/main/code/app.js",
-    "test": "jest --detectOpenHandles ./dist/test",
+    "start": "node ./build/main/code/app.js",
+    "watch:dev": "nodemon -w ./build/main/code/app.js",
+    "test": "jest --detectOpenHandles ./build/test",
     "b_t": "npm run build && npm run test"
   },
   "engines": {
     "node": "16"
   },
-  "main": "./dist/main/code/app.js",
+  "main": "./build/main/code/app.js",
   "dependencies": {
     "cors": "^2.8.5",
     "express": "^4.17.2",
