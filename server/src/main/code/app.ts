@@ -5,6 +5,7 @@ import { errHandler } from "./middleware";
 import controller from "./controller";
 import config from "./config";
 import { logger } from "./utils";
+import { seedPeople } from "./db";
 
 const app = express();
 
@@ -17,6 +18,7 @@ app.use(errHandler);
 export default app;
 
 if (require.main === module) {
+  seedPeople();
   app.listen(config.PORT, () => {
     logger.info(`Server running...`);
     config.display();

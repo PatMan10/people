@@ -2,10 +2,15 @@ import req from "supertest";
 import { StatusCodes } from "http-status-codes";
 import app from "../../main/code/app";
 import { Messages, Urls } from "../../main/code/utils";
-import { Person, pac, Name } from "../../main/code/models";
+import { Person, Name } from "../../main/code/models";
 import { nanoid } from "nanoid";
+import { seedPeople, pac } from "../../main/code/db";
 
 describe("*-*-*-*-*-*-*-*-*-*- People API *-*-*-*-*-*-*-*-*-*-", () => {
+  beforeEach(() => {
+    seedPeople();
+  });
+
   describe(`---------- GET ${Urls.people.GET_ALL} ----------`, () => {
     const exec = () => req(app).get(Urls.people.getAll());
 
@@ -81,6 +86,54 @@ describe("*-*-*-*-*-*-*-*-*-*- People API *-*-*-*-*-*-*-*-*-*-", () => {
       expect(person.name.first).toBe(newPerson.name.first);
       expect(person.name.last).toBe(newPerson.name.last);
       expect(person.birthday).toBe(newPerson.birthday);
+    });
+  });
+
+  describe(`---------- PUT ${Urls.people.UPDATE} ----------`, () => {
+    const exec = (id: string, person: Person) =>
+      req(app)
+        .put(Urls.people.update(id))
+        .set("content-type", "application/json")
+        .send(person);
+
+    it("400 invalid id", async () => {
+      const res = await exec("2", new Person());
+      const { message } = res.body;
+
+      expect(res.status).toBe(StatusCodes.BAD_REQUEST);
+      expect(message).toBe(Messages.fail.INVALID_ID);
+    });
+
+    it("400 invalid data", async () => {
+      const updatedPerson = new Person();
+      const res = await exec(updatedPerson.id, updatedPerson);
+      const { message } = res.body;
+
+      expect(res.status).toBe(StatusCodes.BAD_REQUEST);
+      expect(message).toBe(Messages.fail.INVALID_DATA);
+    });
+
+    it("404 person not found", async () => {
+      const res = await exec(nanoid(), pac);
+      const { message } = res.body;
+
+      expect(res.status).toBe(StatusCodes.NOT_FOUND);
+      expect(message).toBe(Messages.fail.NOT_FOUND);
+    });
+
+    it("200 return person", async () => {
+      const updatedPerson = new Person(
+        new Name("PJ", undefined, "Heynes"),
+        "1995-09-30"
+      );
+      const res = await exec(pac.id, updatedPerson);
+      const person: Person = res.body;
+
+      expect(res.status).toBe(StatusCodes.CREATED);
+      expect(person.id).toBe(pac.id);
+      expect(person.name.first).toBe(updatedPerson.name.first);
+      expect(person.name.last).toBe(updatedPerson.name.last);
+      expect(person.birthday).toBe(updatedPerson.birthday);
     });
   });
 
