@@ -15,6 +15,7 @@ controller.get(Urls.INDEX, (_req, res) => {
   respond(StatusCodes.OK, { message: Messages.success.WELCOME }, res);
 });
 
+/* GET ALL */
 controller.get(
   Urls.people.GET_ALL,
   errCat((_req, res) => {
@@ -22,6 +23,7 @@ controller.get(
   })
 );
 
+/* GET BY ID */
 controller.get(
   Urls.people.GET_BY_ID,
   errCat((req, res) => {
@@ -45,10 +47,10 @@ controller.get(
   })
 );
 
+/* POST */
+
 controller.get(Urls.WILD, (_req, res) => {
-  res.set("content-type", "text/html");
-  res.status(StatusCodes.NOT_FOUND);
-  res.send({ message: ReasonPhrases.NOT_FOUND });
+  respond(StatusCodes.NOT_FOUND, { message: ReasonPhrases.NOT_FOUND }, res);
 });
 
 export default controller;
