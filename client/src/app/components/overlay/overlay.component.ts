@@ -1,4 +1,10 @@
-import { Component, OnInit, Input } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Input,
+  OnChanges,
+  SimpleChanges,
+} from '@angular/core';
 import { Visibility } from 'src/app/utils/enums';
 
 @Component({
@@ -6,10 +12,19 @@ import { Visibility } from 'src/app/utils/enums';
   templateUrl: './overlay.component.html',
   styleUrls: ['./overlay.component.scss'],
 })
-export class OverlayComponent implements OnInit {
+export class OverlayComponent implements OnInit, OnChanges {
+  Visibility = Visibility;
   @Input() visibility: Visibility = Visibility._;
+  @Input() closeDrawer: () => void = () => {};
 
   constructor() {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    console.log('overlayVisibility => ', this.visibility);
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    console.log('changes in overlay comp => ');
+    console.log(changes);
+  }
 }

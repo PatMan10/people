@@ -1,6 +1,9 @@
-<div class="flex-col-aiC cyan-bg h-100vh">
-  <app-toolbar></app-toolbar>
-  <app-overlay [visibility]="overlayVisibility"></app-overlay>
-  <app-nav-drawer [visibility]="navDrawerVisibility"></app-nav-drawer>
+<div class="flex-col-aiC">
+  <app-toolbar [openDrawer]="openDrawer"></app-toolbar>
+  <app-overlay
+    [visibility]="drawerMeta.overlayVisibility"
+    [closeDrawer]="closeDrawer"
+  ></app-overlay>
+  <app-nav-drawer [visibleDrawer]="drawerMeta.visibleDrawer"></app-nav-drawer>
   <router-outlet class="router-outlet">PAGES GO HERE</router-outlet>
 </div>

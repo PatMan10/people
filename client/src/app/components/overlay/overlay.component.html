@@ -1,1 +1,7 @@
-<div *ngIf="visibility === 'visible'" id="overlay" class="overlay"></div>
+<div
+  *ngIf="visibility === Visibility.VISIBLE"
+  id="overlay"
+  class="overlay"
+  (click)="closeDrawer()"
+></div>
+<div>{{ visibility }} <span> zolle</span></div>

@@ -1,8 +1,12 @@
 <div id="toolbar" class="toolbar magenta-bg">
-  <div id="btn-open-nav-drawer" class="btn-open-nav-drawer">
-    <span>Nav</span>
+  <div
+    id="icon-open-nav-drawer"
+    class="static-icon-container-s-square"
+    (click)="openDrawer(Drawer.NAV_DRAWER)"
+  >
+    <img src="../../../assets//icons/bars_solid.svg" class="full-icon" />
   </div>
-  <div>
-    <span>People</span>
+  <div class="toolbar-text-container cyan-bg">
+    <span class="white-bg">People</span>
   </div>
 </div>
