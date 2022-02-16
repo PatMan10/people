@@ -1,17 +1,4 @@
-.nav-drawer {
-  height: 100vh;
-  left: -250px;
-  width: 250px;
-  // position: absolute;
-  // transition: 0.5s;
-}
-
-.nav-bar {
-  display: flex;
-  flex-direction: column;
-
-  a {
-    width: 100%;
-    text-decoration: none;
-  }
+.router-outlet {
+  position: fixed;
+  top: 75px;
 }
