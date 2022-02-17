@@ -13,13 +13,13 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {}
 
   openDrawer = (d: Drawer) => this._openDrawer(d);
-  _openDrawer(drawer: Drawer): void {
+  private _openDrawer(drawer: Drawer): void {
     this.visibleDrawer = drawer;
     this.overlayVisibility = Visibility.VISIBLE;
   }
 
   closeDrawer = () => this._closeDrawer();
-  _closeDrawer(): void {
+  private _closeDrawer(): void {
     this.visibleDrawer = Drawer._;
     this.overlayVisibility = Visibility.HIDDEN;
   }

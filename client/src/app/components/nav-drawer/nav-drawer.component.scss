@@ -1,17 +1,31 @@
 .nav-drawer {
+  background-color: whitesmoke;
   height: 100vh;
-  left: -250px;
   width: 250px;
   position: fixed;
+  top: 60px;
   transition: 0.5s;
+  z-index: 3;
 }
 
 .nav-bar {
   display: flex;
   flex-direction: column;
+  overflow: visible;
 
   a {
-    width: 100%;
+    align-items: center;
+    border-bottom: 1px solid gray;
+    color: darkgray;
+    display: flex;
+    font-size: 1.25rem;
+    height: 40px;
+    padding-left: 30px;
     text-decoration: none;
+  }
+
+  a:hover {
+    background-color: lightgray;
+    color: #1976d2;
   }
 }
