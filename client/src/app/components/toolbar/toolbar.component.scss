@@ -1,13 +1,14 @@
 .toolbar {
-  align-items: center;
-  background-color: #1976d2;
+  position: fixed;
+  left: 0;
+  top: 0;
+
   display: flex;
   flex-direction: row;
-  flex-grow: 1;
+  align-items: center;
+
+  background-color: #1976d2;
   height: 60px;
-  left: 0;
-  position: fixed;
-  top: 0;
   width: 100vw;
   z-index: 3;
 }

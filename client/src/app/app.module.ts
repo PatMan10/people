@@ -1,9 +1,10 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { ToolbarComponent } from './components/toolbar/toolbar.component';
 import { OverlayComponent } from './components/overlay/overlay.component';
 import { NavDrawerComponent } from './components/nav-drawer/nav-drawer.component';
@@ -14,13 +15,10 @@ import { NavDrawerComponent } from './components/nav-drawer/nav-drawer.component
     DashboardComponent,
     ToolbarComponent,
     OverlayComponent,
-    NavDrawerComponent
+    NavDrawerComponent,
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule
-  ],
+  imports: [BrowserModule, AppRoutingModule, HttpClientModule],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
