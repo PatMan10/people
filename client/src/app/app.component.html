@@ -1,9 +1,9 @@
 <div class="flex-col-aiC">
-  <app-toolbar [openDrawer]="openDrawer"></app-toolbar>
   <app-overlay
-    [visibility]="drawerMeta.overlayVisibility"
+    [visibility]="overlayVisibility"
     [closeDrawer]="closeDrawer"
   ></app-overlay>
-  <app-nav-drawer [visibleDrawer]="drawerMeta.visibleDrawer"></app-nav-drawer>
+  <app-toolbar [openDrawer]="openDrawer"></app-toolbar>
+  <app-nav-drawer [visibleDrawer]="visibleDrawer"></app-nav-drawer>
   <router-outlet class="router-outlet">PAGES GO HERE</router-outlet>
 </div>
