@@ -3,3 +3,11 @@
   margin: 0;
   padding: 0;
 }
+
+.page {
+  height: 94vh;
+  width: 100vw;
+  position: fixed;
+  overflow-y: scroll;
+  top: 60px;
+}
