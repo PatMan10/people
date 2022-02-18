@@ -3,13 +3,11 @@ export class Name {
     public first: string = '',
     public middle: string[] = [],
     public last: string = ''
-  ) {
-  }
+  ) {}
 }
 
 export class Person {
-  readonly id?: string;
+  readonly id: string = '';
 
-  constructor(public name: Name = new Name(), public birthday: string = '') {
-  }
+  constructor(public name: Name = new Name(), public birthday: string = '') {}
 }

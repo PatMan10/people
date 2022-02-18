@@ -53,10 +53,12 @@ controller.get(
 /* ADD */
 controller.post(Urls.people.ADD, (req, res) => {
   // 400 invalid data
-  const { name, birthday } = req.body;
+  const { name, birthday, phoneNumbers, emails } = req.body;
   const person = new Person(
     new Name(name.first, name.middle, name.last),
-    birthday
+    birthday,
+    phoneNumbers,
+    emails
   );
   if (!validPerson(person)) {
     respond(
