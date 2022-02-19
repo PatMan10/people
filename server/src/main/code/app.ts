@@ -5,7 +5,7 @@ import { errHandler } from "./middleware";
 import controller from "./controller";
 import config from "./config";
 import { logger } from "./utils";
-import { seedPeople, people } from "./db";
+import { seedPeople } from "./db";
 
 const app = express();
 
