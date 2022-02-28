@@ -8,13 +8,13 @@ import { Drawer } from 'src/app/utils/enums';
   styleUrls: ['./nav-drawer.component.scss'],
 })
 export class NavDrawerComponent implements OnInit {
-  left: string = '-250px';
+  left = '-250px';
 
-  constructor(public drawerService: DrawerService) {}
+  constructor(public drawer: DrawerService) {}
 
   ngOnInit(): void {
-    this.drawerService.state.subscribe((state) => {
-      this.left = state.visibleDrawer === Drawer.NAV_DRAWER ? '0px' : '-250px';
+    this.drawer.state.subscribe((s) => {
+      this.left = s.visibleDrawer === Drawer.NAV_DRAWER ? '0px' : '-250px';
     });
   }
 }
