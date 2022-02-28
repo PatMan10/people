@@ -1,4 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { DrawerService } from 'src/app/services/drawer.service';
 import { Visibility } from 'src/app/utils/enums';
 
 @Component({
@@ -7,11 +8,14 @@ import { Visibility } from 'src/app/utils/enums';
   styleUrls: ['./backdrop.component.scss'],
 })
 export class BackdropComponent implements OnInit {
-  Visibility = Visibility;
-  @Input() visibility: Visibility = Visibility._;
-  @Input() closeDrawer: () => void = () => {};
+  readonly Visibility = Visibility;
+  visibility = Visibility.HIDDEN;
 
-  constructor() {}
+  constructor(public drawer: DrawerService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.drawer.state.subscribe((s) => {
+      this.visibility = s.backdropVisibility;
+    });
+  }
 }

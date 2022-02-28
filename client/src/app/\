@@ -1,0 +1,27 @@
+import { Injectable } from '@angular/core';
+import { Drawer, Visibility } from '../utils/enums';
+import { clone } from '../utils/misc';
+
+@Injectable({
+  providedIn: 'root',
+})
+export class DrawerService {
+  private state = new DrawerService.State();
+
+  openDrawer(drawer: Drawer): void {
+    this.state = new DrawerService.State(drawer, Visibility.VISIBLE);
+  }
+
+  closeDrawer(): void {
+    this.state = new DrawerService.State();
+  }
+}
+
+export namespace DrawerService {
+  export class State {
+    constructor(
+      readonly visibleDrawer = Drawer._,
+      readonly backdropVisibility = Visibility.HIDDEN
+    ) {}
+  }
+}

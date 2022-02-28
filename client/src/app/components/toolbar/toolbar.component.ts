@@ -1,4 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { DrawerService } from 'src/app/services/drawer.service';
 import { Drawer } from 'src/app/utils/enums';
 
 @Component({
@@ -7,10 +8,9 @@ import { Drawer } from 'src/app/utils/enums';
   styleUrls: ['./toolbar.component.scss'],
 })
 export class ToolbarComponent implements OnInit {
-  Drawer = Drawer;
-  @Input() openDrawer: (d: Drawer) => void = (d: Drawer) => {};
+  readonly Drawer = Drawer;
 
-  constructor() {}
+  constructor(readonly drawer: DrawerService) {}
 
   ngOnInit(): void {}
 }
