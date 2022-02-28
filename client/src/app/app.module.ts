@@ -6,7 +6,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { ToolbarComponent } from './components/toolbar/toolbar.component';
-import { OverlayComponent } from './components/overlay/overlay.component';
+import { BackdropComponent } from './components/backdrop/backdrop.component';
 import { NavDrawerComponent } from './components/nav-drawer/nav-drawer.component';
 
 @NgModule({
@@ -14,7 +14,7 @@ import { NavDrawerComponent } from './components/nav-drawer/nav-drawer.component
     AppComponent,
     DashboardComponent,
     ToolbarComponent,
-    OverlayComponent,
+    BackdropComponent,
     NavDrawerComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, HttpClientModule],
