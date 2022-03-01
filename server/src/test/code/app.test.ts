@@ -1,8 +1,8 @@
 import req from "supertest";
 import { StatusCodes } from "http-status-codes";
 import app from "../../main/code/app";
-import { Messages, Urls } from "../../main/code/utils";
-import { Person, Name } from "../../main/code/models";
+import { Messages, Urls } from "../../main/code/utils/const";
+import { Person, Name } from "../../main/code/models/person";
 import { nanoid } from "nanoid";
 import { seedPeople, pac } from "../../main/code/db";
 

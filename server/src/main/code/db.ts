@@ -1,4 +1,4 @@
-import { Person, Name } from "./models";
+import { Person, Name } from "./models/person";
 
 export const people = new Map<string, Person>();
 export const eminem = new Person(
