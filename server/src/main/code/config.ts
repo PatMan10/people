@@ -26,14 +26,12 @@ export class Config {
   constructor(
     readonly ENV: Env = env,
     readonly PORT: number = port,
-    readonly BASE_URL: string = "http://localhost:" + port,
     readonly DB_URI = "mongodb://localhost/people"
   ) {}
 
   display() {
     logger.info(`ENV:\t\t${this.ENV}`);
     logger.info(`PORT:\t\t${this.PORT}`);
-    logger.info(`BASE_URL:\t${this.BASE_URL}`);
     logger.info(`DB_URI:\t${this.DB_URI}`);
   }
 }
@@ -52,4 +50,5 @@ export const getConfig = (env: Env) => {
   }
 };
 
-export default getConfig(env);
+const config = getConfig(env);
+export default config;

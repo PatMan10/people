@@ -22,6 +22,7 @@ export class GenericConst {
     static readonly ALPHA = /^[A-Za-z]+$/;
     static readonly ALPHA_SYM = /^[A-Za-z-\s]+$/;
     static readonly ALPHANUMERIC = /^[a-zA-Z0-9]+$/;
+    static readonly ALPHANUMERIC_SYM = /^[a-zA-Z0-9-\s]+$/;
     static readonly NUMERIC = /^\d+$/;
     static readonly NUMERIC_SYM = /^[\d-]+$/;
   };

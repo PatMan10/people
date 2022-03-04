@@ -5,7 +5,7 @@ import morgan from "morgan";
 import peopleController from "./controllers/people";
 import config from "./config";
 import { logger } from "./utils/misc";
-import { seedPeople } from "./db";
+import { DB } from "./db";
 import { errHandler } from "./middleware/error";
 
 const app = express();
@@ -20,9 +20,11 @@ app.use(errHandler);
 export default app;
 
 if (require.main === module) {
-  seedPeople();
-  app.listen(config.PORT, () => {
-    logger.info(`Server running...`);
-    config.display();
-  });
+  (async () => {
+    await DB.connect();
+    app.listen(config.PORT, () => {
+      logger.info(`Server running...`);
+      config.display();
+    });
+  })();
 }

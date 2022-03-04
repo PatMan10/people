@@ -29,7 +29,7 @@ export class PersonConst extends GenericConst {
     );
     static readonly NICK = new StringConst(
       new Length(2, 25),
-      PersonConst.REGEX.ALPHA_SYM
+      PersonConst.REGEX.ALPHANUMERIC_SYM
     );
   };
   static readonly BIRTHDAY = new StringConst(

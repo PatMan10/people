@@ -1,4 +1,40 @@
-import { Person, Name } from "./models/person";
+import mongoose from "mongoose";
+import config from "./config";
+import { Person, Name, PersonModel } from "./models/person";
+import { logger } from "./utils/misc";
+
+export class DB {
+  private static _state: DB.State;
+
+  static getState = () => this._state;
+
+  private constructor() {}
+
+  static async connect(): Promise<void> {
+    try {
+      await mongoose.connect(config.DB_URI);
+      this._state = DB.State.CONNECTED;
+    } catch (err) {
+      logger.error("failed to connect to DB", err);
+    }
+  }
+
+  static async disconnect(): Promise<void> {
+    try {
+      await mongoose.disconnect();
+      this._state = DB.State.DISCONNECTED;
+    } catch (err) {
+      logger.error("failed to disconnect from DB", err);
+    }
+  }
+}
+
+export namespace DB {
+  export enum State {
+    CONNECTED = "connected",
+    DISCONNECTED = "connected",
+  }
+}
 
 export const people = new Map<string, Person>();
 export const eminem = new Person(
@@ -22,12 +58,20 @@ export const logic = new Person(
   "1990-01-22"
 );
 
-export function seedPeople() {
-  people.clear();
-  people
-    .set(eminem.id, eminem)
-    .set(jayZ.id, jayZ)
-    .set(pac.id, pac)
-    .set(biggie.id, biggie)
-    .set(logic.id, logic);
+export async function seedPeople() {
+  if (DB.getState() !== DB.State.CONNECTED) {
+    logger.info("can't seed the DB, not connected.");
+    return;
+  }
+
+  logger.info("clearing db");
+  await PersonModel.deleteMany();
+  logger.info("adding new dummy data");
+  const people: Person[] = [eminem, jayZ, pac, biggie, logic];
+  await Promise.all(
+    people.map((p) => {
+      logger.info(`saving ${p.name.first} ${p.name.last}`);
+      return new PersonModel(p).save();
+    })
+  );
 }
