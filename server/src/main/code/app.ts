@@ -6,7 +6,7 @@ import peopleController from "./controllers/people";
 import config from "./config";
 import { logger } from "./utils/misc";
 import { seedPeople } from "./db";
-import {errHandler} from "./middleware/error";
+import { errHandler } from "./middleware/error";
 
 const app = express();
 
