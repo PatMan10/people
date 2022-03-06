@@ -1,18 +1,10 @@
 import { Router } from "express";
 import { Messages, Urls } from "../utils/const";
 import { StatusCodes } from "http-status-codes";
-import { people } from "../db";
-import {
-  Person,
-  Name,
-  Contact,
-  validPerson,
-  PersonModel,
-  PersonJoiSchema,
-} from "../models/person";
+import { Person, PersonModel, PersonJoiSchema } from "../models/person";
 import { respond } from "../utils/http";
 import { errCat } from "../middleware/error";
-import { json, validate, validId } from "../models/generic";
+import { validate, validId } from "../models/generic";
 import { Body, Error, ValidationError } from "../models/http";
 
 const controller = Router();
