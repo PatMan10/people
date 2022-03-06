@@ -35,23 +35,31 @@ export class GenericConst {
   );
 }
 
-export const _id = () => new Types.ObjectId();
+//####################
+// TS MODEL UTILS
+//####################
 
-export const valid_id = (_id: string | Types.ObjectId) =>
+export const id = () => new Types.ObjectId();
+
+export const validId = (_id: string | Types.ObjectId) =>
   Types.ObjectId.isValid(_id);
 
 export const clone = <T>(o: T) => JSON.parse(JSON.stringify(o));
 
+export const json = <T>(o: T) => Object.assign({}, o);
+
 //####################
 // TS MODEL
 //####################
+
+export type ObjectId = Types.ObjectId;
 
 export class Generic<T> {
   [k: string]: T;
 }
 
 export class GenericModel extends Generic<any> {
-  readonly _id: Types.ObjectId = _id();
+  readonly _id: string | Types.ObjectId = id();
 
   constructor() {
     super();
@@ -81,6 +89,14 @@ export class GenericModelJoiSchema {
 
   readonly __v = Joi.number();
 }
+
+export const validate = <
+  oT extends GenericModel,
+  sT extends GenericModelJoiSchema
+>(
+  obj: oT,
+  schema: sT
+) => Joi.object(json(schema)).validate(obj);
 
 //####################
 // QUERY MODEL

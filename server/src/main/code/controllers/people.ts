@@ -8,11 +8,12 @@ import {
   Contact,
   validPerson,
   PersonModel,
+  PersonJoiSchema,
 } from "../models/person";
 import { respond } from "../utils/http";
 import { errCat } from "../middleware/error";
-import { valid_id } from "../models/generic";
-import { Body, Error } from "../models/http";
+import { json, validate, validId } from "../models/generic";
+import { Body, Error, ValidationError } from "../models/http";
 
 const controller = Router();
 
@@ -31,8 +32,8 @@ controller.get(
   Urls.people.GET_BY_ID,
   errCat(async (req, res) => {
     // 400 invalid id
-    const { _id } = req.params;
-    if (!valid_id(_id)) {
+    const { id } = req.params;
+    if (!validId(id)) {
       respond(
         StatusCodes.BAD_REQUEST,
         new Body(undefined, new Error(Messages.fail.INVALID_ID)),
@@ -41,7 +42,7 @@ controller.get(
       return;
     }
     // 404 not found
-    const person = await PersonModel.findById(_id);
+    const person = await PersonModel.findById(id);
     if (!person) {
       respond(
         StatusCodes.NOT_FOUND,
@@ -56,26 +57,30 @@ controller.get(
 );
 
 /* ADD */
-controller.post(Urls.people.ADD, (req, res) => {
-  // 400 invalid data
-  const { name, birthday, contact } = req.body;
-  const person = new Person(
-    new Name(name.first, name.middle, name.last),
-    birthday,
-    new Contact(contact.phone, contact.email)
-  );
-  if (!validPerson(person)) {
-    respond(
-      StatusCodes.BAD_REQUEST,
-      { message: Messages.fail.INVALID_DATA },
-      res
-    );
-    return;
-  }
-  // 201 success
-  people.set(person.id, person);
-  respond(StatusCodes.CREATED, person, res);
-});
+controller.post(
+  Urls.people.ADD,
+  errCat(async (req, res) => {
+    const newPerson = req.body.payload;
+
+    // 400 invalid data
+    const { error } = validate(newPerson, new PersonJoiSchema());
+    if (error) {
+      respond(
+        StatusCodes.BAD_REQUEST,
+        new Body(
+          undefined,
+          new ValidationError(Messages.fail.INVALID_DATA, error.details)
+        ),
+        res
+      );
+      return;
+    }
+
+    // 201 success
+    const savedPerson = await new PersonModel(newPerson).save();
+    respond(StatusCodes.CREATED, new Body(savedPerson), res);
+  })
+);
 
 /* UPDATE */
 controller.put(Urls.people.UPDATE, (req, res) => {

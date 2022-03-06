@@ -1,6 +1,6 @@
 // urls
 enum UrlParam {
-  ID = ":_id",
+  ID = ":id",
 }
 
 export class Urls {
@@ -16,13 +16,13 @@ export class Urls {
     static readonly DELETE = `/people/${UrlParam.ID}`;
 
     static getAll = () => this.GET_ALL;
-    static getById = (id: string) =>
-      this.GET_BY_ID.replace(UrlParam.ID, id.toString());
+    static getById = (_id: string) =>
+      this.GET_BY_ID.replace(UrlParam.ID, _id.toString());
     static add = () => this.ADD;
-    static update = (id: string) =>
-      this.UPDATE.replace(UrlParam.ID, id.toString());
-    static delete = (id: string) =>
-      this.DELETE.replace(UrlParam.ID, id.toString());
+    static update = (_id: string) =>
+      this.UPDATE.replace(UrlParam.ID, _id.toString());
+    static delete = (_id: string) =>
+      this.DELETE.replace(UrlParam.ID, _id.toString());
   };
 }
 

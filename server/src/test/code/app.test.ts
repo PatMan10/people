@@ -2,9 +2,10 @@ import req from "supertest";
 import { StatusCodes } from "http-status-codes";
 import app from "../../main/code/app";
 import { Messages, Urls } from "../../main/code/utils/const";
-import { Person } from "../../main/code/models/person";
+import { Name, Person } from "../../main/code/models/person";
 import { seedPeople, clearPeople, pac, DB } from "../../main/code/db";
-import { _id } from "../../main/code/models/generic";
+import { clone, id, json, ObjectId } from "../../main/code/models/generic";
+import { Body } from "../../main/code/models/http";
 
 describe("*-*-*-*-*-*-*-*-*-*- People API *-*-*-*-*-*-*-*-*-*-", () => {
   beforeEach(async () => {
@@ -39,14 +40,13 @@ describe("*-*-*-*-*-*-*-*-*-*- People API *-*-*-*-*-*-*-*-*-*-", () => {
     it("400 invalid id", async () => {
       const res = await exec("2");
       const { message } = res.body.error;
-      console.warn(res.body);
 
       expect(res.status).toBe(StatusCodes.BAD_REQUEST);
       expect(message).toBe(Messages.fail.INVALID_ID);
     });
 
     it("404 person not found", async () => {
-      const res = await exec(_id().toHexString());
+      const res = await exec(id().toHexString());
       const { message } = res.body.error;
 
       expect(res.status).toBe(StatusCodes.NOT_FOUND);
@@ -54,7 +54,7 @@ describe("*-*-*-*-*-*-*-*-*-*- People API *-*-*-*-*-*-*-*-*-*-", () => {
     });
 
     it("200 return person", async () => {
-      const res = await exec(pac._id.toHexString());
+      const res = await exec((pac._id as ObjectId).toHexString());
       const person: Person = res.body.payload;
 
       expect(res.status).toBe(StatusCodes.OK);
@@ -64,37 +64,39 @@ describe("*-*-*-*-*-*-*-*-*-*- People API *-*-*-*-*-*-*-*-*-*-", () => {
     });
   });
 
-  //  describe(`---------- POST ${Urls.people.ADD} ----------`, () => {
-  //    const exec = (person: Person) =>
-  //      req(app)
-  //        .post(Urls.people.add())
-  //        .set("content-type", "application/json")
-  //        .send(person);
-  //
-  //    it("400 invalid data", async () => {
-  //      const newPerson = new Person();
-  //      const res = await exec(newPerson);
-  //      const { message } = res.body;
-  //
-  //      expect(res.status).toBe(StatusCodes.BAD_REQUEST);
-  //      expect(message).toBe(Messages.fail.INVALID_DATA);
-  //    });
-  //
-  //    it("200 return person", async () => {
-  //      const newPerson = new Person(
-  //        new Name("PJ", undefined, "Heynes"),
-  //        "1995-09-30"
-  //      );
-  //      const res = await exec(newPerson);
-  //      const person: Person = res.body;
-  //
-  //      expect(res.status).toBe(StatusCodes.CREATED);
-  //      expect(person.id).toBeTruthy();
-  //      expect(person.name.first).toBe(newPerson.name.first);
-  //      expect(person.name.last).toBe(newPerson.name.last);
-  //      expect(person.birthday).toBe(newPerson.birthday);
-  //    });
-  //  });
+  describe(`---------- POST ${Urls.people.ADD} ----------`, () => {
+    const exec = (person: Person) =>
+      req(app)
+        .post(Urls.people.add())
+        .set("content-type", "application/json")
+        .send(new Body(person));
+
+    it("400 invalid data", async () => {
+      const newPerson = new Person();
+      const res = await exec(newPerson);
+      const { message } = res.body.error;
+
+      expect(res.status).toBe(StatusCodes.BAD_REQUEST);
+      expect(message).toBe(Messages.fail.INVALID_DATA);
+    });
+
+    it("200 return person", async () => {
+      const newPerson = new Person(
+        new Name("pj", undefined, "heynes"),
+        "1995-09-30"
+      );
+      const res = await exec(newPerson);
+      const person: Person = res.body.payload;
+
+      expect(res.status).toBe(StatusCodes.CREATED);
+      expect(person._id as string).toBe(
+        (newPerson._id as ObjectId).toHexString()
+      );
+      expect(person.name.first).toBe(newPerson.name.first);
+      expect(person.name.last).toBe(newPerson.name.last);
+      expect(person.birthday).toBe(newPerson.birthday);
+    });
+  });
   //
   //  describe(`---------- PUT ${Urls.people.UPDATE} ----------`, () => {
   //    const exec = (id: string, person: Person) =>
