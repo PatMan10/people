@@ -1,4 +1,4 @@
-import mongoose, { Types } from "mongoose";
+import mongoose from "mongoose";
 import config from "./config";
 import { Person, Name, PersonModel } from "./models/person";
 import { logger } from "./utils/misc";
@@ -36,7 +36,6 @@ export namespace DB {
   }
 }
 
-export const people = new Map<string, Person>();
 export const eminem = new Person(
   new Name("marshal", ["bruce"], "mathers", ["eminem", "slim shady"]),
   "1972-10-17"
@@ -69,12 +68,7 @@ export async function seedPeople(): Promise<void> {
 
   logger.info("adding new dummy data");
   const people: Person[] = [eminem, jayZ, pac, biggie, logic];
-  await Promise.all(
-    people.map((p) => {
-      //logger.info(`saving ${p.name.first} ${p.name.last}`);
-      return new PersonModel(p).save();
-    })
-  );
+  await Promise.all(people.map((p) => new PersonModel(p).save()));
 }
 
 export async function clearPeople(): Promise<void> {
