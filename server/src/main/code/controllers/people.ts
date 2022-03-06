@@ -60,7 +60,7 @@ controller.get(
 controller.post(
   Urls.people.ADD,
   errCat(async (req, res) => {
-    const newPerson = req.body.payload;
+    const newPerson: Person = req.body.payload;
 
     // 400 invalid data
     const { error } = validate(newPerson, new PersonJoiSchema());
@@ -77,44 +77,62 @@ controller.post(
     }
 
     // 201 success
-    const savedPerson = await new PersonModel(newPerson).save();
+    const savedPerson: Person = await new PersonModel(newPerson).save();
     respond(StatusCodes.CREATED, new Body(savedPerson), res);
   })
 );
 
 /* UPDATE */
-controller.put(Urls.people.UPDATE, (req, res) => {
-  // 400 invalid id
-  const { id } = req.params;
-  if (id.length !== 21) {
-    respond(
-      StatusCodes.BAD_REQUEST,
-      { message: Messages.fail.INVALID_ID },
-      res
-    );
-    return;
-  }
-  // 400 invalid data
-  if (!validPerson(req.body)) {
-    respond(
-      StatusCodes.BAD_REQUEST,
-      { message: Messages.fail.INVALID_DATA },
-      res
-    );
-    return;
-  }
-  // 404 not found
-  const person = people.get(id);
-  if (!person) {
-    respond(StatusCodes.NOT_FOUND, { message: Messages.fail.NOT_FOUND }, res);
-    return;
-  }
-  const { id: _id, ...rest } = req.body;
-  const updatedPerson: Person = { id: person.id, ...rest };
-  // 200 success
-  people.set(updatedPerson.id, updatedPerson);
-  respond(StatusCodes.CREATED, updatedPerson, res);
-});
+controller.put(
+  Urls.people.UPDATE,
+  errCat(async (req, res) => {
+    // 400 invalid id
+    const { id } = req.params;
+    if (!validId(id)) {
+      respond(
+        StatusCodes.BAD_REQUEST,
+        new Body(undefined, new Error(Messages.fail.INVALID_ID)),
+        res
+      );
+      return;
+    }
+
+    const updatedPerson: Person = req.body.payload;
+
+    // 400 invalid data
+    const { error } = validate(updatedPerson, new PersonJoiSchema());
+    if (error) {
+      respond(
+        StatusCodes.BAD_REQUEST,
+        new Body(
+          undefined,
+          new ValidationError(Messages.fail.INVALID_DATA, error.details)
+        ),
+        res
+      );
+      return;
+    }
+
+    const savedPerson: Person = (await PersonModel.findByIdAndUpdate(
+      id,
+      updatedPerson,
+      { new: true }
+    )) as Person;
+
+    // 404 not found
+    if (!savedPerson) {
+      respond(
+        StatusCodes.NOT_FOUND,
+        new Body(undefined, new Error(Messages.fail.NOT_FOUND)),
+        res
+      );
+      return;
+    }
+
+    // 200 success
+    respond(StatusCodes.CREATED, new Body(savedPerson), res);
+  })
+);
 
 /* DELETE BY ID */
 controller.delete(

@@ -4,7 +4,7 @@ import app from "../../main/code/app";
 import { Messages, Urls } from "../../main/code/utils/const";
 import { Name, Person } from "../../main/code/models/person";
 import { seedPeople, clearPeople, pac, DB } from "../../main/code/db";
-import { clone, id, json, ObjectId } from "../../main/code/models/generic";
+import { clone, id, idToStr } from "../../main/code/models/generic";
 import { Body } from "../../main/code/models/http";
 
 describe("*-*-*-*-*-*-*-*-*-*- People API *-*-*-*-*-*-*-*-*-*-", () => {
@@ -54,7 +54,7 @@ describe("*-*-*-*-*-*-*-*-*-*- People API *-*-*-*-*-*-*-*-*-*-", () => {
     });
 
     it("200 return person", async () => {
-      const res = await exec((pac._id as ObjectId).toHexString());
+      const res = await exec(idToStr(pac._id));
       const person: Person = res.body.payload;
 
       expect(res.status).toBe(StatusCodes.OK);
@@ -80,72 +80,71 @@ describe("*-*-*-*-*-*-*-*-*-*- People API *-*-*-*-*-*-*-*-*-*-", () => {
       expect(message).toBe(Messages.fail.INVALID_DATA);
     });
 
-    it("200 return person", async () => {
+    it("200 return saved person", async () => {
       const newPerson = new Person(
-        new Name("pj", undefined, "heynes"),
+        new Name("patrick", ["junior"], "heynes", ["pj"]),
         "1995-09-30"
       );
       const res = await exec(newPerson);
       const person: Person = res.body.payload;
 
       expect(res.status).toBe(StatusCodes.CREATED);
-      expect(person._id as string).toBe(
-        (newPerson._id as ObjectId).toHexString()
-      );
+      expect(person._id as string).toBe(idToStr(newPerson._id));
       expect(person.name.first).toBe(newPerson.name.first);
       expect(person.name.last).toBe(newPerson.name.last);
       expect(person.birthday).toBe(newPerson.birthday);
     });
   });
-  //
-  //  describe(`---------- PUT ${Urls.people.UPDATE} ----------`, () => {
-  //    const exec = (id: string, person: Person) =>
-  //      req(app)
-  //        .put(Urls.people.update(id))
-  //        .set("content-type", "application/json")
-  //        .send(person);
-  //
-  //    it("400 invalid id", async () => {
-  //      const res = await exec("2", new Person());
-  //      const { message } = res.body;
-  //
-  //      expect(res.status).toBe(StatusCodes.BAD_REQUEST);
-  //      expect(message).toBe(Messages.fail.INVALID_ID);
-  //    });
-  //
-  //    it("400 invalid data", async () => {
-  //      const updatedPerson = new Person();
-  //      const res = await exec(updatedPerson.id, updatedPerson);
-  //      const { message } = res.body;
-  //
-  //      expect(res.status).toBe(StatusCodes.BAD_REQUEST);
-  //      expect(message).toBe(Messages.fail.INVALID_DATA);
-  //    });
-  //
-  //    it("404 person not found", async () => {
-  //      const res = await exec(nanoid(), pac);
-  //      const { message } = res.body;
-  //
-  //      expect(res.status).toBe(StatusCodes.NOT_FOUND);
-  //      expect(message).toBe(Messages.fail.NOT_FOUND);
-  //    });
-  //
-  //    it("200 return person", async () => {
-  //      const updatedPerson = new Person(
-  //        new Name("PJ", undefined, "Heynes"),
-  //        "1995-09-30"
-  //      );
-  //      const res = await exec(pac.id, updatedPerson);
-  //      const person: Person = res.body;
-  //
-  //      expect(res.status).toBe(StatusCodes.CREATED);
-  //      expect(person.id).toBe(pac.id);
-  //      expect(person.name.first).toBe(updatedPerson.name.first);
-  //      expect(person.name.last).toBe(updatedPerson.name.last);
-  //      expect(person.birthday).toBe(updatedPerson.birthday);
-  //    });
-  //  });
-  //
+
+  describe(`---------- PUT ${Urls.people.UPDATE} ----------`, () => {
+    const exec = (id: string, person: Person) =>
+      req(app)
+        .put(Urls.people.update(id))
+        .set("content-type", "application/json")
+        .send(new Body(person));
+
+    it("400 invalid id", async () => {
+      const res = await exec("2", new Person());
+      const { message } = res.body.error;
+
+      expect(res.status).toBe(StatusCodes.BAD_REQUEST);
+      expect(message).toBe(Messages.fail.INVALID_ID);
+    });
+
+    it("400 invalid data", async () => {
+      const updatedPerson = new Person();
+      const res = await exec(idToStr(pac._id), updatedPerson);
+      const { message } = res.body.error;
+
+      expect(res.status).toBe(StatusCodes.BAD_REQUEST);
+      expect(message).toBe(Messages.fail.INVALID_DATA);
+    });
+
+    it("404 person not found", async () => {
+      const res = await exec(id().toHexString(), pac);
+      const { message } = res.body.error;
+
+      expect(res.status).toBe(StatusCodes.NOT_FOUND);
+      expect(message).toBe(Messages.fail.NOT_FOUND);
+    });
+
+    it("200 return saved person", async () => {
+      const updatedPerson = clone(pac);
+      updatedPerson.name.first = "siya";
+      updatedPerson.name.last = "landela";
+      updatedPerson.birthday = "1985-05-05";
+
+      const res = await exec(idToStr(pac._id), updatedPerson);
+      const person: Person = res.body.payload;
+
+      expect(res.status).toBe(StatusCodes.CREATED);
+      expect(person._id).toBe(idToStr(pac._id));
+      expect(person.name.first).toBe(updatedPerson.name.first);
+      expect(person.name.last).toBe(updatedPerson.name.last);
+      expect(person.birthday).toBe(updatedPerson.birthday);
+    });
+  });
+
   //  describe(`---------- DELETE ${Urls.people.DELETE} ----------`, () => {
   //    const exec = (id: string) => req(app).delete(Urls.people.delete(id));
   //

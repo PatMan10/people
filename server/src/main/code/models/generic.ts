@@ -41,12 +41,15 @@ export class GenericConst {
 
 export const id = () => new Types.ObjectId();
 
-export const validId = (_id: string | Types.ObjectId) =>
-  Types.ObjectId.isValid(_id);
+export const idToStr = (id: string | ObjectId): string =>
+  typeof id === "string" ? id : id.toHexString();
 
-export const clone = <T>(o: T) => JSON.parse(JSON.stringify(o));
+export const validId = (id: string | Types.ObjectId) =>
+  Types.ObjectId.isValid(id);
 
-export const json = <T>(o: T) => Object.assign({}, o);
+export const clone = <T>(o: T): T => JSON.parse(JSON.stringify(o));
+
+export const json = <T>(o: T): T => Object.assign({}, o);
 
 //####################
 // TS MODEL
