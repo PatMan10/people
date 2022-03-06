@@ -113,11 +113,11 @@ controller.put(
       return;
     }
 
-    const savedPerson: Person = (await PersonModel.findByIdAndUpdate(
+    const savedPerson: Person | null = await PersonModel.findByIdAndUpdate(
       id,
       updatedPerson,
       { new: true }
-    )) as Person;
+    );
 
     // 404 not found
     if (!savedPerson) {
@@ -137,26 +137,33 @@ controller.put(
 /* DELETE BY ID */
 controller.delete(
   Urls.people.DELETE,
-  errCat((req, res) => {
+  errCat(async (req, res) => {
     // 400 invalid id
     const { id } = req.params;
-    if (id.length !== 21) {
+    if (!validId(id)) {
       respond(
         StatusCodes.BAD_REQUEST,
-        { message: Messages.fail.INVALID_ID },
+        new Body(undefined, new Error(Messages.fail.INVALID_ID)),
         res
       );
       return;
     }
+
     // 404 not found
-    const person = people.get(id);
-    if (!person) {
-      respond(StatusCodes.NOT_FOUND, { message: Messages.fail.NOT_FOUND }, res);
+    const deletedPerson: Person | null = await PersonModel.findByIdAndDelete(
+      id
+    );
+    if (!deletedPerson) {
+      respond(
+        StatusCodes.NOT_FOUND,
+        new Body(undefined, new Error(Messages.fail.NOT_FOUND)),
+        res
+      );
       return;
     }
+
     // 200 success
-    people.delete(id);
-    respond(StatusCodes.OK, person, res);
+    respond(StatusCodes.OK, new Body(deletedPerson), res);
   })
 );
 
