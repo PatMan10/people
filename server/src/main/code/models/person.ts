@@ -191,7 +191,7 @@ export const PersonModel = model(
 );
 
 //####################
-// JOI SCHEMA
+// MODEL JOI SCHEMA
 //####################
 
 export class PersonJoiSchema extends GenericModelJoiSchema {

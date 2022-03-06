@@ -1,7 +1,10 @@
 import { Schema, Types } from "mongoose";
 import Joi from "joi";
 
+//####################
 // CONSTRAINTS
+//####################
+
 export class Range {
   constructor(readonly MIN: number, readonly MAX: number) {}
 }
@@ -32,27 +35,40 @@ export class GenericConst {
   );
 }
 
-// MODEL
+export const _id = () => new Types.ObjectId();
+
+export const valid_id = (_id: string | Types.ObjectId) =>
+  Types.ObjectId.isValid(_id);
 
 export const clone = <T>(o: T) => JSON.parse(JSON.stringify(o));
+
+//####################
+// TS MODEL
+//####################
 
 export class Generic<T> {
   [k: string]: T;
 }
 
 export class GenericModel extends Generic<any> {
-  readonly _id: Types.ObjectId = new Types.ObjectId();
+  readonly _id: Types.ObjectId = _id();
 
   constructor() {
     super();
   }
 }
 
+//####################
+// DB MODEL
+//####################
+
 export class GenericModelDbSchema extends Generic<any> {
   readonly _id = { type: Schema.Types.ObjectId };
 }
 
-// JOI
+//####################
+// MODEL JOI SCHEMA
+//####################
 
 export class GenericModelJoiSchema {
   readonly _id = Joi.string()
@@ -65,7 +81,9 @@ export class GenericModelJoiSchema {
   readonly __v = Joi.number();
 }
 
-// QUERY
+//####################
+// QUERY MODEL
+//####################
 
 export enum SortOrder {
   ASCENDING = "asc",
@@ -92,6 +110,10 @@ export class GenericQuery {
     public sort: SortMeta = new SortMeta("_id", SortOrder.ASCENDING)
   ) {}
 }
+
+//####################
+// QUERY MODEL JOI SCHEMA
+//####################
 
 export class GenericQueryValuesJoiSchema {
   readonly _id = Joi.array().items(new GenericModelJoiSchema()._id);
