@@ -38,7 +38,7 @@ controller.post(
   Urls.people.ADD,
   validatePayload(new PersonJoiSchema()),
   errCat(async (req, res) => {
-    // 400 invalid data
+    // 400 invalid payload
 
     // 201 success
     const savedPerson = await new PersonModel(req.body.payload).save();
@@ -52,7 +52,7 @@ controller.put(
   [validateId, validatePayload(new PersonJoiSchema()), exists(PersonModel)],
   errCat(async (req, res) => {
     // 400 invalid id
-    // 400 invalid data
+    // 400 invalid payload
     // 404 not found
 
     // 200 success

@@ -77,7 +77,7 @@ describe("*-*-*-*-*-*-*-*-*-*- People API *-*-*-*-*-*-*-*-*-*-", () => {
       const { message } = res.body.error;
 
       expect(res.status).toBe(StatusCodes.BAD_REQUEST);
-      expect(message).toBe(Messages.fail.INVALID_DATA);
+      expect(message).toBe(Messages.fail.INVALID_PAYLOAD);
     });
 
     it("200 return saved person", async () => {
@@ -117,7 +117,7 @@ describe("*-*-*-*-*-*-*-*-*-*- People API *-*-*-*-*-*-*-*-*-*-", () => {
       const { message } = res.body.error;
 
       expect(res.status).toBe(StatusCodes.BAD_REQUEST);
-      expect(message).toBe(Messages.fail.INVALID_DATA);
+      expect(message).toBe(Messages.fail.INVALID_PAYLOAD);
     });
 
     it("404 person not found", async () => {

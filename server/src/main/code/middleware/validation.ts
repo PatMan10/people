@@ -26,7 +26,7 @@ const validate =
   };
 
 export const validatePayload = (schema: GenericJoiSchema) =>
-  validate("payload", schema, Messages.fail.INVALID_DATA);
+  validate("payload", schema, Messages.fail.INVALID_PAYLOAD);
 
 export const validateQuery = (schema: GenericJoiSchema) =>
   validate("query", schema, Messages.fail.INVALID_QUERY);

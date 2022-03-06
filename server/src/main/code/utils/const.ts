@@ -29,7 +29,7 @@ export class Urls {
 // responses
 export class Messages {
   static readonly success = class {
-    static readonly WELCOME = "Welcome to the people API.";
+    static readonly WELCOME = "Welcome to the people rest API.";
   };
 
   static readonly fail = class {
@@ -37,7 +37,7 @@ export class Messages {
       "Uh oh, some unexpected error ocurred...";
 
     static readonly INVALID_ID = "Invalid id.";
-    static readonly INVALID_DATA = "Invalid data.";
+    static readonly INVALID_PAYLOAD = "Invalid payload.";
     static readonly INVALID_QUERY = "Invalid query.";
     static readonly NOT_FOUND = "Resource not found.";
   };
