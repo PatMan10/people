@@ -23,6 +23,9 @@ if (require.main === module) {
   (async () => {
     await DB.connect();
 
+    console.log(jayZ);
+    seedPeople();
+
     app.listen(config.PORT, () => {
       logger.info(`Server running...`);
       config.display();

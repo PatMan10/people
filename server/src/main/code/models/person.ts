@@ -32,18 +32,22 @@ export class PersonConst extends GenericConst {
       PersonConst.REGEX.ALPHANUMERIC_SYM
     );
   };
+
   static readonly BIRTHDAY = new StringConst(
     new Length(10, 10),
     PersonConst.REGEX.NUMERIC_SYM
   );
-  static readonly PHONE_NUM = new StringConst(
-    new Length(10, 10),
-    PersonConst.REGEX.NUMERIC
-  );
-  static readonly EMAIL = new StringConst(
-    new Length(2, 50),
-    PersonConst.REGEX.FREE
-  );
+
+  static readonly CONTACT = class {
+    static readonly PHONE = new StringConst(
+      new Length(10, 10),
+      PersonConst.REGEX.NUMERIC
+    );
+    static readonly EMAIL = new StringConst(
+      new Length(4, 50),
+      PersonConst.REGEX.FREE
+    );
+  };
 }
 
 //####################
@@ -54,8 +58,7 @@ export class Person extends GenericModel {
   constructor(
     public name: Name = new Name(),
     public birthday: string = "",
-    public phoneNumbers: PhoneNumber[] = [],
-    public emails: Email[] = []
+    public contact: Contact = new Contact()
   ) {
     super();
   }
@@ -70,26 +73,35 @@ export class Name {
   ) {}
 }
 
-export class PhoneNumber {
-  constructor(public type: PhoneNumber.Type, public value: string) {}
+export class Contact {
+  constructor(
+    public phone: Contact.Phone[] = [],
+    public email: Contact.Email[] = []
+  ) {}
 }
 
-export namespace PhoneNumber {
-  export enum Type {
-    MOBILE = "mobile",
-    HOME = "home",
-    WORK = "work",
+export namespace Contact {
+  export class Phone {
+    constructor(public type: Phone.Type, public number: string) {}
   }
-}
 
-export class Email {
-  constructor(public type: Email.Type, public value: string) {}
-}
+  export namespace Phone {
+    export enum Type {
+      MOBILE = "mobile",
+      HOME = "home",
+      WORK = "work",
+    }
+  }
 
-export namespace Email {
-  export enum Type {
-    PERSONAL = "personal",
-    WORK = "work",
+  export class Email {
+    constructor(public type: Email.Type, public address: string) {}
+  }
+
+  export namespace Email {
+    export enum Type {
+      PERSONAL = "personal",
+      WORK = "work",
+    }
   }
 }
 
@@ -148,41 +160,43 @@ export class PersonDbSchema extends GenericModelDbSchema {
     match: PersonConst.BIRTHDAY.REGEX,
   };
 
-  readonly phoneNumbers = [
-    {
-      _id: false,
-      type: {
-        type: String,
-        enum: PhoneNumber.Type,
+  readonly contact = {
+    phone: [
+      {
+        _id: false,
+        type: {
+          type: String,
+          enum: Contact.Phone.Type,
+        },
+        number: {
+          type: String,
+          required: true,
+          trim: true,
+          minlength: PersonConst.CONTACT.PHONE.LENGTH.MIN,
+          maxlength: PersonConst.CONTACT.PHONE.LENGTH.MAX,
+          match: PersonConst.CONTACT.PHONE.REGEX,
+        },
       },
-      value: {
-        type: String,
-        required: true,
-        trim: true,
-        minlength: PersonConst.PHONE_NUM.LENGTH.MIN,
-        maxlength: PersonConst.PHONE_NUM.LENGTH.MAX,
-        match: PersonConst.PHONE_NUM.REGEX,
-      },
-    },
-  ];
+    ],
 
-  readonly emails = [
-    {
-      _id: false,
-      type: {
-        type: String,
-        enum: Email.Type,
+    email: [
+      {
+        _id: false,
+        type: {
+          type: String,
+          enum: Contact.Email.Type,
+        },
+        address: {
+          type: String,
+          required: true,
+          trim: true,
+          minlength: PersonConst.CONTACT.EMAIL.LENGTH.MIN,
+          maxlength: PersonConst.CONTACT.EMAIL.LENGTH.MAX,
+          match: PersonConst.CONTACT.EMAIL.REGEX,
+        },
       },
-      value: {
-        type: String,
-        required: true,
-        trim: true,
-        minlength: PersonConst.EMAIL.LENGTH.MIN,
-        maxlength: PersonConst.EMAIL.LENGTH.MAX,
-        match: PersonConst.EMAIL.REGEX,
-      },
-    },
-  ];
+    ],
+  };
 }
 
 export const PersonModel = model(
@@ -243,37 +257,39 @@ export class PersonJoiSchema extends GenericModelJoiSchema {
     .required()
     .trim();
 
-  readonly phoneNumbers = Joi.array().items(
-    Joi.object({
-      type: Joi.string()
-        .valid(...Object.values(PhoneNumber.Type))
-        .label("phone number type")
-        .trim(),
+  readonly contact = {
+    phone: Joi.array().items(
+      Joi.object({
+        type: Joi.string()
+          .valid(...Object.values(Contact.Phone.Type))
+          .label("phone type")
+          .trim(),
 
-      value: Joi.string()
-        .min(PersonConst.PHONE_NUM.LENGTH.MIN)
-        .max(PersonConst.PHONE_NUM.LENGTH.MAX)
-        .pattern(PersonConst.PHONE_NUM.REGEX)
-        .label("phone number value")
-        .trim(),
-    })
-  );
+        value: Joi.string()
+          .min(PersonConst.CONTACT.PHONE.LENGTH.MIN)
+          .max(PersonConst.CONTACT.PHONE.LENGTH.MAX)
+          .pattern(PersonConst.CONTACT.PHONE.REGEX)
+          .label("phone number")
+          .trim(),
+      })
+    ),
 
-  readonly emails = Joi.array().items(
-    Joi.object({
-      type: Joi.string()
-        .valid(...Object.values(Email.Type))
-        .label("email type")
-        .trim(),
+    email: Joi.array().items(
+      Joi.object({
+        type: Joi.string()
+          .valid(...Object.values(Contact.Email.Type))
+          .label("email type")
+          .trim(),
 
-      value: Joi.string()
-        .min(PersonConst.EMAIL.LENGTH.MIN)
-        .max(PersonConst.EMAIL.LENGTH.MAX)
-        .pattern(PersonConst.EMAIL.REGEX)
-        .label("email value")
-        .trim(),
-    })
-  );
+        value: Joi.string()
+          .min(PersonConst.CONTACT.EMAIL.LENGTH.MIN)
+          .max(PersonConst.CONTACT.EMAIL.LENGTH.MAX)
+          .pattern(PersonConst.CONTACT.EMAIL.REGEX)
+          .label("email address")
+          .trim(),
+      })
+    ),
+  };
 }
 
 export function validPerson(person: Person) {

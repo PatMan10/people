@@ -64,6 +64,7 @@ export class GenericModel extends Generic<any> {
 
 export class GenericModelDbSchema extends Generic<any> {
   readonly _id = { type: Schema.Types.ObjectId };
+  readonly __v = { type: Number };
 }
 
 //####################

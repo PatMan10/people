@@ -2,7 +2,13 @@ import { Router } from "express";
 import { Messages, Urls } from "../utils/const";
 import { StatusCodes } from "http-status-codes";
 import { people } from "../db";
-import { Name, Person, validPerson, PersonModel } from "../models/person";
+import {
+  Person,
+  Name,
+  Contact,
+  validPerson,
+  PersonModel,
+} from "../models/person";
 import { respond } from "../utils/http";
 import { errCat } from "../middleware/error";
 import { valid_id } from "../models/generic";
@@ -52,12 +58,11 @@ controller.get(
 /* ADD */
 controller.post(Urls.people.ADD, (req, res) => {
   // 400 invalid data
-  const { name, birthday, phoneNumbers, emails } = req.body;
+  const { name, birthday, contact } = req.body;
   const person = new Person(
     new Name(name.first, name.middle, name.last),
     birthday,
-    phoneNumbers,
-    emails
+    new Contact(contact.phone, contact.email)
   );
   if (!validPerson(person)) {
     respond(
