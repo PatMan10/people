@@ -82,7 +82,9 @@ export class GenericModelDbSchema extends Generic<any> {
 // MODEL JOI SCHEMA
 //####################
 
-export class GenericModelJoiSchema {
+export class GenericJoiSchema extends Generic<object> {}
+
+export class GenericModelJoiSchema extends GenericJoiSchema {
   readonly _id = Joi.string()
     .min(GenericConst.OBJECT_ID.LENGTH.MIN)
     .max(GenericConst.OBJECT_ID.LENGTH.MAX)
@@ -93,13 +95,13 @@ export class GenericModelJoiSchema {
   readonly __v = Joi.number();
 }
 
-export const validate = <
+export const validateObject = <
   oT extends GenericModel,
-  sT extends GenericModelJoiSchema
+  sT extends GenericJoiSchema
 >(
   obj: oT,
   schema: sT
-) => Joi.object(json(schema)).validate(obj);
+) => Joi.object(json(schema)).validate(obj, { abortEarly: false });
 
 //####################
 // QUERY MODEL
@@ -132,18 +134,21 @@ export class GenericQuery {
 }
 
 //####################
-// QUERY MODEL JOI SCHEMA
+// QUERY JOI SCHEMA
 //####################
 
-export class GenericQueryValuesJoiSchema {
+export class GenericQueryValuesJoiSchema extends GenericJoiSchema {
   readonly _id = Joi.array().items(new GenericModelJoiSchema()._id);
 }
 
-export class GenericQueryJoiSchema<T extends GenericQueryValuesJoiSchema> {
+export class GenericQueryJoiSchema extends GenericJoiSchema {
   readonly values: object;
 
-  constructor(valuesJoiSchema: T = new GenericQueryValuesJoiSchema() as T) {
-    this.values = Joi.object(valuesJoiSchema);
+  constructor(
+    valuesSchema: GenericQueryValuesJoiSchema = new GenericQueryValuesJoiSchema()
+  ) {
+    super();
+    this.values = Joi.object(valuesSchema);
   }
 
   readonly options = Joi.object({ exactMatch: Joi.boolean() });

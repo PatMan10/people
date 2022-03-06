@@ -38,6 +38,7 @@ export class Messages {
 
     static readonly INVALID_ID = "Invalid id.";
     static readonly INVALID_DATA = "Invalid data.";
+    static readonly INVALID_QUERY = "Invalid query.";
     static readonly NOT_FOUND = "Resource not found.";
   };
 }
