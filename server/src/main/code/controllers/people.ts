@@ -51,7 +51,7 @@ controller.get(
       return;
     }
     // 200 success
-    respond(StatusCodes.OK, { payload: person }, res);
+    respond(StatusCodes.OK, new Body(person), res);
   })
 );
 
