@@ -5,7 +5,7 @@ import morgan from "morgan";
 import peopleController from "./controllers/people";
 import config from "./config";
 import logger from "./utils/logger";
-import { DB, jayZ, seedPeople } from "./db";
+import { DB } from "./db";
 import { errHandler } from "./middleware/error";
 
 const app = express();
@@ -22,9 +22,6 @@ export default app;
 if (require.main === module) {
   (async () => {
     await DB.connect();
-
-    console.log(jayZ);
-    seedPeople();
 
     app.listen(config.PORT, () => {
       logger.info(`Server running...`);
