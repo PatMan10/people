@@ -4,8 +4,7 @@
     "build": "tsc",
     "start": "node ./build/main/code/app.js",
     "test": "jest --detectOpenHandles ./build/test",
-    "watch:dev": "concurrently \"tsc -w\" \"nodemon -w ./build/main/code/app.js\"",
-    "build:test": "npm run build && npm run test"
+    "start:dev": "concurrently \"tsc -w\" \"nodemon -w ./build/main/code/app.js\""
   },
   "engines": {
     "node": "16"
