@@ -1,11 +1,12 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, catchError } from 'rxjs';
+import { Observable, catchError, map } from 'rxjs';
 
 import { handleError } from '../utils/rxjs';
 import { log, LogLevel } from '../utils/rxjs';
 import { ApiUrls } from '../utils/urls';
 import { Person } from '../models/person.model';
+import { Body } from '../models/http.model';
 
 @Injectable({
   providedIn: 'root',
@@ -14,52 +15,51 @@ export class PeopleService {
   constructor(private http: HttpClient) {}
 
   getAll = (): Observable<Person[]> =>
-    this.http
-      .get<Person[]>(ApiUrls.people.getAll())
-      .pipe(
-        log(LogLevel.INFO, 'fetched people'),
-        catchError(handleError<Person[]>('fetchPeople', []))
-      );
+    this.http.get<Body<Person[]>>(ApiUrls.people.getAll()).pipe(
+      map((body) => body.payload as Person[]),
+      log(LogLevel.INFO, 'fetched people'),
+      catchError(handleError<Person[]>('fetchPeople', []))
+    );
 
   getById = (id: string): Observable<Person | undefined> =>
-    this.http
-      .get<Person>(ApiUrls.people.getById(id))
-      .pipe(
-        log(LogLevel.INFO, 'fetched person'),
-        catchError(
-          handleError<Person | undefined>(`fetchPerson id=${id}`, undefined)
-        )
-      );
+    this.http.get<Body<Person>>(ApiUrls.people.getById(id)).pipe(
+      map((body) => body.payload as Person),
+      log(LogLevel.INFO, 'fetched person'),
+      catchError(
+        handleError<Person | undefined>(`fetchPerson id=${id}`, undefined)
+      )
+    );
 
   add = (person: Person): Observable<Person> =>
     this.http
-      .post<Person>(ApiUrls.people.add(), person, {
+      .post<Body<Person>>(ApiUrls.people.add(), person, {
         headers: new HttpHeaders({ 'content-type': 'application/json' }),
       })
       .pipe(
+        map((body) => body.payload as Person),
         log(LogLevel.INFO, 'add person'),
         catchError(handleError<Person>(`addPerson`, new Person()))
       );
 
   save = (person: Person): Observable<Person> =>
     this.http
-      .put<Person>(ApiUrls.people.update(person.id as string), person, {
+      .put<Body<Person>>(ApiUrls.people.update(person._id), person, {
         headers: new HttpHeaders({ 'content-type': 'application/json' }),
       })
       .pipe(
+        map((body) => body.payload as Person),
         log(LogLevel.INFO, 'save person'),
         catchError(
-          handleError<Person>(`savePerson id=${person.id}`, new Person())
+          handleError<Person>(`savePerson id=${person._id}`, new Person())
         )
       );
 
   delete = (id: string): Observable<Person | undefined> =>
-    this.http
-      .delete<Person>(ApiUrls.people.getById(id))
-      .pipe(
-        log(LogLevel.INFO, 'delete person'),
-        catchError(
-          handleError<Person | undefined>(`deletePerson id=${id}`, undefined)
-        )
-      );
+    this.http.delete<Body<Person>>(ApiUrls.people.getById(id)).pipe(
+      map((body) => body.payload as Person),
+      log(LogLevel.INFO, 'delete person'),
+      catchError(
+        handleError<Person | undefined>(`deletePerson id=${id}`, undefined)
+      )
+    );
 }
