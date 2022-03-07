@@ -26,7 +26,7 @@ export class Config {
   constructor(
     readonly ENV: Env = env,
     readonly PORT: number = port,
-    readonly DB_URI = "mongodb://localhost/people"
+    readonly DB_URI = "mongodb://localhost/people_dev"
   ) {}
 
   display() {
@@ -39,11 +39,7 @@ export class Config {
 export const getConfig = (env: Env) => {
   switch (env) {
     case Env.PROD:
-      return new Config(
-        undefined,
-        undefined,
-        "https://pm10-people-api.deno.dev"
-      );
+      return new Config(undefined, undefined, "mongodb://localhost/people");
 
     default:
       return new Config();
