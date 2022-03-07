@@ -1,9 +1,11 @@
 <div class="page dashboard">
   <h1>Most Searched People</h1>
   <div class="banner">
-    <div *ngFor="let person of people" class="banner-item">
-      <span>{{ person.name.first }}</span>
-      <span>{{ person.name.last }}</span>
-    </div>
+    <ng-container *ngIf="people$ | async as people">
+      <div *ngFor="let person of people" class="banner-item">
+        <span>{{ person.name.first }}</span>
+        <span>{{ person.name.last }}</span>
+      </div>
+    </ng-container>
   </div>
 </div>

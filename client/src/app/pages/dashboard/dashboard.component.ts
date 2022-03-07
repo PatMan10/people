@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
 import { PeopleService } from 'src/app/services/people.service';
 import { Person } from '../../models/person.model';
 
@@ -8,13 +9,11 @@ import { Person } from '../../models/person.model';
   styleUrls: ['./dashboard.component.scss'],
 })
 export class DashboardComponent implements OnInit {
-  people: Person[] = [];
+  people$: Observable<Person[]>;
 
-  constructor(private peopleService: PeopleService) {}
-
-  ngOnInit(): void {
-    this.peopleService.getAll().subscribe((people) => {
-      this.people = people;
-    });
+  constructor(peopleService: PeopleService) {
+    this.people$ = peopleService.getAll();
   }
+
+  ngOnInit(): void {}
 }

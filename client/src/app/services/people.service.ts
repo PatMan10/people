@@ -14,24 +14,26 @@ import { Body } from '../models/http.model';
 export class PeopleService {
   constructor(private http: HttpClient) {}
 
-  getAll = (): Observable<Person[]> =>
-    this.http.get<Body<Person[]>>(ApiUrls.people.getAll()).pipe(
+  getAll(): Observable<Person[]> {
+    return this.http.get<Body<Person[]>>(ApiUrls.people.getAll()).pipe(
       map((body) => body.payload as Person[]),
       log(LogLevel.INFO, 'fetched people'),
       catchError(handleError<Person[]>('fetchPeople', []))
     );
+  }
 
-  getById = (id: string): Observable<Person | undefined> =>
-    this.http.get<Body<Person>>(ApiUrls.people.getById(id)).pipe(
+  getById(id: string): Observable<Person | undefined> {
+    return this.http.get<Body<Person>>(ApiUrls.people.getById(id)).pipe(
       map((body) => body.payload as Person),
       log(LogLevel.INFO, 'fetched person'),
       catchError(
         handleError<Person | undefined>(`fetchPerson id=${id}`, undefined)
       )
     );
+  }
 
-  add = (person: Person): Observable<Person> =>
-    this.http
+  add(person: Person): Observable<Person> {
+    return this.http
       .post<Body<Person>>(ApiUrls.people.add(), person, {
         headers: new HttpHeaders({ 'content-type': 'application/json' }),
       })
@@ -40,9 +42,10 @@ export class PeopleService {
         log(LogLevel.INFO, 'add person'),
         catchError(handleError<Person>(`addPerson`, new Person()))
       );
+  }
 
-  save = (person: Person): Observable<Person> =>
-    this.http
+  save(person: Person): Observable<Person> {
+    return this.http
       .put<Body<Person>>(ApiUrls.people.update(person._id), person, {
         headers: new HttpHeaders({ 'content-type': 'application/json' }),
       })
@@ -53,13 +56,15 @@ export class PeopleService {
           handleError<Person>(`savePerson id=${person._id}`, new Person())
         )
       );
+  }
 
-  delete = (id: string): Observable<Person | undefined> =>
-    this.http.delete<Body<Person>>(ApiUrls.people.getById(id)).pipe(
+  delete(id: string): Observable<Person | undefined> {
+    return this.http.delete<Body<Person>>(ApiUrls.people.getById(id)).pipe(
       map((body) => body.payload as Person),
       log(LogLevel.INFO, 'delete person'),
       catchError(
         handleError<Person | undefined>(`deletePerson id=${id}`, undefined)
       )
     );
+  }
 }
