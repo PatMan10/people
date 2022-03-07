@@ -1,4 +1,4 @@
-import { logger } from "./utils/misc";
+import logger from "./utils/logger";
 
 export enum EnvKey {
   ENV = "PEOPLE_API_ENV",

@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import config from "./config";
 import { Person, Name, PersonModel } from "./models/person";
-import { logger } from "./utils/misc";
+import logger from "./utils/logger";
 
 export class DB {
   private static _state: DB.State;
@@ -59,24 +59,24 @@ export const logic = new Person(
 
 export async function seedPeople(): Promise<void> {
   if (DB.getState() !== DB.State.CONNECTED) {
-    logger.info("Can't seed people, DB not connected.");
+    logger.verbose("Can't seed people, DB not connected.");
     return;
   }
 
-  logger.info("clearing db");
+  logger.verbose("clearing db");
   await PersonModel.deleteMany();
 
-  logger.info("adding new dummy data");
+  logger.verbose("adding new dummy data");
   const people: Person[] = [eminem, jayZ, pac, biggie, logic];
   await Promise.all(people.map((p) => new PersonModel(p).save()));
 }
 
 export async function clearPeople(): Promise<void> {
   if (DB.getState() !== DB.State.CONNECTED) {
-    logger.info("Can't clear people, DB not connected.");
+    logger.verbose("Can't clear people, DB not connected.");
     return;
   }
 
-  logger.info("clearing db");
+  logger.verbose("clearing db");
   await PersonModel.deleteMany();
 }

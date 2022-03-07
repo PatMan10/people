@@ -1,6 +1,7 @@
 import { NextFunction, Request, RequestHandler, Response } from "express";
-import { logger } from "../utils/misc";
 import { StatusCodes } from "http-status-codes";
+
+import logger from "../utils/logger";
 import { Messages } from "../utils/const";
 import { respond } from "../utils/http";
 import { Body, Error } from "../models/http";

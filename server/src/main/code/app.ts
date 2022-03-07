@@ -4,7 +4,7 @@ import morgan from "morgan";
 //import indexController from "./controllers/index";
 import peopleController from "./controllers/people";
 import config from "./config";
-import { logger } from "./utils/misc";
+import logger from "./utils/logger";
 import { DB, jayZ, seedPeople } from "./db";
 import { errHandler } from "./middleware/error";
 
