@@ -3,8 +3,10 @@
   <div class="banner">
     <ng-container *ngIf="people$ | async as people">
       <div *ngFor="let person of people" class="banner-item">
-        <span>{{ person.name.first }}</span>
-        <span>{{ person.name.last }}</span>
+        <a>
+          <span>{{ person.name.first }}</span>
+          <span>{{ person.name.last }}</span>
+        </a>
       </div>
     </ng-container>
   </div>

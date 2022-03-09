@@ -22,13 +22,11 @@ export class PeopleService {
     );
   }
 
-  getById(id: string): Observable<Person | undefined> {
+  getById(id: string): Observable<Person> {
     return this.http.get<Body<Person>>(ApiUrls.people.getById(id)).pipe(
       map((body) => body.payload as Person),
       log(LogLevel.INFO, 'fetched person'),
-      catchError(
-        handleError<Person | undefined>(`fetchPerson id=${id}`, undefined)
-      )
+      catchError(handleError<Person>(`fetchPerson id=${id}`, new Person()))
     );
   }
 
@@ -58,13 +56,11 @@ export class PeopleService {
       );
   }
 
-  delete(id: string): Observable<Person | undefined> {
+  delete(id: string): Observable<Person> {
     return this.http.delete<Body<Person>>(ApiUrls.people.getById(id)).pipe(
       map((body) => body.payload as Person),
       log(LogLevel.INFO, 'delete person'),
-      catchError(
-        handleError<Person | undefined>(`deletePerson id=${id}`, undefined)
-      )
+      catchError(handleError<Person>(`deletePerson id=${id}`, new Person()))
     );
   }
 }
