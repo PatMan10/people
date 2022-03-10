@@ -1,16 +1,23 @@
-<div class="">
+<div class="container">
   <h1>People</h1>
   <ng-container *ngIf="people$ | async as people">
-    <table>
-      <th>First Name</th>
-      <th>Last Name</th>
-      <th>Birthday</th>
-
-      <tr *ngFor="let person of people" class="banner-item">
-        <td>{{ person.name.first }}</td>
-        <td>{{ person.name.last }}</td>
-        <td>{{ person.birthday }}</td>
-      </tr>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">First</th>
+          <th scope="col">Last</th>
+          <th scope="col">Birthday</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let person of people; let i = index">
+          <th scope="row">{{ i + 1 }}</th>
+          <td>{{ person.name.first }}</td>
+          <td>{{ person.name.last }}</td>
+          <td>{{ person.birthday }}</td>
+        </tr>
+      </tbody>
     </table>
   </ng-container>
 </div>

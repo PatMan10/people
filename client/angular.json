@@ -28,8 +28,10 @@
             "inlineStyleLanguage": "scss",
             "assets": ["src/favicon.ico", "src/assets"],
             "styles": [
-              "src/styles.scss",
-              "./node_modules/@patman10/kickstart.css/dist/kickstart.css"
+              "./node_modules/@patman10/kickstart.css/dist/kickstart.css",
+              "./node_modules/bootstrap/dist/css/bootstrap-reboot.min.css",
+              "./node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "src/styles.scss"
             ],
             "scripts": []
           },
