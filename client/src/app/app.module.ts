@@ -9,8 +9,9 @@ import {DashboardComponent} from './pages/dashboard/dashboard.component';
 import {ToolbarComponent} from './components/toolbar/toolbar.component';
 import {BackdropComponent} from './components/backdrop/backdrop.component';
 import {NavDrawerComponent} from './components/nav-drawer/nav-drawer.component';
-import {PersonFormComponent} from './components/person-form/person-form.component';
-import { PersonDetailComponent } from './components/person-detail/person-detail.component';
+import {PersonFormComponent} from './pages/person-form/person-form.component';
+import { PersonDetailComponent } from './pages/person-detail/person-detail.component';
+import { PersonListComponent } from './pages/person-list/person-list.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { PersonDetailComponent } from './components/person-detail/person-detail.
     NavDrawerComponent,
     PersonFormComponent,
     PersonDetailComponent,
+    PersonListComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, FormsModule, HttpClientModule],
   providers: [],
