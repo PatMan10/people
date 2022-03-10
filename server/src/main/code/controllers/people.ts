@@ -6,6 +6,8 @@ import { respond } from "../utils/http";
 import { errCat } from "../middleware/error";
 import { Body } from "../models/http";
 import { validateId, validatePayload, exists } from "../middleware/validation";
+import { id, validId } from "../models/generic";
+import logger from "../utils/logger";
 
 const controller = Router();
 
@@ -40,6 +42,10 @@ controller.post(
   errCat(async (req, res) => {
     // 400 invalid payload
 
+    const { payload } = req.body;
+    logger.debug("valid id => ", validId(payload._id));
+    if (!validId(payload._id)) payload._id = id();
+
     // 201 success
     const savedPerson = await new PersonModel(req.body.payload).save();
     respond(StatusCodes.CREATED, new Body(savedPerson), res);
@@ -61,7 +67,7 @@ controller.put(
       req.body.payload,
       { new: true }
     );
-    respond(StatusCodes.CREATED, new Body(savedPerson), res);
+    respond(StatusCodes.OK, new Body(savedPerson), res);
   })
 );
 
@@ -80,4 +86,3 @@ controller.delete(
 );
 
 export default controller;
-

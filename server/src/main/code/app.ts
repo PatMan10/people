@@ -25,7 +25,7 @@ if (require.main === module) {
 
     app.listen(config.PORT, () => {
       logger.info(`Server running...`);
-      config.display();
+      logger.info(config);
     });
   })();
 }

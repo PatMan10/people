@@ -5,4 +5,3 @@ export function respond<T>(status: number, body: T, res: Response) {
   res.status(status);
   res.send(body);
 }
-

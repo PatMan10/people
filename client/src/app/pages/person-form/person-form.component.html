@@ -1,1 +1,64 @@
-<p>person-form works!</p>
+<div class="container">
+  <h1>{{ title }}</h1>
+  <form (ngSubmit)="submit(form)" #form="ngForm">
+    <div class="mb-3">
+      <label for="firstName" class="form-label">First Name</label>
+      <input
+        [(ngModel)]="person.name.first"
+        type="text"
+        id="firstName"
+        name="firstName"
+        class="form-control"
+        placeholder="first name"
+        required
+        #firstNameCtrl="ngModel"
+      />
+      <span
+        *ngIf="firstNameCtrl.invalid && firstNameCtrl.touched"
+        class="help-block color-danger"
+        >Please enter a first name!</span
+      >
+    </div>
+
+    <div class="mb-3">
+      <label for="lastName" class="form-label">Last Name</label>
+      <input
+        [(ngModel)]="person.name.last"
+        type="text"
+        id="lastName"
+        name="lastName"
+        class="form-control"
+        placeholder="last name"
+        required
+        #lastNameCtrl="ngModel"
+      />
+      <span
+        *ngIf="lastNameCtrl.invalid && lastNameCtrl.touched"
+        class="help-block color-danger"
+        >Please enter a last name!</span
+      >
+    </div>
+
+    <div class="mb-3">
+      <label for="birthday" class="form-label">Birthday</label>
+      <input
+        [(ngModel)]="person.birthday"
+        type="date"
+        id="birthday"
+        name="birthday"
+        class="form-control"
+        required
+        #birthdayCtrl="ngModel"
+      />
+      <span
+        *ngIf="birthdayCtrl.invalid && birthdayCtrl.touched"
+        class="help-block color-danger"
+        >Please enter a last name!</span
+      >
+    </div>
+
+    <button type="submit" class="btn btn-primary" [disabled]="form.invalid">
+      {{ btnText }}
+    </button>
+  </form>
+</div>

@@ -13,7 +13,11 @@
       <tbody>
         <tr *ngFor="let person of people; let i = index">
           <th scope="row">{{ i + 1 }}</th>
-          <td>{{ person.name.first }}</td>
+          <td>
+            <a [routerLink]="Urls.people.viewById(person._id)">
+              {{ person.name.first }}
+            </a>
+          </td>
           <td>{{ person.name.last }}</td>
           <td>{{ person.birthday }}</td>
         </tr>

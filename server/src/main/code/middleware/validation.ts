@@ -6,18 +6,41 @@ import { GenericJoiSchema, validateObject, validId } from "../models/generic";
 import { Body, Error, ValidationError } from "../models/http";
 import { Messages } from "../utils/const";
 import { respond } from "../utils/http";
+import logger from "../utils/logger";
 
 const validate =
-  (key: "payload" | "query", schema: GenericJoiSchema, message: string) =>
+  (
+    key: "payload" | "query",
+    schema: GenericJoiSchema,
+    validationErrMsg: string
+  ) =>
   (req: Request, res: Response, next: NextFunction) => {
     const obj = key === "payload" ? req.body.payload : req.query;
+
+    // 400 no payload or query
+    if (!obj) {
+      const errMsg =
+        key === "payload" ? Messages.fail.NO_PAYLOAD : Messages.fail.NO_QUERY;
+
+      respond(
+        StatusCodes.BAD_REQUEST,
+        new Body(undefined, new Error(errMsg)),
+        res
+      );
+      return;
+    }
+
+    logger.debug("payload being validated => ", obj);
     const { error } = validateObject(obj, schema);
 
-    // 400 invalid object
+    // 400 invalid payload or query
     if (error) {
       respond(
         StatusCodes.BAD_REQUEST,
-        new Body(undefined, new ValidationError(message, error.details)),
+        new Body(
+          undefined,
+          new ValidationError(validationErrMsg, error.details)
+        ),
         res
       );
       return;

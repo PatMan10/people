@@ -40,6 +40,7 @@ export class Messages {
     static readonly INVALID_PAYLOAD = "Invalid payload.";
     static readonly INVALID_QUERY = "Invalid query.";
     static readonly NOT_FOUND = "Resource not found.";
+    static readonly NO_PAYLOAD = "Payload is undefined.";
+    static readonly NO_QUERY = "Query is undefined.";
   };
 }
-

@@ -1,5 +1,5 @@
 export class Logger {
-  constructor(public level: Logger.Level = Logger.Level.INFO) {}
+  constructor(public level: Logger.Level = Logger.Level.VERBOSE) {}
 
   error(...data: any[]) {
     if (this.level >= Logger.Level.ERROR)

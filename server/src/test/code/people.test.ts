@@ -71,6 +71,14 @@ describe("*-*-*-*-*-*-*-*-*-*- People API *-*-*-*-*-*-*-*-*-*-", () => {
         .set("content-type", "application/json")
         .send(new Body(person));
 
+    it("400 no payload", async () => {
+      const res = await exec(undefined as unknown as Person);
+      const { message } = res.body.error;
+
+      expect(res.status).toBe(StatusCodes.BAD_REQUEST);
+      expect(message).toBe(Messages.fail.NO_PAYLOAD);
+    });
+
     it("400 invalid data", async () => {
       const newPerson = new Person();
       const res = await exec(newPerson);
@@ -111,6 +119,14 @@ describe("*-*-*-*-*-*-*-*-*-*- People API *-*-*-*-*-*-*-*-*-*-", () => {
       expect(message).toBe(Messages.fail.INVALID_ID);
     });
 
+    it("400 no payload", async () => {
+      const res = await exec(idToStr(pac._id), undefined as unknown as Person);
+      const { message } = res.body.error;
+
+      expect(res.status).toBe(StatusCodes.BAD_REQUEST);
+      expect(message).toBe(Messages.fail.NO_PAYLOAD);
+    });
+
     it("400 invalid data", async () => {
       const updatedPerson = new Person();
       const res = await exec(idToStr(pac._id), updatedPerson);
@@ -137,7 +153,7 @@ describe("*-*-*-*-*-*-*-*-*-*- People API *-*-*-*-*-*-*-*-*-*-", () => {
       const res = await exec(idToStr(pac._id), updatedPerson);
       const person: Person = res.body.payload;
 
-      expect(res.status).toBe(StatusCodes.CREATED);
+      expect(res.status).toBe(StatusCodes.OK);
       expect(person._id).toBe(idToStr(pac._id));
       expect(person.name.first).toBe(updatedPerson.name.first);
       expect(person.name.last).toBe(updatedPerson.name.last);

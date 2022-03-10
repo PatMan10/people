@@ -90,6 +90,7 @@ export class GenericModelJoiSchema extends GenericJoiSchema {
     .max(GenericConst.OBJECT_ID.LENGTH.MAX)
     .pattern(GenericConst.REGEX.ALPHANUMERIC)
     .label("_id")
+    .allow("")
     .trim();
 
   readonly __v = Joi.number();

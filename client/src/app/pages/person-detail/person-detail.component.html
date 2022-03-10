@@ -1,21 +1,25 @@
-<ng-container *ngIf="person$ | async as person">
+<div class="container">
   <h1>Person Details</h1>
-  <div class="detail-group">
-    <label>ID: </label>
-    <span>{{ person._id }}</span>
-  </div>
-  <div class="detail-group">
-    <label>Name: </label>
-    <span>{{ person.name.first }} {{ person.name.last }}</span>
-  </div>
-  <div class="detail-group">
-    <label>Birthday: </label>
-    <span>{{ person.birthday }}</span>
-  </div>
-  <div class="detail-group">
-    <a [routerLink]="Urls.people.edit(person._id)" class="btn btn-primary">
-      Edit
-    </a>
-    <button class="btn btn-danger" (click)="delete(person._id)">Delete</button>
-  </div>
-</ng-container>
+  <ng-container *ngIf="person$ | async as person">
+    <div class="detail-group">
+      <label>ID: </label>
+      <span>{{ person._id }}</span>
+    </div>
+    <div class="detail-group">
+      <label>Name: </label>
+      <span>{{ person.name.first }} {{ person.name.last }}</span>
+    </div>
+    <div class="detail-group">
+      <label>Birthday: </label>
+      <span>{{ person.birthday }}</span>
+    </div>
+    <div class="detail-group">
+      <a [routerLink]="Urls.people.edit(person._id)" class="btn btn-primary">
+        Edit
+      </a>
+      <button class="btn btn-danger" (click)="delete(person._id)">
+        Delete
+      </button>
+    </div>
+  </ng-container>
+</div>
