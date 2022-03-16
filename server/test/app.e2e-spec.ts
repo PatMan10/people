@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication, HttpStatus } from '@nestjs/common';
 import * as request from 'supertest';
-import { AppModule } from '../../src/app.module';
+import { AppModule } from '../src/app/app.module';
 import { Messages, Urls } from 'src/common/utils/const';
 
 describe('AppController (e2e)', () => {

@@ -7,9 +7,8 @@ import {
   Param,
   Body,
 } from '@nestjs/common';
-import config, { Env } from 'src/app.config';
-import { Urls } from 'src/common/utils/const';
-import logger from 'src/common/utils/logger';
+//import { Urls } from 'src/common/utils/const';
+//import logger from 'src/common/utils/logger';
 import { Person } from './person.model';
 import { PersonService } from './person.service';
 
@@ -17,31 +16,31 @@ import { PersonService } from './person.service';
 export class PersonController {
   constructor(private readonly personService: PersonService) {}
 
-  @Get(Urls.people.GET_ALL)
+  @Get('/people')
   getAll(): Promise<Person[]> {
     return this.personService.getAll();
   }
 
-  @Get(Urls.people.GET_BY_ID)
+  @Get('/people/:id')
   getById(@Param('id') id: string): Promise<Person> {
     return this.personService.getById(id);
   }
 
-  @Post(Urls.people.ADD)
+  @Post('/people')
   add(@Body() person: Person): Promise<Person> {
-    logger.debug('person to add => ', person);
+    //logger.debug('person to add => ', person);
     return this.personService.add(person);
   }
 
-  @Put(Urls.people.UPDATE)
+  @Put('/people:id')
   update(@Body() person: Person): Promise<Person> {
-    logger.debug('person to update => ', person);
+    //logger.debug('person to update => ', person);
     return this.personService.update(person);
   }
 
-  @Delete(Urls.people.UPDATE)
+  @Delete('people:id')
   delete(@Param('id') id: string): Promise<Person> {
-    logger.debug('person id to delete => ', id);
+    //logger.debug('person id to delete => ', id);
     return this.personService.delete(id);
   }
 }
