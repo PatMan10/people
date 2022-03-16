@@ -1,18 +1,27 @@
 import { Test } from '@nestjs/testing';
 import { MongooseModule } from '@nestjs/mongoose';
 
+import {
+  createDBTestModule,
+  closeDBConnection,
+} from '../common/utils//mock-db-module';
 import { PersonController } from './person.controller';
 import { PersonService } from './person.service';
 import { Person, PersonSchema } from './person.model';
-import { people } from './person.seed';
+import { eminem, people } from './person.seed';
 
 describe('PersonController', () => {
-  let personController: PersonController;
-  let personService: PersonService;
+  let controller: PersonController;
+  let service: PersonService;
+
+  afterAll(async () => {
+    await closeDBConnection();
+  });
 
   beforeEach(async () => {
-    const moduleRef = await Test.createTestingModule({
+    const module = await Test.createTestingModule({
       imports: [
+        createDBTestModule(),
         MongooseModule.forFeature([
           { name: Person.name, schema: PersonSchema },
         ]),
@@ -21,16 +30,34 @@ describe('PersonController', () => {
       providers: [PersonService],
     }).compile();
 
-    personService = moduleRef.get<PersonService>(PersonService);
-    personController = moduleRef.get<PersonController>(PersonController);
+    service = module.get<PersonService>(PersonService);
+    controller = module.get<PersonController>(PersonController);
+  });
+
+  it('controller should be defined', () => {
+    expect(controller).toBeDefined();
   });
 
   describe('getAll', () => {
     it('should return an array of people', async () => {
       const result = Promise.resolve(people.slice(0));
-      jest.spyOn(personService, 'getAll').mockImplementation(() => result);
+      jest.spyOn(service, 'getAll').mockImplementation(() => result);
+      const expected = await result;
+      expected.pop();
+      const actual = await controller.getAll();
 
-      expect(await personController.getAll()).toBe(result);
+      expect(expected).toBe(actual);
+    });
+  });
+
+  describe('getById', () => {
+    it('should return a person', async () => {
+      const result = Promise.resolve(eminem);
+      jest.spyOn(service, 'getById').mockImplementation(() => result);
+      const expected = await result;
+      const actual = await controller.getById(eminem._id.toString());
+
+      expect(expected).toBe(actual);
     });
   });
 });
