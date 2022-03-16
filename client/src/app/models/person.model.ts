@@ -50,53 +50,80 @@ export class PersonConst extends GenericConst {
 // TS MODEL
 //####################
 
-export class Person extends GenericModel {
-  constructor(
-    public name: Name = new Name(),
-    public birthday: string = '',
-    public contact: Contact = new Contact()
-  ) {
-    super();
-  }
-}
-
 export class Name {
+  first: string;
+  middle: string[];
+  last: string;
+
+  nick: string[];
+
   constructor(
-    public first: string = '',
-    public middle: string[] = [],
-    public last: string = '',
-    public nick: string[] = []
-  ) {}
+    first: string = '',
+    middle: string[] = [],
+    last: string = '',
+    nick: string[] = []
+  ) {
+    this.first = first;
+    this.middle = middle;
+    this.last = last;
+    this.nick = nick;
+  }
 }
 
 export class Contact {
-  constructor(
-    public phone: Contact.Phone[] = [],
-    public email: Contact.Email[] = []
-  ) {}
+  phone: Phone[];
+  email: Email[];
+
+  constructor(phone: Phone[] = [], email: Email[] = []) {
+    this.phone = phone;
+    this.email = email;
+  }
 }
 
-export namespace Contact {
-  export class Phone {
-    constructor(public type: Phone.Type, public number: string) {}
-  }
+export enum PhoneType {
+  MOBILE = 'mobile',
+  HOME = 'home',
+  WORK = 'work',
+}
 
-  export namespace Phone {
-    export enum Type {
-      MOBILE = 'mobile',
-      HOME = 'home',
-      WORK = 'work',
-    }
-  }
+export enum EmailType {
+  PERSONAL = 'personal',
+  WORK = 'work',
+}
 
-  export class Email {
-    constructor(public type: Email.Type, public address: string) {}
-  }
+export class Phone {
+  type: PhoneType;
+  number: string;
 
-  export namespace Email {
-    export enum Type {
-      PERSONAL = 'personal',
-      WORK = 'work',
-    }
+  constructor(type: PhoneType, number: string) {
+    this.type = type;
+    this.number = number;
+  }
+}
+
+export class Email {
+  type: EmailType;
+  address: string;
+
+  constructor(type: EmailType, address: string) {
+    this.type = type;
+    this.address = address;
+  }
+}
+
+export class Person extends GenericModel {
+  name: Name;
+  birthday: string;
+  contact: Contact;
+
+  constructor(
+    name: Name = new Name(),
+    birthday: string = '',
+    contact: Contact = new Contact()
+  ) {
+    super();
+    this.name = name;
+    this.birthday = birthday;
+    this.contact = contact;
   }
 }

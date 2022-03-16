@@ -1,16 +1,21 @@
 {
   "compilerOptions": {
-    "module": "CommonJS",
-    "noImplicitReturns": true,
-    "noUnusedLocals": false,
-    "outDir": "./build",
+    "module": "commonjs",
+    "declaration": true,
+    "removeComments": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "allowSyntheticDefaultImports": true,
+    "target": "es2017",
     "sourceMap": true,
-    "strict": true,
-    "target": "ES5",
-    "esModuleInterop": true
-  },
-  "compileOnSave": true,
-  "include": [
-    "./src"
-  ]
+    "outDir": "./dist",
+    "baseUrl": "./",
+    "incremental": true,
+    "skipLibCheck": true,
+    "strictNullChecks": false,
+    "noImplicitAny": false,
+    "strictBindCallApply": false,
+    "forceConsistentCasingInFileNames": false,
+    "noFallthroughCasesInSwitch": false
+  }
 }

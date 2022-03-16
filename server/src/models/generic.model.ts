@@ -1,3 +1,6 @@
+import { IsString } from 'class-validator';
+import { Schema, Types } from 'mongoose';
+
 //####################
 // CONSTRAINTS
 //####################
@@ -28,13 +31,21 @@ export class GenericConst {
   };
   static readonly OBJECT_ID = new StringConst(
     new Length(24, 24),
-    GenericConst.REGEX.ALPHANUMERIC
+    GenericConst.REGEX.ALPHANUMERIC,
   );
 }
 
 //####################
 // TS MODEL UTILS
 //####################
+
+export const id = () => new Types.ObjectId();
+
+export const idToStr = (id: string | ObjectId): string =>
+  typeof id === 'string' ? id : id.toHexString();
+
+export const validId = (id: string | Types.ObjectId) =>
+  Types.ObjectId.isValid(id);
 
 export const clone = <T>(o: T): T => JSON.parse(JSON.stringify(o));
 
@@ -44,16 +55,28 @@ export const json = <T>(o: T): T => Object.assign({}, o);
 // TS MODEL
 //####################
 
+export type ObjectId = Types.ObjectId;
+
 export class Generic<T> {
   [k: string]: T;
 }
 
 export class GenericModel extends Generic<any> {
-  readonly _id: string = '';
+  @IsString()
+  readonly _id: string | Types.ObjectId = id();
 
   constructor() {
     super();
   }
+}
+
+//####################
+// DB MODEL
+//####################
+
+export class GenericModelDbSchema extends Generic<any> {
+  readonly _id = { type: Schema.Types.ObjectId };
+  readonly __v = { type: Number };
 }
 
 //####################
@@ -65,7 +88,7 @@ export class Query {
     public options: Options = new Options(),
     public values: Generic<string[]> = new Generic(),
     public page: Page = new Page(),
-    public sort: Sort = new Sort('_id', Order.ASCENDING)
+    public sort: Sort = new Sort('_id', Order.ASCENDING),
   ) {}
 }
 

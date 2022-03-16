@@ -39,7 +39,7 @@ export class PersonFormComponent implements OnInit {
     if (e.valid === false) return;
 
     const operation$: Observable<Person> = this.id
-      ? this.peopleService.save(this.person)
+      ? this.peopleService.update(this.person)
       : this.peopleService.add(this.person);
 
     operation$.subscribe(() => {
