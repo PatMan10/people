@@ -8,7 +8,7 @@ export class Urls {
   static readonly INDEX = '/';
   static readonly WILD = '*';
 
-  static readonly person = class {
+  static readonly people = class {
     static readonly GET_ALL = `/people`;
     static readonly GET_BY_ID = `/people/${Param.ID}`;
     static readonly ADD = `/people`;

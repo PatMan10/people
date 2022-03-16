@@ -18,6 +18,6 @@ export class PersonModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
     consumer
       .apply(ValidateIdMiddleware)
-      .forRoutes(Urls.person.GET_BY_ID, Urls.person.UPDATE, Urls.person.DELETE);
+      .forRoutes(Urls.people.GET_BY_ID, Urls.people.UPDATE, Urls.people.DELETE);
   }
 }

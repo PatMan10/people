@@ -17,29 +17,29 @@ import { PersonService } from './person.service';
 export class PersonController {
   constructor(private readonly personService: PersonService) {}
 
-  @Get(Urls.person.GET_ALL)
+  @Get(Urls.people.GET_ALL)
   getAll(): Promise<Person[]> {
     return this.personService.getAll();
   }
 
-  @Get(Urls.person.GET_BY_ID)
+  @Get(Urls.people.GET_BY_ID)
   getById(@Param('id') id: string): Promise<Person> {
     return this.personService.getById(id);
   }
 
-  @Post(Urls.person.ADD)
+  @Post(Urls.people.ADD)
   add(@Body() person: Person): Promise<Person> {
     logger.debug('person to add => ', person);
     return this.personService.add(person);
   }
 
-  @Put(Urls.person.UPDATE)
+  @Put(Urls.people.UPDATE)
   update(@Body() person: Person): Promise<Person> {
     logger.debug('person to update => ', person);
     return this.personService.update(person);
   }
 
-  @Delete(Urls.person.UPDATE)
+  @Delete(Urls.people.UPDATE)
   delete(@Param('id') id: string): Promise<Person> {
     logger.debug('person id to delete => ', id);
     return this.personService.delete(id);
