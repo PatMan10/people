@@ -7,9 +7,9 @@ import {
 } from '@nestjs/common';
 import { Response } from 'express';
 
-import { Error } from 'src/models/http.model';
-import { Messages } from 'src/utils/const';
-import logger from 'src/utils/logger';
+import { Error } from 'src/common/models/http.model';
+import { Messages } from 'src/common/utils/const';
+import logger from 'src/common/utils/logger';
 
 @Catch()
 export class AllExceptionsFilter implements ExceptionFilter {

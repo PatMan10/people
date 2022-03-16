@@ -1,11 +1,11 @@
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
-import { ValidateIdMiddleware } from 'src/middleware/validation.middleware';
-import { Urls } from 'src/utils/const';
+import { ValidateIdMiddleware } from 'src/common/middleware/validation.middleware';
+import { Urls } from 'src/common/utils/const';
 
-import { PersonController } from '../controllers/person.controller';
-import { Person, PersonSchema } from '../models/person.model';
-import { PersonService } from '../services/person.service';
+import { PersonController } from './person.controller';
+import { Person, PersonSchema } from './person.model';
+import { PersonService } from './person.service';
 
 @Module({
   imports: [
@@ -18,6 +18,6 @@ export class PersonModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
     consumer
       .apply(ValidateIdMiddleware)
-      .forRoutes(Urls.people.GET_BY_ID, Urls.people.UPDATE, Urls.people.DELETE);
+      .forRoutes(Urls.person.GET_BY_ID, Urls.person.UPDATE, Urls.person.DELETE);
   }
 }

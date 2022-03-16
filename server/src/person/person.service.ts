@@ -2,10 +2,10 @@ import { InjectModel, InjectConnection } from '@nestjs/mongoose';
 import { Injectable } from '@nestjs/common';
 import { Model, Connection, ConnectionStates } from 'mongoose';
 
-import { ObjectId } from 'src/models/generic.model';
-import { Person } from '../models/person.model';
-import logger from 'src/utils/logger';
-import { people } from 'src/utils/db';
+import { ObjectId } from 'src/common/models/generic.model';
+import { Person } from './person.model';
+import logger from 'src/common/utils/logger';
+import { people } from 'src/person/person.seed';
 
 @Injectable({})
 export class PersonService {

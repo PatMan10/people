@@ -2,9 +2,9 @@ import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 
 import config from './app.config';
-import { AuthModule } from './modules/auth.module';
-import { UserModule } from './modules/user.module';
-import { PersonModule } from './modules/person.module';
+import { AuthModule } from './auth/auth.module';
+import { UserModule } from './user/user.module';
+import { PersonModule } from './person/person.module';
 import { AppController } from './app.controller';
 
 @Module({

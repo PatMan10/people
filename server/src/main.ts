@@ -4,8 +4,8 @@ import * as morgan from 'morgan';
 
 import config from './app.config';
 import { AppModule } from './app.module';
-import { AllExceptionsFilter } from './filters/all-exception.filter';
-import logger from './utils/logger';
+import { AllExceptionsFilter } from './common/filters/all-exception.filter';
+import logger from './common/utils/logger';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {

@@ -6,7 +6,7 @@ import {
   PhoneType,
   Email,
   EmailType,
-} from '../models/person.model';
+} from './person.model';
 
 export const eminem = new Person(
   new Name('marshal', ['bruce'], 'mathers', ['eminem', 'slim shady']),

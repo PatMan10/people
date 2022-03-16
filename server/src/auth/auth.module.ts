@@ -7,8 +7,8 @@ import {
 } from '@nestjs/common';
 import { Request, Response, NextFunction } from 'express';
 
-import { AuthController } from '../controllers/auth.controller';
-import { AuthService } from '../services/auth.service';
+import { AuthController } from './auth.controller';
+import { AuthService } from './auth.service';
 
 @Injectable()
 export class RegisterMiddleware implements NestMiddleware {
