@@ -9,6 +9,7 @@ import { PersonController } from './person.controller';
 import { PersonService } from './person.service';
 import { Person, PersonSchema } from './person.model';
 import { eminem, people } from './person.seed';
+import { clone } from '../common/models/generic.model';
 
 describe('PersonController', () => {
   let controller: PersonController;
@@ -56,6 +57,43 @@ describe('PersonController', () => {
       jest.spyOn(service, 'getById').mockImplementation(() => result);
       const expected = await result;
       const actual = await controller.getById(eminem._id.toString());
+
+      expect(expected).toBe(actual);
+    });
+  });
+
+  describe('add', () => {
+    it('should return added person', async () => {
+      const result = Promise.resolve(eminem);
+      jest.spyOn(service, 'add').mockImplementation(() => result);
+      const expected = await result;
+      const actual = await controller.add(eminem);
+
+      expect(expected).toBe(actual);
+    });
+  });
+
+  describe('update', () => {
+    it('should return updated person', async () => {
+      const emClone = clone(eminem);
+      emClone.birthday = '2000-01-01';
+      const result = Promise.resolve(emClone);
+      jest.spyOn(service, 'update').mockImplementation(() => result);
+      const expected = await result;
+      const actual = await controller.update(eminem);
+
+      expect(expected.birthday).toBe(actual.birthday);
+    });
+  });
+
+  describe('delete', () => {
+    it('should return deleted person', async () => {
+      const emClone = clone(eminem);
+      emClone.birthday = '2000-01-01';
+      const result = Promise.resolve(emClone);
+      jest.spyOn(service, 'delete').mockImplementation(() => result);
+      const expected = await result;
+      const actual = await controller.delete(eminem._id.toString());
 
       expect(expected).toBe(actual);
     });
