@@ -1,10 +1,10 @@
-import { Controller, Get, HttpStatus } from '@nestjs/common';
-import { Urls, Messages } from '../common/utils/const';
+import { Controller, Get } from '@nestjs/common';
+//import { Urls, Messages } from '../common/utils/const';
 
 @Controller()
 export class AppController {
-  @Get(Urls.INDEX)
-  index() {
-    return { status: HttpStatus.OK, message: Messages.success.WELCOME };
+  @Get('/')
+  index(): string {
+    return 'Welcome to the people rest API.';
   }
 }
