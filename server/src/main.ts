@@ -1,5 +1,6 @@
 import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
+import * as morgan from 'morgan';
 
 import config from './app.config';
 import { AppModule } from './app.module';
@@ -7,14 +8,17 @@ import { AllExceptionsFilter } from './filters/all-exception.filter';
 import logger from './utils/logger';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule, { cors: true });
+  const app = await NestFactory.create(AppModule, {
+    cors: true,
+  });
   app.useGlobalPipes(new ValidationPipe({ transform: true, whitelist: true }));
   app.useGlobalFilters(new AllExceptionsFilter());
+  app.use(morgan('tiny'));
 
-  if (require.main === module)
-    await app.listen(config.PORT, () => {
-      logger.info('server running');
-      logger.info(config);
-    });
+  if (require.main === module) {
+    await app.listen(config.PORT);
+    logger.log(`server running on: ${await app.getUrl()}`);
+    logger.log(config);
+  }
 }
 bootstrap();
