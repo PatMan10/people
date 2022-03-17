@@ -118,7 +118,8 @@ describe('PersonController (e2e)', () => {
     });
 
     it(`201: return new person`, async () => {
-      const person = people[0];
+      const person = clone(people[2]);
+      (person as any)._id = '';
       const res = await exec(person);
       const payload: Person = res.body;
 

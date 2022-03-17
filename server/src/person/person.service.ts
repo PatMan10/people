@@ -2,12 +2,11 @@ import { InjectModel, InjectConnection } from '@nestjs/mongoose';
 import { Injectable } from '@nestjs/common';
 import { Model, Connection, ConnectionStates } from 'mongoose';
 
-import { ObjectId } from 'src/common/models/generic.model';
+import { validId, id, ObjectId } from '../common/models/generic.model';
 import { Person } from './person.model';
-//import logger from 'src/common/utils/logger';
-//import { people } from 'src/person/person.seed';
+import logger from '../common/utils/logger';
 
-@Injectable({})
+@Injectable()
 export class PersonService {
   constructor(
     @InjectModel(Person.name)
@@ -23,6 +22,9 @@ export class PersonService {
   }
 
   add(person: Person): Promise<Person> {
+    logger.debug(`valid id ${person._id} => `, validId(person._id));
+    if (!validId(person._id)) (person as any)._id = id();
+
     return new this.PersonModel(person).save();
   }
 
