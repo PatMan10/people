@@ -3,7 +3,7 @@ import {
   GenericModel,
   Length,
   StringConst,
-} from './generic.model';
+} from '../common/models/generic.model';
 
 //####################
 // CONSTRAINTS

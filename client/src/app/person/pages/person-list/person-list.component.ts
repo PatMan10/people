@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Person } from 'src/app/models/person.model';
-import { PeopleService } from 'src/app/services/people.service';
-import { UiUrls } from 'src/app/utils/urls';
+import { Person } from 'src/app/person/person.model';
+import { PersonService } from 'src/app/person/person.service';
+import { UiUrls } from 'src/app/common/utils/urls';
 
 @Component({
   selector: 'app-person-list',
@@ -13,7 +13,7 @@ export class PersonListComponent implements OnInit {
   Urls = UiUrls;
   people$: Observable<Person[]>;
 
-  constructor(peopleService: PeopleService) {
+  constructor(peopleService: PersonService) {
     this.people$ = peopleService.getAll();
   }
 

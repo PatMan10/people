@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
-import { Person } from 'src/app/models/person.model';
-import { PeopleService } from 'src/app/services/people.service';
-import { UiUrls } from 'src/app/utils/urls';
+import { Person } from 'src/app/person/person.model';
+import { PersonService } from 'src/app/person/person.service';
+import { UiUrls } from 'src/app/common/utils/urls';
 
 @Component({
   selector: 'app-person-detail',
@@ -15,7 +15,7 @@ export class PersonDetailComponent implements OnInit {
   person$: Observable<Person> = of(new Person());
 
   constructor(
-    private peopleService: PeopleService,
+    private peopleService: PersonService,
     private route: ActivatedRoute,
     private router: Router
   ) {}

@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { Person } from 'src/app/models/person.model';
-import { PeopleService } from 'src/app/services/people.service';
-import { UiUrls } from 'src/app/utils/urls';
+import { Person } from 'src/app/person/person.model';
+import { PersonService } from 'src/app/person/person.service';
+import { UiUrls } from 'src/app/common/utils/urls';
 
 @Component({
   selector: 'app-person-form',
@@ -18,7 +18,7 @@ export class PersonFormComponent implements OnInit {
   btnText = 'Add';
 
   constructor(
-    private peopleService: PeopleService,
+    private peopleService: PersonService,
     private route: ActivatedRoute,
     private router: Router
   ) {}

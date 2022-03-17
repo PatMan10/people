@@ -3,8 +3,6 @@ enum URLParam {
 }
 
 export class UiUrls {
-  static readonly DASHBOARD = 'dashboard';
-
   static readonly people = class {
     static readonly VIEW_ALL = 'people';
     static readonly VIEW_BY_ID = `people/${URLParam.ID}`;

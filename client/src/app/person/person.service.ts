@@ -2,15 +2,15 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, catchError } from 'rxjs';
 
-import { handleHttpError } from '../utils/rxjs';
-import { log, LogLevel } from '../utils/rxjs';
-import { ApiUrls } from '../utils/urls';
-import { Person } from '../models/person.model';
+import { handleHttpError } from '../common/utils/rxjs';
+import { log, LogLevel } from '../common/utils/rxjs';
+import { ApiUrls } from '../common/utils/urls';
+import { Person } from './person.model';
 
 @Injectable({
   providedIn: 'root',
 })
-export class PeopleService {
+export class PersonService {
   constructor(private http: HttpClient) {}
 
   getAll(): Observable<Person[]> {
