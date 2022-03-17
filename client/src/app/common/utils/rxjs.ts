@@ -1,7 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Observable, of, tap } from 'rxjs';
 import { Error } from '../models/http.model';
-import { Logger } from './logger';
 
 //####################
 // LOG OPERATOR
@@ -37,12 +36,12 @@ export function log<T>(
         if (level.value >= logLevel.value) {
           const logFun =
             level.name === LogLevel.ERROR.name
-              ? Logger.error
+              ? console.error
               : level.name === LogLevel.WARN.name
-              ? Logger.warn
+              ? console.warn
               : level.name === LogLevel.INFO.name
-              ? Logger.info
-              : Logger.debug;
+              ? console.info
+              : console.info;
           logFun(`${level.name}: ${message}`, val);
         }
       })
@@ -70,7 +69,7 @@ export function handleHttpError<T>(
 
     const err = httpErr.error as Error;
     // TODO: better job of transforming error for user consumption
-    Logger.info(`${operation} failed: ${err.message}`);
+    console.info(`${operation} failed: ${err.message}`);
     alert(err.message);
 
     // Let the app keep running by returning an empty result.

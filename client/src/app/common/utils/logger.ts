@@ -1,6 +1,31 @@
+import { Injectable } from '@angular/core';
+
+@Injectable({
+  providedIn: 'root',
+})
 export class Logger {
-  static readonly info = (...data: unknown[]) => console.info(...data);
-  static readonly warn = (...data: unknown[]) => console.warn(...data);
-  static readonly error = (...data: unknown[]) => console.error(...data);
-  static readonly debug = (...data: unknown[]) => console.log(...data);
+  public level: number = LogLevel.DEBUG;
+
+  error(...data: any[]) {
+    if (this.level >= LogLevel.ERROR) console.error('error:', ...data);
+  }
+
+  warn(...data: any[]) {
+    if (this.level >= LogLevel.WARN) console.warn('warn:', ...data);
+  }
+
+  info(...data: any[]) {
+    if (this.level >= LogLevel.INFO) console.info('info:', ...data);
+  }
+
+  debug(...data: any[]) {
+    if (this.level >= LogLevel.DEBUG) console.log('debug:', ...data);
+  }
+}
+
+export enum LogLevel {
+  ERROR = 0,
+  WARN = 1,
+  INFO = 2,
+  DEBUG = 3,
 }
