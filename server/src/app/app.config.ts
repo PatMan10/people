@@ -9,6 +9,14 @@ export enum Env {
   PROD = 'prod',
 }
 
+export enum LogLevel {
+  ERROR = 0,
+  WARN = 1,
+  INFO = 2,
+  DEBUG = 3,
+  VERBOSE = 4,
+}
+
 const env = ((): Env => {
   switch (process.env[EnvVar.ENV]) {
     case Env.PROD:
@@ -27,19 +35,35 @@ export class Config {
     readonly ENV: Env,
     readonly PORT: number,
     readonly DB_URI: string,
+    readonly LOG_LEVEL: LogLevel,
   ) {}
 }
 
 export const getConfig = (env: Env) => {
   switch (env) {
     case Env.PROD:
-      return new Config(Env.PROD, 80, 'mongodb://localhost/people');
+      return new Config(
+        Env.PROD,
+        80,
+        'mongodb://localhost/people',
+        LogLevel.INFO,
+      );
 
     case Env.DEV:
-      return new Config(Env.DEV, 8000, 'mongodb://localhost/people_dev');
+      return new Config(
+        Env.DEV,
+        8000,
+        'mongodb://localhost/people_dev',
+        LogLevel.DEBUG,
+      );
 
     default:
-      return new Config(Env.TEST, 8080, 'mongodb://localhost/people_test');
+      return new Config(
+        Env.TEST,
+        8080,
+        'mongodb://localhost/people_test',
+        LogLevel.VERBOSE,
+      );
   }
 };
 

@@ -36,7 +36,7 @@ export class AllExceptionsFilter implements ExceptionFilter {
         HttpStatus.INTERNAL_SERVER_ERROR,
         Messages.fail.INTERNAL_SERVER_ERROR,
       );
-      logger.debug('unexpected exception => ', exception);
+      logger.error('unexpected exception => ', exception);
     }
 
     res.status(error.status).send(error);

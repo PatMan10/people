@@ -1,7 +1,8 @@
 import { LoggerService } from '@nestjs/common';
+import config, { LogLevel } from '../../app/app.config';
 
 export class Logger implements LoggerService {
-  constructor(public level: LogLevel = LogLevel.VERBOSE) {}
+  constructor(public level: LogLevel = config.LOG_LEVEL) {}
 
   error(...data: any[]) {
     if (this.level >= LogLevel.ERROR)
@@ -27,14 +28,6 @@ export class Logger implements LoggerService {
     if (this.level >= LogLevel.VERBOSE)
       console.log('\x1b[37m', 'verbose:', '\x1b[0m', ...data);
   }
-}
-
-export enum LogLevel {
-  ERROR = 0,
-  WARN = 1,
-  INFO = 2,
-  DEBUG = 3,
-  VERBOSE = 4,
 }
 
 const logger = new Logger();

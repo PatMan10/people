@@ -9,8 +9,9 @@ import { AppModule } from '../src/app/app.module';
 import { id } from '../src/common/models/generic.model';
 import { Person, PersonSchema } from '../src/person/person.model';
 import { people } from '../src/person/person.seed';
-import { Error } from '../src/common/models/http.model';
+import { Error, ValidationError } from '../src/common/models/http.model';
 import { AllExceptionsFilter } from '../src/common/filters/all-exception.filter';
+import { setupMiddleware } from '../src/main';
 
 describe('PersonController (e2e)', () => {
   let app: INestApplication;
@@ -34,10 +35,7 @@ describe('PersonController (e2e)', () => {
     }).compile();
 
     app = moduleFixture.createNestApplication();
-    app.useGlobalPipes(
-      new ValidationPipe({ transform: true, whitelist: true }),
-    );
-    app.useGlobalFilters(new AllExceptionsFilter());
+    setupMiddleware(app, config);
     await app.init();
   });
 
@@ -98,6 +96,35 @@ describe('PersonController (e2e)', () => {
 
       expect(res.status).toBe(HttpStatus.OK);
       expect(payload._id).toBe(person._id.toString());
+      expect(payload.name.first).toBe(person.name.first);
+    });
+  });
+
+  describe('add', () => {
+    afterEach(async () => {
+      await PersonModel.deleteMany();
+    });
+
+    const exec = (person: Person) =>
+      request(app.getHttpServer()).post(Urls.people.ADD).send(person);
+
+    it(`400: invalid payload`, async () => {
+      const res = await exec(new Person());
+      const error: ValidationError = res.body;
+
+      expect(res.status).toBe(HttpStatus.BAD_REQUEST);
+      expect(error.status).toBe(HttpStatus.BAD_REQUEST);
+      expect(error.message).toBe(Messages.fail.INVALID_PAYLOAD);
+      expect(error.details.length > 0).toBeTruthy();
+    });
+
+    it(`201: return new person`, async () => {
+      const person = people[0];
+      const res = await exec(person);
+      const payload: Person = res.body;
+
+      expect(res.status).toBe(HttpStatus.CREATED);
+      expect(payload._id).toBeDefined();
       expect(payload.name.first).toBe(person.name.first);
     });
   });
