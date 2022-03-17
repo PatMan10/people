@@ -61,8 +61,16 @@ export class PersonController {
   }
 
   @Delete(Urls.people.DELETE)
-  delete(@Param('id') id: string): Promise<Person> {
+  async delete(@Param('id') id: string): Promise<Person> {
+    // 400: invalid id
     logger.debug('person id to delete => ', id);
-    return this.personService.delete(id);
+
+    const person = await this.personService.getById(id);
+
+    // 404: not found
+    if (!person) throw new NotFoundException(Messages.fail.NOT_FOUND);
+
+    // 200: return person
+    return person;
   }
 }

@@ -186,4 +186,45 @@ describe('PersonController (e2e)', () => {
       expect(payload.birthday).toBe(updatedPerson.birthday);
     });
   });
+
+  describe('delete', () => {
+    beforeEach(async () => {
+      await PersonModel.insertMany(people);
+    });
+
+    afterEach(async () => {
+      await PersonModel.deleteMany();
+    });
+
+    const exec = (id: string) =>
+      request(app.getHttpServer()).delete(Urls.people.delete(id));
+
+    it(`400: invalid id`, async () => {
+      const res = await exec('id');
+      const error: Error = res.body;
+
+      expect(res.status).toBe(HttpStatus.BAD_REQUEST);
+      expect(error.status).toBe(HttpStatus.BAD_REQUEST);
+      expect(error.message).toBe(Messages.fail.INVALID_ID);
+    });
+
+    it(`404: not found`, async () => {
+      const res = await exec(id().toHexString());
+      const error: Error = res.body;
+
+      expect(res.status).toBe(HttpStatus.NOT_FOUND);
+      expect(error.status).toBe(HttpStatus.NOT_FOUND);
+      expect(error.message).toBe(Messages.fail.NOT_FOUND);
+    });
+
+    it(`200: return person`, async () => {
+      const person = people[0];
+      const res = await exec(person._id.toString());
+      const payload: Person = res.body;
+
+      expect(res.status).toBe(HttpStatus.OK);
+      expect(payload._id).toBe(person._id.toString());
+      expect(payload.name.first).toBe(person.name.first);
+    });
+  });
 });
