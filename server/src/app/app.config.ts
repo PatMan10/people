@@ -1,12 +1,12 @@
 export enum EnvVar {
-  ENV = "PEOPLE_API_ENV",
-  PORT = "PEOPLE_API_PORT",
+  ENV = 'PEOPLE_API_ENV',
+  PORT = 'PEOPLE_API_PORT',
 }
 
 export enum Env {
-  TEST = "test",
-  DEV = "dev",
-  PROD = "prod",
+  TEST = 'test',
+  DEV = 'dev',
+  PROD = 'prod',
 }
 
 const env = ((): Env => {
@@ -22,26 +22,24 @@ const env = ((): Env => {
   }
 })();
 
-const port = Number(process.env[EnvVar.PORT]) || 8000;
-
 export class Config {
   constructor(
-    readonly ENV: Env = env,
-    readonly PORT: number = port,
-    readonly DB_URI = "mongodb://localhost/people_test"
+    readonly ENV: Env,
+    readonly PORT: number,
+    readonly DB_URI: string,
   ) {}
 }
 
 export const getConfig = (env: Env) => {
   switch (env) {
     case Env.PROD:
-      return new Config(undefined, undefined, "mongodb://localhost/people");
+      return new Config(Env.PROD, 80, 'mongodb://localhost/people');
 
     case Env.DEV:
-      return new Config(undefined, undefined, "mongodb://localhost/people_dev");
+      return new Config(Env.DEV, 8000, 'mongodb://localhost/people_dev');
 
     default:
-      return new Config();
+      return new Config(Env.TEST, 8080, 'mongodb://localhost/people_test');
   }
 };
 
