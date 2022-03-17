@@ -4,14 +4,13 @@ import * as request from 'supertest';
 import mongoose, { model, Model } from 'mongoose';
 
 import config from '../src/app/app.config';
-import { Messages, Urls } from '../src/common/utils/const';
+import { setupMiddleware } from '../src/main';
 import { AppModule } from '../src/app/app.module';
-import { id } from '../src/common/models/generic.model';
-import { Person, PersonSchema } from '../src/person/person.model';
+import { Messages, Urls } from '../src/common/utils/const';
+import { clone, id } from '../src/common/models/generic.model';
+import { Name, Person, PersonSchema } from '../src/person/person.model';
 import { people } from '../src/person/person.seed';
 import { Error, ValidationError } from '../src/common/models/http.model';
-import { AllExceptionsFilter } from '../src/common/filters/all-exception.filter';
-import { setupMiddleware } from '../src/main';
 
 describe('PersonController (e2e)', () => {
   let app: INestApplication;
@@ -126,6 +125,64 @@ describe('PersonController (e2e)', () => {
       expect(res.status).toBe(HttpStatus.CREATED);
       expect(payload._id).toBeDefined();
       expect(payload.name.first).toBe(person.name.first);
+    });
+  });
+
+  describe(`update`, () => {
+    beforeEach(async () => {
+      await PersonModel.insertMany(people);
+    });
+
+    afterEach(async () => {
+      await PersonModel.deleteMany();
+    });
+
+    const exec = (id: string, person: Person) =>
+      request(app.getHttpServer()).put(Urls.people.update(id)).send(person);
+
+    it('400 invalid id', async () => {
+      const res = await exec('2', new Person());
+      const error: Error = res.body;
+
+      expect(res.status).toBe(HttpStatus.BAD_REQUEST);
+      expect(error.status).toBe(HttpStatus.BAD_REQUEST);
+      expect(error.message).toBe(Messages.fail.INVALID_ID);
+    });
+
+    it('400 invalid data', async () => {
+      const res = await exec(people[0]._id.toString(), new Person());
+      const error: ValidationError = res.body;
+
+      expect(res.status).toBe(HttpStatus.BAD_REQUEST);
+      expect(error.status).toBe(HttpStatus.BAD_REQUEST);
+      expect(error.message).toBe(Messages.fail.INVALID_PAYLOAD);
+      expect(error.details.length > 0).toBeTruthy();
+    });
+
+    it('404 person not found', async () => {
+      const person = new Person(new Name('not', [], 'found'), '1234-11-12');
+      const res = await exec(person._id.toString(), person);
+      const error: Error = res.body;
+
+      expect(res.status).toBe(HttpStatus.NOT_FOUND);
+      expect(error.status).toBe(HttpStatus.NOT_FOUND);
+      expect(error.message).toBe(Messages.fail.NOT_FOUND);
+    });
+
+    it('200 return saved person', async () => {
+      const updatedPerson = clone(people[2]);
+      updatedPerson.name.first = 'siya';
+      updatedPerson.name.last = 'landela';
+      updatedPerson.birthday = '1985-05-05';
+
+      const res = await exec(updatedPerson._id.toString(), updatedPerson);
+      const payload: Person = res.body;
+
+      expect(res.status).toBe(HttpStatus.OK);
+      expect(payload._id).toBe(updatedPerson._id.toString());
+      expect(payload.name.first).toBe(updatedPerson.name.first);
+      expect(payload.name.last).toBe(updatedPerson.name.last);
+      expect(payload.birthday).toBe(updatedPerson.birthday);
     });
   });
 });

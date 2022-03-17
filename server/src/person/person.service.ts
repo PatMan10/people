@@ -35,24 +35,4 @@ export class PersonService {
   delete(id: string | ObjectId): Promise<Person> {
     return this.PersonModel.findByIdAndDelete(id).exec();
   }
-
-  //  private async seed(): Promise<void> {
-  //    if (this.dbCon.readyState !== ConnectionStates.connected) {
-  //      //logger.verbose("Can't seed people, DB not connected.");
-  //      return;
-  //    }
-  //
-  //    //logger.verbose('adding new dummy data');
-  //    await Promise.all(people.map((p) => new this.PersonModel(p).save()));
-  //  }
-  //
-  //  private async clear(): Promise<void> {
-  //    if (this.dbCon.readyState !== ConnectionStates.connected) {
-  //      //logger.verbose("Can't clear people, DB not connected.");
-  //      return;
-  //    }
-  //
-  //    //logger.verbose('clearing db');
-  //    await this.PersonModel.deleteMany();
-  //  }
 }

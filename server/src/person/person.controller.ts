@@ -39,21 +39,25 @@ export class PersonController {
   @Post(Urls.people.ADD)
   add(@Body() person: Person): Promise<Person> {
     // 400: invalid payload
-
     logger.debug('person to add => ', person);
+
     // 200: return saved person
     return this.personService.add(person);
   }
 
   @Put(Urls.people.UPDATE)
-  update(@Body() person: Person): Promise<Person> {
+  async update(@Body() person: Person): Promise<Person> {
     // 400: invalid id
     // 400: invalid payload
-
-    // 404: person not found
     logger.debug('person to update => ', person);
+
+    const updatedPerson = await this.personService.update(person);
+
+    // 404: not found
+    if (!updatedPerson) throw new NotFoundException(Messages.fail.NOT_FOUND);
+
     // 200: return updated person
-    return this.personService.update(person);
+    return updatedPerson;
   }
 
   @Delete(Urls.people.DELETE)
