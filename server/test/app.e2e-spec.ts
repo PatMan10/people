@@ -2,7 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication, HttpStatus } from '@nestjs/common';
 import * as request from 'supertest';
 import { AppModule } from '../src/app/app.module';
-import { Messages, Urls } from 'src/common/utils/const';
+import { Messages, Urls } from '../src/common/utils/const';
 
 describe('AppController (e2e)', () => {
   let app: INestApplication;
@@ -18,10 +18,9 @@ describe('AppController (e2e)', () => {
 
   const exec = () => request(app.getHttpServer()).get(Urls.INDEX);
 
-  it(`GET ${Urls.INDEX}`, async () => {
-    const resp = await exec();
-    const { status, message } = resp.body;
-    expect(status).toBe(HttpStatus.OK);
-    expect(message).toBe(Messages.success.WELCOME);
+  it('200: return welcome message', async () => {
+    const res = await exec();
+    expect(res.status).toBe(HttpStatus.OK);
+    expect(res.text).toBe(Messages.success.WELCOME);
   });
 });

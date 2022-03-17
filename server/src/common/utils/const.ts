@@ -16,13 +16,10 @@ export class Urls {
     static readonly DELETE = `/people/${Param.ID}`;
 
     static getAll = () => this.GET_ALL;
-    static getById = (id: string) =>
-      this.GET_BY_ID.replace(Param.ID, id.toString());
+    static getById = (id: string) => this.GET_BY_ID.replace(Param.ID, id);
     static add = () => this.ADD;
-    static update = (id: string) =>
-      this.UPDATE.replace(Param.ID, id.toString());
-    static delete = (id: string) =>
-      this.DELETE.replace(Param.ID, id.toString());
+    static update = (id: string) => this.UPDATE.replace(Param.ID, id);
+    static delete = (id: string) => this.DELETE.replace(Param.ID, id);
   };
 }
 

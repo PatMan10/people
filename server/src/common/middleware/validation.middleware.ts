@@ -10,7 +10,7 @@ import { Messages } from '../utils/const';
 
 @Injectable()
 export class ValidateIdMiddleware implements NestMiddleware {
-  use(req: Request, res: Response, next: NextFunction) {
+  use(req: Request, _res: Response, next: NextFunction) {
     // 400 invalid id
     if (!validId(req.params.id))
       throw new BadRequestException(Messages.fail.INVALID_ID);

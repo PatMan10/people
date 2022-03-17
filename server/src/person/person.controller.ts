@@ -6,9 +6,10 @@ import {
   Delete,
   Param,
   Body,
+  NotFoundException,
 } from '@nestjs/common';
-//import { Urls } from 'src/common/utils/const';
-//import logger from 'src/common/utils/logger';
+import { Messages, Urls } from '../common/utils/const';
+import logger from '../common/utils/logger';
 import { Person } from './person.model';
 import { PersonService } from './person.service';
 
@@ -16,31 +17,40 @@ import { PersonService } from './person.service';
 export class PersonController {
   constructor(private readonly personService: PersonService) {}
 
-  @Get('/people')
+  @Get(Urls.people.GET_ALL)
   getAll(): Promise<Person[]> {
+    // 200: return people
     return this.personService.getAll();
   }
 
-  @Get('/people/:id')
-  getById(@Param('id') id: string): Promise<Person> {
-    return this.personService.getById(id);
+  @Get(Urls.people.GET_BY_ID)
+  async getById(@Param('id') id: string): Promise<Person> {
+    // 400: invalid id
+
+    const person = await this.personService.getById(id);
+
+    // 404: not found
+    if (!person) throw new NotFoundException(Messages.fail.NOT_FOUND);
+
+    // 200: return person
+    return person;
   }
 
-  @Post('/people')
+  @Post(Urls.people.ADD)
   add(@Body() person: Person): Promise<Person> {
-    //logger.debug('person to add => ', person);
+    logger.debug('person to add => ', person);
     return this.personService.add(person);
   }
 
-  @Put('/people:id')
+  @Put(Urls.people.UPDATE)
   update(@Body() person: Person): Promise<Person> {
-    //logger.debug('person to update => ', person);
+    logger.debug('person to update => ', person);
     return this.personService.update(person);
   }
 
-  @Delete('people:id')
+  @Delete(Urls.people.DELETE)
   delete(@Param('id') id: string): Promise<Person> {
-    //logger.debug('person id to delete => ', id);
+    logger.debug('person id to delete => ', id);
     return this.personService.delete(id);
   }
 }
