@@ -5,14 +5,33 @@
       <label>ID: </label>
       <span>{{ person._id }}</span>
     </div>
+
     <div class="detail-group">
       <label>Name: </label>
       <span>{{ person.name.first }} {{ person.name.last }}</span>
     </div>
+
     <div class="detail-group">
       <label>Birthday: </label>
       <span>{{ person.birthday }}</span>
     </div>
+
+    <div class="detail-group">
+      <label>Phone: </label>
+      <div *ngFor="let phone of person.contact.phone" class="phone">
+        <span class="type">{{ phone.type }}:</span>
+        <span class="number">{{ phone.number }}</span>
+      </div>
+    </div>
+
+    <div class="detail-group">
+      <label>Email: </label>
+      <div *ngFor="let email of person.contact.email" class="email">
+        <span class="type">{{ email.type }}:</span>
+        <span class="address">{{ email.address }}</span>
+      </div>
+    </div>
+
     <div class="detail-group">
       <a [routerLink]="Urls.people.edit(person._id)" class="btn btn-primary">
         Edit
