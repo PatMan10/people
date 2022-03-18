@@ -1,16 +1,11 @@
-import {
-  BadRequestException,
-  ValidationPipe,
-  INestApplication,
-} from '@nestjs/common';
+import { ValidationPipe, INestApplication } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import * as morgan from 'morgan';
 
 import config, { Config, Env } from './app/app.config';
 import { AppModule } from './app/app.module';
 import { AllExceptionsFilter } from './common/filters/all-exception.filter';
-import { ValidationException } from './common/models/http.model';
-import { Messages } from './common/utils/const';
+import { exceptionFactory } from './common/pipes/validation.pipe';
 import logger from './common/utils/logger';
 
 if (require.main === module)
@@ -33,16 +28,7 @@ export const setupMiddleware = (
     new ValidationPipe({
       transform: true,
       whitelist: true,
-      exceptionFactory: (errorsArg) => {
-        const errors = errorsArg.map(({ property, value, constraints }) => ({
-          property,
-          value,
-          constraints,
-        }));
-        throw new BadRequestException(
-          new ValidationException(Messages.fail.INVALID_PAYLOAD, errors),
-        );
-      },
+      exceptionFactory,
     }),
   );
   app.useGlobalFilters(new AllExceptionsFilter());
