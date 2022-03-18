@@ -9,7 +9,7 @@ import * as morgan from 'morgan';
 import config, { Config, Env } from './app/app.config';
 import { AppModule } from './app/app.module';
 import { AllExceptionsFilter } from './common/filters/all-exception.filter';
-import { ValidationError } from './common/models/http.model';
+import { ValidationException } from './common/models/http.model';
 import { Messages } from './common/utils/const';
 import logger from './common/utils/logger';
 
@@ -40,7 +40,7 @@ export const setupMiddleware = (
           constraints,
         }));
         throw new BadRequestException(
-          new ValidationError(Messages.fail.INVALID_PAYLOAD, errors),
+          new ValidationException(Messages.fail.INVALID_PAYLOAD, errors),
         );
       },
     }),

@@ -10,7 +10,7 @@ import { Messages, Urls } from '../src/common/utils/const';
 import { clone, id } from '../src/common/models/generic.model';
 import { Name, Person, PersonSchema } from '../src/person/person.model';
 import { people } from '../src/person/person.seed';
-import { Error, ValidationError } from '../src/common/models/http.model';
+import { Exception, ValidationException } from '../src/common/models/http.model';
 
 describe('PersonController (e2e)', () => {
   let app: INestApplication;
@@ -72,7 +72,7 @@ describe('PersonController (e2e)', () => {
 
     it(`400: invalid id`, async () => {
       const res = await exec('id');
-      const error: Error = res.body;
+      const error: Exception = res.body;
 
       expect(res.status).toBe(HttpStatus.BAD_REQUEST);
       expect(error.status).toBe(HttpStatus.BAD_REQUEST);
@@ -81,7 +81,7 @@ describe('PersonController (e2e)', () => {
 
     it(`404: not found`, async () => {
       const res = await exec(id().toHexString());
-      const error: Error = res.body;
+      const error: Exception = res.body;
 
       expect(res.status).toBe(HttpStatus.NOT_FOUND);
       expect(error.status).toBe(HttpStatus.NOT_FOUND);
@@ -109,7 +109,7 @@ describe('PersonController (e2e)', () => {
 
     it(`400: invalid payload`, async () => {
       const res = await exec(new Person());
-      const error: ValidationError = res.body;
+      const error: ValidationException = res.body;
 
       expect(res.status).toBe(HttpStatus.BAD_REQUEST);
       expect(error.status).toBe(HttpStatus.BAD_REQUEST);
@@ -143,7 +143,7 @@ describe('PersonController (e2e)', () => {
 
     it('400 invalid id', async () => {
       const res = await exec('2', new Person());
-      const error: Error = res.body;
+      const error: Exception = res.body;
 
       expect(res.status).toBe(HttpStatus.BAD_REQUEST);
       expect(error.status).toBe(HttpStatus.BAD_REQUEST);
@@ -152,7 +152,7 @@ describe('PersonController (e2e)', () => {
 
     it('400 invalid data', async () => {
       const res = await exec(people[0]._id.toString(), new Person());
-      const error: ValidationError = res.body;
+      const error: ValidationException = res.body;
 
       expect(res.status).toBe(HttpStatus.BAD_REQUEST);
       expect(error.status).toBe(HttpStatus.BAD_REQUEST);
@@ -163,7 +163,7 @@ describe('PersonController (e2e)', () => {
     it('404 person not found', async () => {
       const person = new Person(new Name('not', [], 'found'), '1234-11-12');
       const res = await exec(person._id.toString(), person);
-      const error: Error = res.body;
+      const error: Exception = res.body;
 
       expect(res.status).toBe(HttpStatus.NOT_FOUND);
       expect(error.status).toBe(HttpStatus.NOT_FOUND);
@@ -201,7 +201,7 @@ describe('PersonController (e2e)', () => {
 
     it(`400: invalid id`, async () => {
       const res = await exec('id');
-      const error: Error = res.body;
+      const error: Exception = res.body;
 
       expect(res.status).toBe(HttpStatus.BAD_REQUEST);
       expect(error.status).toBe(HttpStatus.BAD_REQUEST);
@@ -210,7 +210,7 @@ describe('PersonController (e2e)', () => {
 
     it(`404: not found`, async () => {
       const res = await exec(id().toHexString());
-      const error: Error = res.body;
+      const error: Exception = res.body;
 
       expect(res.status).toBe(HttpStatus.NOT_FOUND);
       expect(error.status).toBe(HttpStatus.NOT_FOUND);

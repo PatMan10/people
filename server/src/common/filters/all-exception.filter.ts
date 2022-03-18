@@ -7,7 +7,7 @@ import {
 } from '@nestjs/common';
 import { Response } from 'express';
 
-import { Error } from '../../common/models/http.model';
+import { Exception } from '../../common/models/http.model';
 import { Messages } from '../../common/utils/const';
 import logger from '../../common/utils/logger';
 
@@ -16,15 +16,15 @@ export class AllExceptionsFilter implements ExceptionFilter {
   catch(exception: unknown, host: ArgumentsHost): void {
     const ctx = host.switchToHttp();
     const res = ctx.getResponse<Response>();
-    let error: Error;
+    let error: Exception;
 
     // handle HttpException
     if (exception instanceof HttpException) {
       const ex = exception as HttpException;
       const exRes = ex.getResponse();
 
-      if (!(exRes instanceof Error))
-        error = new Error(exRes['statusCode'], exRes['message']);
+      if (!(exRes instanceof Exception))
+        error = new Exception(exRes['statusCode'], exRes['message']);
       else error = exRes;
 
       logger.debug('http exception => ', error);
@@ -32,7 +32,7 @@ export class AllExceptionsFilter implements ExceptionFilter {
 
     // handle other Exceptions
     else {
-      error = new Error(
+      error = new Exception(
         HttpStatus.INTERNAL_SERVER_ERROR,
         Messages.fail.INTERNAL_SERVER_ERROR,
       );
