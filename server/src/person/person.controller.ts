@@ -65,12 +65,12 @@ export class PersonController {
     // 400: invalid id
     logger.debug('person id to delete => ', id);
 
-    const person = await this.personService.delete(id);
+    const deletedPerson = await this.personService.delete(id);
 
     // 404: not found
-    if (!person) throw new NotFoundException(Messages.fail.NOT_FOUND);
+    if (!deletedPerson) throw new NotFoundException(Messages.fail.NOT_FOUND);
 
     // 200: return deleted person
-    return person;
+    return deletedPerson;
   }
 }

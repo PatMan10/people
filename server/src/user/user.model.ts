@@ -1,3 +1,4 @@
+import { ApiProperty } from '@nestjs/swagger';
 import {
   IsString,
   Length as dLength,
@@ -48,18 +49,22 @@ export class User extends GenericModel {
   @IsString()
   @dLength(UserConst.HANDLE.LENGTH.MIN, UserConst.HANDLE.LENGTH.MAX)
   @Matches(UserConst.HANDLE.REGEX)
+  @ApiProperty()
   handle: string;
 
   @IsEmail()
   @dLength(UserConst.EMAIL.LENGTH.MIN, UserConst.EMAIL.LENGTH.MAX)
+  @ApiProperty()
   email: string;
 
   @IsString()
   @dLength(UserConst.PASSWORD.LENGTH.MIN, UserConst.PASSWORD.LENGTH.MAX)
   @Matches(UserConst.PASSWORD.REGEX)
+  @ApiProperty()
   password: string;
 
   @IsEnum(UserRole)
+  @ApiProperty()
   role: UserRole;
 
   constructor(
@@ -86,7 +91,6 @@ export class UserDbSchema extends GenericModelDbSchema {
     required: true,
     unique: true,
     trim: true,
-    lowercase: true,
     minlength: UserConst.HANDLE.LENGTH.MIN,
     maxlength: UserConst.HANDLE.LENGTH.MAX,
     match: UserConst.HANDLE.REGEX,
@@ -107,7 +111,7 @@ export class UserDbSchema extends GenericModelDbSchema {
     type: String,
     required: true,
     trim: true,
-    lowercase: true,
+    select: false,
     minlength: UserConst.PASSWORD.LENGTH.MIN,
     maxlength: UserConst.PASSWORD.LENGTH.MAX,
     match: UserConst.PASSWORD.REGEX,

@@ -1,38 +1,15 @@
-import {
-  MiddlewareConsumer,
-  Module,
-  NestModule,
-  Injectable,
-  NestMiddleware,
-} from '@nestjs/common';
-import { Request, Response, NextFunction } from 'express';
+import { Module } from '@nestjs/common';
+import { MongooseModule } from '@nestjs/mongoose';
 
 import { AuthController } from './auth.controller';
-import { AuthService } from './auth.service';
-
-@Injectable()
-export class RegisterMiddleware implements NestMiddleware {
-  use(req: Request, res: Response, next: NextFunction) {
-    console.log('Register Middleware');
-    next();
-  }
-}
-
-@Injectable()
-export class LoginMiddleware implements NestMiddleware {
-  use(req: Request, res: Response, next: NextFunction) {
-    console.log('Login Middleware');
-    next();
-  }
-}
+import { UserService } from '../user/user.service';
+import { User, UserSchema } from '../user/user.model';
 
 @Module({
+  imports: [
+    MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
+  ],
   controllers: [AuthController],
-  providers: [AuthService],
+  providers: [UserService],
 })
-export class AuthModule implements NestModule {
-  configure(consumer: MiddlewareConsumer) {
-    consumer.apply(RegisterMiddleware).forRoutes('auth/register');
-    consumer.apply(LoginMiddleware).forRoutes('auth/login');
-  }
-}
+export class AuthModule {}

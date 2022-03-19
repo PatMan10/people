@@ -9,8 +9,8 @@ export class Urls {
   static readonly WILD = '*';
 
   static readonly auth = class {
-    static readonly LOGIN = `/auth/login`;
     static readonly REGISTER = `/auth/register`;
+    static readonly LOGIN = `/auth/login`;
   };
 
   static readonly user = class {
@@ -54,5 +54,12 @@ export class Messages {
     static readonly NOT_FOUND = 'Resource not found.';
     static readonly NO_PAYLOAD = 'Payload is undefined.';
     static readonly NO_QUERY = 'Query is undefined.';
+
+    static readonly auth = class {
+      static readonly DUPLICATE_HANDLE =
+        'User already exists with that handle.';
+      static readonly DUPLICATE_EMAIL = 'User already exists with that email.';
+      static readonly INVALID_CREDENTIALS = 'Invalid email or password.';
+    };
   };
 }

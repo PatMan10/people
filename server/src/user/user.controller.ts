@@ -49,12 +49,12 @@ export class UserController {
     // 400: invalid id
     logger.debug('user id to delete => ', id);
 
-    const user = await this.userService.delete(id);
+    const deletedUser = await this.userService.delete(id);
 
     // 404: not found
-    if (!user) throw new NotFoundException(Messages.fail.NOT_FOUND);
+    if (!deletedUser) throw new NotFoundException(Messages.fail.NOT_FOUND);
 
     // 200: return deleted user
-    return user;
+    return deletedUser;
   }
 }

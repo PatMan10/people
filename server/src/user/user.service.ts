@@ -4,6 +4,7 @@ import { Model } from 'mongoose';
 
 import { validId, id, ObjectId } from '../common/models/generic.model';
 import { User } from './user.model';
+import { Credentials } from '../auth/auth.model';
 import logger from '../common/utils/logger';
 
 @Injectable()
@@ -17,11 +18,17 @@ export class UserService {
     return this.UserModel.findById(id).exec();
   }
 
-  add(user: User): Promise<User> {
+  getByEmail(email: string): Promise<User> {
+    return this.UserModel.findOne({ email }).exec();
+  }
+
+  async add(user: User): Promise<User> {
     logger.debug(`valid id ${user._id} => `, validId(user._id));
     if (!validId(user._id)) (user as any)._id = id();
 
-    return new this.UserModel(user).save();
+    const newUser = await new this.UserModel(user).save();
+    newUser.password = undefined;
+    return newUser;
   }
 
   update(user: User): Promise<User> {
@@ -32,5 +39,23 @@ export class UserService {
 
   delete(id: string | ObjectId): Promise<User> {
     return this.UserModel.findByIdAndDelete(id).exec();
+  }
+
+  async duplicateEmail(email: string): Promise<boolean> {
+    return (await this.UserModel.count({ email }).exec()) > 0;
+  }
+
+  async duplicateHandle(handle: string): Promise<boolean> {
+    return (await this.UserModel.count({ handle }).exec()) > 0;
+  }
+
+  async validCredentials(credentials: Credentials): Promise<boolean> {
+    const user = await this.UserModel.findOne({
+      email: credentials.email,
+    }).select('+password');
+
+    if (!user) return false;
+    if (credentials.password !== user.password) return false;
+    return true;
   }
 }

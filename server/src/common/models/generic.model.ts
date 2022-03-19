@@ -1,3 +1,4 @@
+import { ApiProperty } from '@nestjs/swagger';
 import { IsString } from 'class-validator';
 import { Schema, Types } from 'mongoose';
 
@@ -63,11 +64,8 @@ export class Generic<T> {
 
 export class GenericModel extends Generic<any> {
   @IsString()
+  @ApiProperty()
   readonly _id: string | Types.ObjectId = id();
-
-  constructor() {
-    super();
-  }
 }
 
 //####################
