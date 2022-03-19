@@ -21,12 +21,12 @@ export class StringConst {
 
 export class GenericConst {
   static readonly REGEX = class {
-    static readonly FREE = new RegExp('');
-    static readonly ALPHA = /^[A-Za-z]+$/;
-    static readonly ALPHA_SYM = /^[A-Za-z-\s]+$/;
+    static readonly FREE = /.*/;
+    static readonly ALPHA = /^[a-zA-Z]+$/;
+    static readonly ALPHA_SYM = /^[a-zA-Z- ]+$/;
     static readonly ALPHANUMERIC = /^[a-zA-Z0-9]+$/;
-    static readonly ALPHANUMERIC_SYM = /^[a-zA-Z0-9-\s]+$/;
-    static readonly NUMERIC = /^[0-9]{10}$/;
+    static readonly ALPHANUMERIC_SYM = /^[a-zA-Z0-9- ]+$/;
+    static readonly NUMERIC = /^[0-9]+$/;
     static readonly NUMERIC_SYM = /^[0-9-]+$/;
   };
   static readonly OBJECT_ID = new StringConst(

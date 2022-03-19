@@ -14,7 +14,7 @@ export const exceptionFactory = (errorsArg: ValidationError[]): void => {
 const extractError = (e: ValidationError): iValidationError => {
   const { property, value, constraints } = e;
   const children: iValidationError[] | undefined =
-    e.children.length > 0 ? e.children.map((e) => extractError(e)) : undefined;
+    e.children.length > 0 ? e.children.map(extractError) : undefined;
 
   return {
     property,

@@ -17,13 +17,13 @@ import { PersonService } from './person.service';
 export class PersonController {
   constructor(private readonly personService: PersonService) {}
 
-  @Get(Urls.people.GET_ALL)
+  @Get(Urls.person.GET_ALL)
   getAll(): Promise<Person[]> {
     // 200: return people
     return this.personService.getAll();
   }
 
-  @Get(Urls.people.GET_BY_ID)
+  @Get(Urls.person.GET_BY_ID)
   async getById(@Param('id') id: string): Promise<Person> {
     // 400: invalid id
 
@@ -36,7 +36,7 @@ export class PersonController {
     return person;
   }
 
-  @Post(Urls.people.ADD)
+  @Post(Urls.person.ADD)
   add(@Body() person: Person): Promise<Person> {
     // 400: invalid payload
     logger.debug('person to add => ', person);
@@ -45,7 +45,7 @@ export class PersonController {
     return this.personService.add(person);
   }
 
-  @Put(Urls.people.UPDATE)
+  @Put(Urls.person.UPDATE)
   async update(@Body() person: Person): Promise<Person> {
     // 400: invalid id
     // 400: invalid payload
@@ -60,7 +60,7 @@ export class PersonController {
     return updatedPerson;
   }
 
-  @Delete(Urls.people.DELETE)
+  @Delete(Urls.person.DELETE)
   async delete(@Param('id') id: string): Promise<Person> {
     // 400: invalid id
     logger.debug('person id to delete => ', id);

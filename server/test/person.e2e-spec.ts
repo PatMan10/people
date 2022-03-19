@@ -10,7 +10,10 @@ import { Messages, Urls } from '../src/common/utils/const';
 import { clone, id } from '../src/common/models/generic.model';
 import { Name, Person, PersonSchema } from '../src/person/person.model';
 import { people } from '../src/person/person.seed';
-import { Exception, ValidationException } from '../src/common/models/http.model';
+import {
+  Exception,
+  ValidationException,
+} from '../src/common/models/http.model';
 
 describe('PersonController (e2e)', () => {
   let app: INestApplication;
@@ -47,7 +50,7 @@ describe('PersonController (e2e)', () => {
       await PersonModel.deleteMany();
     });
 
-    const exec = () => request(app.getHttpServer()).get(Urls.people.GET_ALL);
+    const exec = () => request(app.getHttpServer()).get(Urls.person.GET_ALL);
 
     it(`200: return list of people`, async () => {
       const res = await exec();
@@ -68,7 +71,7 @@ describe('PersonController (e2e)', () => {
     });
 
     const exec = (id: string) =>
-      request(app.getHttpServer()).get(Urls.people.getById(id));
+      request(app.getHttpServer()).get(Urls.person.getById(id));
 
     it(`400: invalid id`, async () => {
       const res = await exec('id');
@@ -105,7 +108,7 @@ describe('PersonController (e2e)', () => {
     });
 
     const exec = (person: Person) =>
-      request(app.getHttpServer()).post(Urls.people.ADD).send(person);
+      request(app.getHttpServer()).post(Urls.person.ADD).send(person);
 
     it(`400: invalid payload`, async () => {
       const res = await exec(new Person());
@@ -139,7 +142,7 @@ describe('PersonController (e2e)', () => {
     });
 
     const exec = (id: string, person: Person) =>
-      request(app.getHttpServer()).put(Urls.people.update(id)).send(person);
+      request(app.getHttpServer()).put(Urls.person.update(id)).send(person);
 
     it('400 invalid id', async () => {
       const res = await exec('2', new Person());
@@ -197,7 +200,7 @@ describe('PersonController (e2e)', () => {
     });
 
     const exec = (id: string) =>
-      request(app.getHttpServer()).delete(Urls.people.delete(id));
+      request(app.getHttpServer()).delete(Urls.person.delete(id));
 
     it(`400: invalid id`, async () => {
       const res = await exec('id');

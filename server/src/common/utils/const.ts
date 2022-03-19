@@ -8,7 +8,22 @@ export class Urls {
   static readonly INDEX = '/';
   static readonly WILD = '*';
 
-  static readonly people = class {
+  static readonly auth = class {
+    static readonly LOGIN = `/auth/login`;
+    static readonly REGISTER = `/auth/register`;
+  };
+
+  static readonly user = class {
+    static readonly GET_BY_ID = `/users/${Param.ID}`;
+    static readonly UPDATE = `/users/${Param.ID}`;
+    static readonly DELETE = `/users/${Param.ID}`;
+
+    static getById = (id: string) => this.GET_BY_ID.replace(Param.ID, id);
+    static update = (id: string) => this.UPDATE.replace(Param.ID, id);
+    static delete = (id: string) => this.DELETE.replace(Param.ID, id);
+  };
+
+  static readonly person = class {
     static readonly GET_ALL = `/people`;
     static readonly GET_BY_ID = `/people/${Param.ID}`;
     static readonly ADD = `/people`;
