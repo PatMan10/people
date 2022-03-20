@@ -6,6 +6,7 @@ import {
   Param,
   Body,
   NotFoundException,
+  BadRequestException,
 } from '@nestjs/common';
 import { Messages, Urls } from '../common/utils/const';
 import logger from '../common/utils/logger';
@@ -34,6 +35,16 @@ export class UserController {
     // 400: invalid id
     // 400: invalid payload
     logger.debug('user to update => ', user);
+
+    // 400: duplicate email
+    const duplicateEmail = await this.userService.duplicateEmail(user.email);
+    if (duplicateEmail)
+      throw new BadRequestException(Messages.fail.auth.DUPLICATE_EMAIL);
+
+    // 400: duplicate handle
+    const duplicateHandle = await this.userService.duplicateHandle(user.handle);
+    if (duplicateHandle)
+      throw new BadRequestException(Messages.fail.auth.DUPLICATE_HANDLE);
 
     const updatedUser = await this.userService.update(user);
 

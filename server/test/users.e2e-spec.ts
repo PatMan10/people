@@ -113,8 +113,35 @@ describe('UserController (e2e)', () => {
       expect(error.details.length > 0).toBeTruthy();
     });
 
+    it(`400: duplicate email`, async () => {
+      const { password, ...rest } = clone(users[1]);
+      const updatedUser: UpdateUserDto = { ...rest };
+      updatedUser.handle = 'siya';
+
+      const res = await exec(updatedUser._id.toString(), updatedUser);
+      const error: Exception = res.body;
+
+      expect(res.status).toBe(HttpStatus.BAD_REQUEST);
+      expect(error.status).toBe(HttpStatus.BAD_REQUEST);
+      expect(error.message).toBe(Messages.fail.auth.DUPLICATE_EMAIL);
+    });
+
+    it(`400: duplicate handle`, async () => {
+      const { password, ...rest } = clone(users[1]);
+      const updatedUser: UpdateUserDto = { ...rest };
+      updatedUser.email = 'siya@gmail.com';
+
+      const res = await exec(updatedUser._id.toString(), updatedUser);
+      const error: Exception = res.body;
+
+      expect(res.status).toBe(HttpStatus.BAD_REQUEST);
+      expect(error.status).toBe(HttpStatus.BAD_REQUEST);
+      expect(error.message).toBe(Messages.fail.auth.DUPLICATE_HANDLE);
+    });
+
     it('404 user not found', async () => {
       const user = new User('handle', 'email@here.com', 'password');
+
       const res = await exec(user._id.toString(), user);
       const error: Exception = res.body;
 
