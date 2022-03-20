@@ -32,9 +32,9 @@ export class UserService {
 
     user.password = await hash(user.password);
 
-    const newUser = await new this.UserModel(user).save();
-    newUser.password = undefined;
-    return newUser;
+    const savedUser = await new this.UserModel(user).save();
+    savedUser.password = undefined;
+    return savedUser;
   }
 
   update(user: UpdateUserDto): Promise<User> {
