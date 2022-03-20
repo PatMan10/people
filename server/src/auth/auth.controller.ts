@@ -20,7 +20,7 @@ export class AuthController {
   async register(@Body() user: User): Promise<User> {
     // 400: invalid payload
 
-    // 400: invalid credentials
+    // 400: duplicate email
     const duplicateEmail = await this.userService.duplicateEmail(user.email);
     if (duplicateEmail)
       throw new BadRequestException(Messages.fail.auth.DUPLICATE_EMAIL);
