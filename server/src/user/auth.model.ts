@@ -1,6 +1,6 @@
 import { PickType } from '@nestjs/swagger';
 
-import { User } from '../user/user.model';
+import { User } from './user.model';
 
 export class Credentials extends PickType(User, ['email', 'password']) {
   constructor(email: string = '', password: string = '') {
