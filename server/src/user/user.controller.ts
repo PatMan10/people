@@ -9,7 +9,7 @@ import {
 } from '@nestjs/common';
 import { Messages, Urls } from '../common/utils/const';
 import logger from '../common/utils/logger';
-import { User } from './user.model';
+import { User, UpdateUserDto } from './user.model';
 import { UserService } from './user.service';
 
 @Controller()
@@ -30,7 +30,7 @@ export class UserController {
   }
 
   @Put(Urls.user.UPDATE)
-  async update(@Body() user: User): Promise<User> {
+  async update(@Body() user: UpdateUserDto): Promise<User> {
     // 400: invalid id
     // 400: invalid payload
     logger.debug('user to update => ', user);

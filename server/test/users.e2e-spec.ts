@@ -8,7 +8,7 @@ import { setupMiddleware } from '../src/main';
 import { AppModule } from '../src/app/app.module';
 import { Messages, Urls } from '../src/common/utils/const';
 import { clone, id } from '../src/common/models/generic.model';
-import { User, UserRole, UserSchema } from '../src/user/user.model';
+import { User, UpdateUserDto, UserSchema } from '../src/user/user.model';
 import { users } from '../src/user/user.seed';
 import {
   Exception,
@@ -91,7 +91,7 @@ describe('UserController (e2e)', () => {
       await UserModel.deleteMany();
     });
 
-    const exec = (id: string, user: User) =>
+    const exec = (id: string, user: UpdateUserDto) =>
       request(app.getHttpServer()).put(Urls.user.update(id)).send(user);
 
     it('400 invalid id', async () => {
@@ -124,7 +124,8 @@ describe('UserController (e2e)', () => {
     });
 
     it('200 return saved user', async () => {
-      const updatedUser = clone(users[1]);
+      const { password, ...rest } = clone(users[1]);
+      const updatedUser: UpdateUserDto = { ...rest };
       updatedUser.handle = 'siya';
       updatedUser.email = 'siya@gmail.com';
 

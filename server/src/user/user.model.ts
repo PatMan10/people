@@ -1,4 +1,4 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, OmitType } from '@nestjs/swagger';
 import {
   IsString,
   Length as dLength,
@@ -80,6 +80,8 @@ export class User extends GenericModel {
     this.role = role;
   }
 }
+
+export class UpdateUserDto extends OmitType(User, ['password']) {}
 
 //####################
 // DB MODEL

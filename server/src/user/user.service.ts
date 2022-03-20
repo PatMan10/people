@@ -3,7 +3,7 @@ import { Injectable } from '@nestjs/common';
 import { Model } from 'mongoose';
 
 import { validId, id, ObjectId } from '../common/models/generic.model';
-import { User } from './user.model';
+import { User, UpdateUserDto } from './user.model';
 import { Credentials } from '../auth/auth.model';
 import logger from '../common/utils/logger';
 
@@ -35,7 +35,7 @@ export class UserService {
     return newUser;
   }
 
-  update(user: User): Promise<User> {
+  update(user: UpdateUserDto): Promise<User> {
     return this.UserModel.findByIdAndUpdate(user._id, user, {
       new: true,
     }).exec();
