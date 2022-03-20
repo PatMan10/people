@@ -9,7 +9,7 @@ import { AppModule } from '../src/app/app.module';
 import { Messages, Urls } from '../src/common/utils/const';
 import { clone, id } from '../src/common/models/generic.model';
 import { User, UpdateUserDto, UserSchema } from '../src/user/user.model';
-import { users } from '../src/user/user.seed';
+import { getUsers } from '../src/user/user.seed';
 import {
   Exception,
   ValidationException,
@@ -42,6 +42,8 @@ describe('UserController (e2e)', () => {
   });
 
   describe('getById', () => {
+    const users = getUsers();
+
     beforeEach(async () => {
       await UserModel.insertMany(users);
     });
@@ -83,6 +85,8 @@ describe('UserController (e2e)', () => {
   });
 
   describe(`update`, () => {
+    const users = getUsers();
+
     beforeEach(async () => {
       await UserModel.insertMany(users);
     });
@@ -167,6 +171,8 @@ describe('UserController (e2e)', () => {
   });
 
   describe('delete', () => {
+    const users = getUsers();
+
     beforeEach(async () => {
       await UserModel.insertMany(users);
     });

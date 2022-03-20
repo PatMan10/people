@@ -9,7 +9,7 @@ import { AppModule } from '../src/app/app.module';
 import { Messages, Urls } from '../src/common/utils/const';
 import { clone, id } from '../src/common/models/generic.model';
 import { Name, Person, PersonSchema } from '../src/person/person.model';
-import { people } from '../src/person/person.seed';
+import { getPeople } from '../src/person/person.seed';
 import {
   Exception,
   ValidationException,
@@ -42,6 +42,8 @@ describe('PersonController (e2e)', () => {
   });
 
   describe('getAll', () => {
+    const people = getPeople();
+
     beforeEach(async () => {
       await PersonModel.insertMany(people);
     });
@@ -62,6 +64,8 @@ describe('PersonController (e2e)', () => {
   });
 
   describe('getById', () => {
+    const people = getPeople();
+
     beforeEach(async () => {
       await PersonModel.insertMany(people);
     });
@@ -103,6 +107,8 @@ describe('PersonController (e2e)', () => {
   });
 
   describe('add', () => {
+    const people = getPeople();
+
     afterEach(async () => {
       await PersonModel.deleteMany();
     });
@@ -133,6 +139,8 @@ describe('PersonController (e2e)', () => {
   });
 
   describe(`update`, () => {
+    const people = getPeople();
+
     beforeEach(async () => {
       await PersonModel.insertMany(people);
     });
@@ -191,6 +199,8 @@ describe('PersonController (e2e)', () => {
   });
 
   describe('delete', () => {
+    const people = getPeople();
+
     beforeEach(async () => {
       await PersonModel.insertMany(people);
     });

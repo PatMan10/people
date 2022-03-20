@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { INestApplication, HttpStatus, ValidationPipe } from '@nestjs/common';
+import { INestApplication, HttpStatus } from '@nestjs/common';
 import * as request from 'supertest';
 import mongoose, { model, Model } from 'mongoose';
 
@@ -7,10 +7,10 @@ import config from '../src/app/app.config';
 import { setupMiddleware } from '../src/main';
 import { AppModule } from '../src/app/app.module';
 import { Messages, Urls } from '../src/common/utils/const';
-import { clone, id } from '../src/common/models/generic.model';
+import { clone } from '../src/common/models/generic.model';
 import { User, UserSchema } from '../src/user/user.model';
-import { Credentials } from '../src/user/auth.model';
-import { users } from '../src/user/user.seed';
+import { Credentials, hash } from '../src/user/auth.model';
+import { getUsers } from '../src/user/user.seed';
 import {
   Exception,
   ValidationException,
@@ -43,6 +43,8 @@ describe('AuthController (e2e)', () => {
   });
 
   describe('register', () => {
+    const users = getUsers();
+
     beforeEach(async () => {
       await UserModel.insertMany(users);
     });
@@ -98,8 +100,14 @@ describe('AuthController (e2e)', () => {
   });
 
   describe('login', () => {
+    const users = getUsers();
+
     beforeEach(async () => {
-      await UserModel.insertMany(users);
+      const hashedUsers = clone(users);
+
+      for (const u of hashedUsers) u.password = await hash(u.password);
+
+      await UserModel.insertMany(hashedUsers);
     });
 
     afterEach(async () => {

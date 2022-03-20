@@ -4,7 +4,7 @@ import { Model } from 'mongoose';
 
 import { validId, id, ObjectId } from '../common/models/generic.model';
 import { User, UpdateUserDto } from './user.model';
-import { Credentials } from './auth.model';
+import { Credentials, hash, compare } from './auth.model';
 import logger from '../common/utils/logger';
 
 @Injectable()
@@ -29,6 +29,8 @@ export class UserService {
   async add(user: User): Promise<User> {
     logger.debug(`valid id ${user._id} => `, validId(user._id));
     if (!validId(user._id)) (user as any)._id = id();
+
+    user.password = await hash(user.password);
 
     const newUser = await new this.UserModel(user).save();
     newUser.password = undefined;
@@ -59,7 +61,10 @@ export class UserService {
     }).select('+password');
 
     if (!user) return false;
-    if (credentials.password !== user.password) return false;
+
+    const validPassword = await compare(credentials.password, user.password);
+    if (!validPassword) return false;
+
     return true;
   }
 }
