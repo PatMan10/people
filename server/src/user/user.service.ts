@@ -22,6 +22,10 @@ export class UserService {
     return this.UserModel.findOne({ email }).exec();
   }
 
+  getByHandle(handle: string): Promise<User> {
+    return this.UserModel.findOne({ handle }).exec();
+  }
+
   async add(user: User): Promise<User> {
     logger.debug(`valid id ${user._id} => `, validId(user._id));
     if (!validId(user._id)) (user as any)._id = id();
@@ -42,11 +46,11 @@ export class UserService {
   }
 
   async duplicateEmail(email: string): Promise<boolean> {
-    return (await this.UserModel.count({ email }).exec()) > 0;
+    return (await this.getByEmail(email)) ? true : false;
   }
 
   async duplicateHandle(handle: string): Promise<boolean> {
-    return (await this.UserModel.count({ handle }).exec()) > 0;
+    return (await this.getByHandle(handle)) ? true : false;
   }
 
   async validCredentials(credentials: Credentials): Promise<boolean> {
