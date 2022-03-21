@@ -10,8 +10,8 @@ import {
   UseGuards,
 } from '@nestjs/common';
 
-import { UserService } from './user.service';
-import { User } from './user.model';
+import { UserService } from '../user/user.service';
+import { User } from '../user/user.model';
 import { Credentials } from './auth.model';
 import { Messages, Urls } from '../common/utils/const';
 import { AuthGuard } from './auth.guard';

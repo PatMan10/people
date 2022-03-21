@@ -4,7 +4,7 @@ import { Model } from 'mongoose';
 
 import { validId, id, ObjectId } from '../common/models/generic.model';
 import { User, UpdateUserDto } from './user.model';
-import { Credentials, hash, compare } from './auth.model';
+import { Credentials, hash, compare } from '../auth/auth.model';
 import logger from '../common/utils/logger';
 
 @Injectable()

@@ -9,7 +9,7 @@ import { AppModule } from '../src/app/app.module';
 import { Messages, Urls } from '../src/common/utils/const';
 import { clone } from '../src/common/models/generic.model';
 import { User, UserSchema } from '../src/user/user.model';
-import { Credentials, hash } from '../src/user/auth.model';
+import { Credentials, hash } from '../src/auth/auth.model';
 import { getUsers } from '../src/user/user.seed';
 import {
   Exception,

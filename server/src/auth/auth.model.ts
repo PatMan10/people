@@ -1,7 +1,7 @@
 import { PickType } from '@nestjs/swagger';
 import * as bcrypt from 'bcrypt';
 
-import { User } from './user.model';
+import { User } from '../user/user.model';
 
 export const hash = (password: string): Promise<string> =>
   bcrypt.hash(password, 10);

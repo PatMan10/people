@@ -3,7 +3,6 @@ import { MongooseModule } from '@nestjs/mongoose';
 
 import { ValidateIdMiddleware } from '../common/middleware/validation.middleware';
 import { Urls } from '../common/utils/const';
-import { AuthController } from './auth.controller';
 import { UserController } from './user.controller';
 import { User, UserSchema } from './user.model';
 import { UserService } from './user.service';
@@ -12,8 +11,9 @@ import { UserService } from './user.service';
   imports: [
     MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
   ],
-  controllers: [AuthController, UserController],
+  controllers: [UserController],
   providers: [UserService],
+  exports: [UserService],
 })
 export class UserModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
