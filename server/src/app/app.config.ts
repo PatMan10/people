@@ -42,6 +42,7 @@ export class Config {
     readonly DB_URI: string,
     readonly SESSION_KEY: string,
     readonly LOG_LEVEL: LogLevel,
+    readonly REQUIRE_AUTH: boolean,
   ) {}
 }
 
@@ -54,6 +55,7 @@ export const getConfig = (env: Env) => {
         'mongodb://localhost/people',
         sessionKey,
         LogLevel.INFO,
+        true,
       );
 
     case Env.DEV:
@@ -63,6 +65,7 @@ export const getConfig = (env: Env) => {
         'mongodb://localhost/people_dev',
         sessionKey,
         LogLevel.DEBUG,
+        true,
       );
 
     default:
@@ -72,6 +75,7 @@ export const getConfig = (env: Env) => {
         'mongodb://localhost/people_test',
         sessionKey,
         LogLevel.VERBOSE,
+        false,
       );
   }
 };

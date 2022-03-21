@@ -74,6 +74,7 @@ export class AuthController {
 
   @Post(Urls.auth.LOGOUT)
   @HttpCode(HttpStatus.OK)
+  @UseGuards(AuthGuard)
   async logout(@Session() session: Record<string, any>): Promise<void> {
     session.userId = undefined;
     return;

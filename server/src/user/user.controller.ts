@@ -7,13 +7,16 @@ import {
   Body,
   NotFoundException,
   BadRequestException,
+  UseGuards,
 } from '@nestjs/common';
 import { Messages, Urls } from '../common/utils/const';
 import logger from '../common/utils/logger';
 import { User, UpdateUserDto } from './user.model';
 import { UserService } from './user.service';
+import { AuthGuard } from '../auth/auth.guard';
 
 @Controller()
+@UseGuards(AuthGuard)
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
