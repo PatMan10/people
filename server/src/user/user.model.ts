@@ -13,6 +13,7 @@ import {
   GenericModelDbSchema,
   Length,
   StringConst,
+  ObjectId,
 } from '../common/models/generic.model';
 
 //####################
@@ -86,7 +87,17 @@ export class UserDao extends PickType(User, [
   'handle',
   'email',
   'role',
-]) {}
+]) {
+  readonly _id: string | ObjectId;
+
+  constructor(
+    public handle: string = '',
+    public email: string = '',
+    public password: string = '',
+  ) {
+    super();
+  }
+}
 
 export class CreateUserDto extends PickType(User, [
   'handle',
