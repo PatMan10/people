@@ -11,7 +11,7 @@ import {
 } from '@nestjs/common';
 import { Messages, Urls } from '../common/utils/const';
 import logger from '../common/utils/logger';
-import { User, UpdateUserDto } from './user.model';
+import { UserDao, UpdateUserDto } from './user.model';
 import { UserService } from './user.service';
 import { AuthGuard } from '../auth/auth.guard';
 
@@ -21,7 +21,7 @@ export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @Get(Urls.user.GET_BY_ID)
-  async getById(@Param('id') id: string): Promise<User> {
+  async getById(@Param('id') id: string): Promise<UserDao> {
     // 400: invalid id
 
     const user = await this.userService.getById(id);
@@ -37,7 +37,7 @@ export class UserController {
   async update(
     @Param('id') id: string,
     @Body() user: UpdateUserDto,
-  ): Promise<User> {
+  ): Promise<UserDao> {
     // 400: invalid id
     // 400: invalid payload
     logger.debug('user to update => ', user);
@@ -62,7 +62,7 @@ export class UserController {
   }
 
   @Delete(Urls.user.DELETE)
-  async delete(@Param('id') id: string): Promise<User> {
+  async delete(@Param('id') id: string): Promise<UserDao> {
     // 400: invalid id
     logger.debug('user id to delete => ', id);
 

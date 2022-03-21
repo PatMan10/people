@@ -81,6 +81,13 @@ export class User extends GenericModel {
   }
 }
 
+export class UserDao extends PickType(User, [
+  '_id',
+  'handle',
+  'email',
+  'role',
+]) {}
+
 export class CreateUserDto extends PickType(User, [
   'handle',
   'email',

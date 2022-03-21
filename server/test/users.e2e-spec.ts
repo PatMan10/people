@@ -8,7 +8,12 @@ import { setupMiddleware } from '../src/main';
 import { AppModule } from '../src/app/app.module';
 import { Messages, Urls } from '../src/common/utils/const';
 import { clone, id } from '../src/common/models/generic.model';
-import { User, UpdateUserDto, UserSchema } from '../src/user/user.model';
+import {
+  User,
+  UserDao,
+  UpdateUserDto,
+  UserSchema,
+} from '../src/user/user.model';
 import { getUsers } from '../src/user/user.seed';
 import {
   Exception,
@@ -76,7 +81,7 @@ describe('UserController (e2e)', () => {
     it(`200: return user`, async () => {
       const user = users[0];
       const res = await exec(user._id.toString());
-      const payload: User = res.body;
+      const payload: UserDao = res.body;
 
       expect(res.status).toBe(HttpStatus.OK);
       expect(payload._id).toBe(user._id.toString());
@@ -157,7 +162,7 @@ describe('UserController (e2e)', () => {
       const updateUserDto = new UpdateUserDto('siya', 'siya@gmail.com');
 
       const res = await exec(_id.toString(), updateUserDto);
-      const payload: User = res.body;
+      const payload: UserDao = res.body;
 
       expect(res.status).toBe(HttpStatus.OK);
       expect(payload._id).toBe(_id.toString());
@@ -201,7 +206,7 @@ describe('UserController (e2e)', () => {
     it(`200: return user`, async () => {
       const user = users[0];
       const res = await exec(user._id.toString());
-      const payload: User = res.body;
+      const payload: UserDao = res.body;
 
       expect(res.status).toBe(HttpStatus.OK);
       expect(payload._id).toBe(user._id.toString());

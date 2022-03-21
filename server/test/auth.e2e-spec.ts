@@ -8,7 +8,12 @@ import { setupMiddleware } from '../src/main';
 import { AppModule } from '../src/app/app.module';
 import { Messages, Urls } from '../src/common/utils/const';
 import { clone } from '../src/common/models/generic.model';
-import { User, UserSchema } from '../src/user/user.model';
+import {
+  User,
+  UserDao,
+  CreateUserDto,
+  UserSchema,
+} from '../src/user/user.model';
 import { Credentials, hash } from '../src/auth/auth.model';
 import { getUsers } from '../src/user/user.seed';
 import {
@@ -53,7 +58,7 @@ describe('AuthController (e2e)', () => {
       await UserModel.deleteMany();
     });
 
-    const exec = (user: User) =>
+    const exec = (user: CreateUserDto) =>
       request(app.getHttpServer()).post(Urls.auth.REGISTER).send(user);
 
     it(`400: invalid payload`, async () => {
@@ -151,13 +156,13 @@ describe('AuthController (e2e)', () => {
       const user = users[1];
       const credentials = new Credentials(user.email, user.password);
       const res = await exec(credentials);
-      const payload: User = res.body;
+      const payload: UserDao = res.body;
 
       expect(res.status).toBe(HttpStatus.OK);
       expect(payload._id).toBeDefined();
       expect(payload.handle).toBe(user.handle);
       expect(payload.email).toBe(user.email);
-      expect(payload.password).not.toBeDefined();
+      expect((payload as any).password).not.toBeDefined();
     });
   });
 });

@@ -3,7 +3,7 @@ import { Injectable } from '@nestjs/common';
 import { Model } from 'mongoose';
 
 import { id, ObjectId } from '../common/models/generic.model';
-import { User, CreateUserDto, UpdateUserDto } from './user.model';
+import { User, UserDao, CreateUserDto, UpdateUserDto } from './user.model';
 import { Credentials, hash, compare } from '../auth/auth.model';
 import logger from '../common/utils/logger';
 
@@ -14,19 +14,19 @@ export class UserService {
     private readonly UserModel: Model<User>,
   ) {}
 
-  getById(id: string | ObjectId): Promise<User> {
+  getById(id: string | ObjectId): Promise<UserDao> {
     return this.UserModel.findById(id).exec();
   }
 
-  getByEmail(email: string): Promise<User> {
+  getByEmail(email: string): Promise<UserDao> {
     return this.UserModel.findOne({ email }).exec();
   }
 
-  getByHandle(handle: string): Promise<User> {
+  getByHandle(handle: string): Promise<UserDao> {
     return this.UserModel.findOne({ handle }).exec();
   }
 
-  async add(user: CreateUserDto): Promise<User> {
+  async add(user: CreateUserDto): Promise<UserDao> {
     (user as any)._id = id();
 
     user.password = await hash(user.password);
@@ -36,7 +36,7 @@ export class UserService {
     return savedUser;
   }
 
-  update(id: string, user: UpdateUserDto): Promise<User> {
+  update(id: string, user: UpdateUserDto): Promise<UserDao> {
     return this.UserModel.findByIdAndUpdate(id, user, {
       new: true,
     }).exec();
