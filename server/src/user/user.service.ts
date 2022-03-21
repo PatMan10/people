@@ -14,16 +14,16 @@ export class UserService {
     private readonly UserModel: Model<User>,
   ) {}
 
-  getById(id: string | ObjectId): Promise<User> {
-    return this.UserModel.findById(id).exec();
+  getById(id: string | ObjectId, select: string = ''): Promise<User> {
+    return this.UserModel.findById(id).select(select).exec();
   }
 
-  getByEmail(email: string): Promise<User> {
-    return this.UserModel.findOne({ email }).exec();
+  getByEmail(email: string, select: string = ''): Promise<User> {
+    return this.UserModel.findOne({ email }).select(select).exec();
   }
 
-  getByHandle(handle: string): Promise<User> {
-    return this.UserModel.findOne({ handle }).exec();
+  getByHandle(handle: string, select: string = ''): Promise<User> {
+    return this.UserModel.findOne({ handle }).select(select).exec();
   }
 
   async add(user: User): Promise<User> {
@@ -45,14 +45,6 @@ export class UserService {
 
   delete(id: string | ObjectId): Promise<User> {
     return this.UserModel.findByIdAndDelete(id).exec();
-  }
-
-  async duplicateEmail(email: string): Promise<boolean> {
-    return (await this.getByEmail(email)) ? true : false;
-  }
-
-  async duplicateHandle(handle: string): Promise<boolean> {
-    return (await this.getByHandle(handle)) ? true : false;
   }
 
   async validCredentials(credentials: Credentials): Promise<boolean> {

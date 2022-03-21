@@ -21,12 +21,12 @@ export class AuthController {
     // 400: invalid payload
 
     // 400: duplicate email
-    const duplicateEmail = await this.userService.duplicateEmail(user.email);
+    const duplicateEmail = await this.userService.getByEmail(user.email);
     if (duplicateEmail)
       throw new BadRequestException(Messages.fail.auth.DUPLICATE_EMAIL);
 
     // 400: duplicate handle
-    const duplicateHandle = await this.userService.duplicateHandle(user.handle);
+    const duplicateHandle = await this.userService.getByHandle(user.handle);
     if (duplicateHandle)
       throw new BadRequestException(Messages.fail.auth.DUPLICATE_HANDLE);
 
