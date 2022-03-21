@@ -118,11 +118,10 @@ describe('UserController (e2e)', () => {
     });
 
     it(`400: duplicate email`, async () => {
-      const { password, ...rest } = clone(users[1]);
-      const updatedUser: UpdateUserDto = { ...rest };
-      updatedUser.handle = 'siya';
+      const { _id, email } = users[1];
+      const updateUserDto = new UpdateUserDto('siya', email);
 
-      const res = await exec(updatedUser._id.toString(), updatedUser);
+      const res = await exec(_id.toString(), updateUserDto);
       const error: Exception = res.body;
 
       expect(res.status).toBe(HttpStatus.BAD_REQUEST);
@@ -131,11 +130,10 @@ describe('UserController (e2e)', () => {
     });
 
     it(`400: duplicate handle`, async () => {
-      const { password, ...rest } = clone(users[1]);
-      const updatedUser: UpdateUserDto = { ...rest };
-      updatedUser.email = 'siya@gmail.com';
+      const { _id, handle } = users[1];
+      const updateUserDto = new UpdateUserDto(handle, 'siya@gmail.com');
 
-      const res = await exec(updatedUser._id.toString(), updatedUser);
+      const res = await exec(_id.toString(), updateUserDto);
       const error: Exception = res.body;
 
       expect(res.status).toBe(HttpStatus.BAD_REQUEST);
@@ -155,18 +153,16 @@ describe('UserController (e2e)', () => {
     });
 
     it('200 return saved user', async () => {
-      const { password, ...rest } = clone(users[1]);
-      const updatedUser: UpdateUserDto = { ...rest };
-      updatedUser.handle = 'siya';
-      updatedUser.email = 'siya@gmail.com';
+      const { _id } = users[1];
+      const updateUserDto = new UpdateUserDto('siya', 'siya@gmail.com');
 
-      const res = await exec(updatedUser._id.toString(), updatedUser);
+      const res = await exec(_id.toString(), updateUserDto);
       const payload: User = res.body;
 
       expect(res.status).toBe(HttpStatus.OK);
-      expect(payload._id).toBe(updatedUser._id.toString());
-      expect(payload.handle).toBe(updatedUser.handle);
-      expect(payload.email).toBe(updatedUser.email);
+      expect(payload._id).toBe(_id.toString());
+      expect(payload.handle).toBe(updateUserDto.handle);
+      expect(payload.email).toBe(updateUserDto.email);
     });
   });
 

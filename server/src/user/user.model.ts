@@ -1,4 +1,4 @@
-import { ApiProperty, OmitType } from '@nestjs/swagger';
+import { ApiProperty, PickType } from '@nestjs/swagger';
 import {
   IsString,
   Length as dLength,
@@ -81,7 +81,25 @@ export class User extends GenericModel {
   }
 }
 
-export class UpdateUserDto extends OmitType(User, ['password']) {}
+export class CreateUserDto extends PickType(User, [
+  'handle',
+  'email',
+  'password',
+]) {
+  constructor(
+    public handle: string = '',
+    public email: string = '',
+    public password: string = '',
+  ) {
+    super();
+  }
+}
+
+export class UpdateUserDto extends PickType(User, ['handle', 'email']) {
+  constructor(public handle: string = '', public email: string = '') {
+    super();
+  }
+}
 
 //####################
 // DB MODEL
@@ -122,6 +140,7 @@ export class UserDbSchema extends GenericModelDbSchema {
     type: String,
     enum: UserRole,
     required: true,
+    default: UserRole.USER,
   };
 }
 

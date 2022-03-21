@@ -34,7 +34,10 @@ export class UserController {
   }
 
   @Put(Urls.user.UPDATE)
-  async update(@Body() user: UpdateUserDto): Promise<User> {
+  async update(
+    @Param('id') id: string,
+    @Body() user: UpdateUserDto,
+  ): Promise<User> {
     // 400: invalid id
     // 400: invalid payload
     logger.debug('user to update => ', user);
@@ -49,7 +52,7 @@ export class UserController {
     if (duplicateHandle)
       throw new BadRequestException(Messages.fail.auth.DUPLICATE_HANDLE);
 
-    const updatedUser = await this.userService.update(user);
+    const updatedUser = await this.userService.update(id, user);
 
     // 404: not found
     if (!updatedUser) throw new NotFoundException(Messages.fail.NOT_FOUND);

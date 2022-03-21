@@ -2,8 +2,8 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Injectable } from '@nestjs/common';
 import { Model } from 'mongoose';
 
-import { validId, id, ObjectId } from '../common/models/generic.model';
-import { User, UpdateUserDto } from './user.model';
+import { id, ObjectId } from '../common/models/generic.model';
+import { User, CreateUserDto, UpdateUserDto } from './user.model';
 import { Credentials, hash, compare } from '../auth/auth.model';
 import logger from '../common/utils/logger';
 
@@ -26,9 +26,8 @@ export class UserService {
     return this.UserModel.findOne({ handle }).exec();
   }
 
-  async add(user: User): Promise<User> {
-    logger.debug(`valid id ${user._id} => `, validId(user._id));
-    if (!validId(user._id)) (user as any)._id = id();
+  async add(user: CreateUserDto): Promise<User> {
+    (user as any)._id = id();
 
     user.password = await hash(user.password);
 
@@ -37,8 +36,8 @@ export class UserService {
     return savedUser;
   }
 
-  update(user: UpdateUserDto): Promise<User> {
-    return this.UserModel.findByIdAndUpdate(user._id, user, {
+  update(id: string, user: UpdateUserDto): Promise<User> {
+    return this.UserModel.findByIdAndUpdate(id, user, {
       new: true,
     }).exec();
   }

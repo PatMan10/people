@@ -11,7 +11,7 @@ import {
 } from '@nestjs/common';
 
 import { UserService } from '../user/user.service';
-import { User } from '../user/user.model';
+import { User, CreateUserDto } from '../user/user.model';
 import { Credentials } from './auth.model';
 import { Messages, Urls } from '../common/utils/const';
 import { AuthGuard } from './auth.guard';
@@ -29,7 +29,7 @@ export class AuthController {
 
   @Post(Urls.auth.REGISTER)
   async register(
-    @Body() user: User,
+    @Body() user: CreateUserDto,
     @Session() session: Record<string, any>,
   ): Promise<User> {
     // 400: invalid payload
