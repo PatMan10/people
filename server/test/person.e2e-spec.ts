@@ -8,7 +8,13 @@ import { setupMiddleware } from '../src/main';
 import { AppModule } from '../src/app/app.module';
 import { Messages, Urls } from '../src/common/utils/const';
 import { clone, id } from '../src/common/models/generic.model';
-import { Name, Person, PersonSchema } from '../src/person/person.model';
+import {
+  Name,
+  Person,
+  CreatePersonDto,
+  UpdatePersonDto,
+  PersonSchema,
+} from '../src/person/person.model';
 import { getPeople } from '../src/person/person.seed';
 import {
   Exception,
@@ -113,7 +119,7 @@ describe('PersonController (e2e)', () => {
       await PersonModel.deleteMany();
     });
 
-    const exec = (person: Person) =>
+    const exec = (person: CreatePersonDto) =>
       request(app.getHttpServer()).post(Urls.person.ADD).send(person);
 
     it(`400: invalid payload`, async () => {
@@ -128,7 +134,6 @@ describe('PersonController (e2e)', () => {
 
     it(`201: return new person`, async () => {
       const person = clone(people[2]);
-      (person as any)._id = '';
       const res = await exec(person);
       const payload: Person = res.body;
 
@@ -149,7 +154,7 @@ describe('PersonController (e2e)', () => {
       await PersonModel.deleteMany();
     });
 
-    const exec = (id: string, person: Person) =>
+    const exec = (id: string, person: UpdatePersonDto) =>
       request(app.getHttpServer()).put(Urls.person.update(id)).send(person);
 
     it('400 invalid id', async () => {
