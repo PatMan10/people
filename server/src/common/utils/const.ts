@@ -11,6 +11,8 @@ export class Urls {
   static readonly auth = class {
     static readonly REGISTER = `/auth/register`;
     static readonly LOGIN = `/auth/login`;
+    static readonly LOGOUT = `/auth/logout`;
+    static readonly WHO_AM_I = `/auth/whoami`;
   };
 
   static readonly user = class {

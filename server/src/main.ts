@@ -1,6 +1,7 @@
 import { ValidationPipe, INestApplication } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import * as morgan from 'morgan';
+const cookieSession = require('cookie-session');
 
 import config, { Config, Env } from './app/app.config';
 import { AppModule } from './app/app.module';
@@ -32,5 +33,10 @@ export const setupMiddleware = (
     }),
   );
   app.useGlobalFilters(new AllExceptionsFilter());
+  app.use(
+    cookieSession({
+      keys: [config.SESSION_KEY],
+    }),
+  );
   if (config.ENV === Env.DEV) app.use(morgan('tiny'));
 };

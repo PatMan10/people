@@ -14,16 +14,16 @@ export class UserService {
     private readonly UserModel: Model<User>,
   ) {}
 
-  getById(id: string | ObjectId, select: string = ''): Promise<User> {
-    return this.UserModel.findById(id).select(select).exec();
+  getById(id: string | ObjectId): Promise<User> {
+    return this.UserModel.findById(id).exec();
   }
 
-  getByEmail(email: string, select: string = ''): Promise<User> {
-    return this.UserModel.findOne({ email }).select(select).exec();
+  getByEmail(email: string): Promise<User> {
+    return this.UserModel.findOne({ email }).exec();
   }
 
-  getByHandle(handle: string, select: string = ''): Promise<User> {
-    return this.UserModel.findOne({ handle }).select(select).exec();
+  getByHandle(handle: string): Promise<User> {
+    return this.UserModel.findOne({ handle }).exec();
   }
 
   async add(user: User): Promise<User> {
