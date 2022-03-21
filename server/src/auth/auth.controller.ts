@@ -15,6 +15,7 @@ import { User } from '../user/user.model';
 import { Credentials } from './auth.model';
 import { Messages, Urls } from '../common/utils/const';
 import { AuthGuard } from './auth.guard';
+import { CurrentUser } from '../user/user.decorator';
 
 @Controller()
 export class AuthController {
@@ -22,8 +23,8 @@ export class AuthController {
 
   @Get(Urls.auth.WHO_AM_I)
   @UseGuards(AuthGuard)
-  async whoAmI(@Session() session: Record<string, any>): Promise<User> {
-    return this.userService.getById(session.userId);
+  async whoAmI(@CurrentUser() user: User): Promise<User> {
+    return user;
   }
 
   @Post(Urls.auth.REGISTER)

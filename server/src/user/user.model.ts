@@ -103,7 +103,6 @@ export class UserDbSchema extends GenericModelDbSchema {
     required: true,
     unique: true,
     trim: true,
-    lowercase: true,
     minlength: UserConst.EMAIL.LENGTH.MIN,
     maxlength: UserConst.EMAIL.LENGTH.MAX,
     match: UserConst.EMAIL.REGEX,
