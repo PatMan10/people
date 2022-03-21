@@ -7,18 +7,21 @@ import {
   HttpStatus,
   Session,
   Get,
+  UseGuards,
 } from '@nestjs/common';
 
 import { UserService } from './user.service';
 import { User } from './user.model';
 import { Credentials } from './auth.model';
 import { Messages, Urls } from '../common/utils/const';
+import { AuthGuard } from './auth.guard';
 
 @Controller()
 export class AuthController {
   constructor(private readonly userService: UserService) {}
 
   @Get(Urls.auth.WHO_AM_I)
+  @UseGuards(AuthGuard)
   async whoAmI(@Session() session: Record<string, any>): Promise<User> {
     return this.userService.getById(session.userId);
   }

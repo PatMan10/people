@@ -38,5 +38,5 @@ export const setupMiddleware = (
       keys: [config.SESSION_KEY],
     }),
   );
-  if (config.ENV === Env.DEV) app.use(morgan('tiny'));
+  if (config.ENV !== Env.PROD) app.use(morgan('tiny'));
 };
