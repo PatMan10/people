@@ -1,6 +1,6 @@
 import { HttpStatus } from '@nestjs/common';
 
-export class Exception {
+export class ErrorResponse {
   constructor(readonly status: number, readonly message: string) {}
 }
 
@@ -11,8 +11,8 @@ export interface iValidationError {
   children?: iValidationError[];
 }
 
-export class ValidationException extends Exception {
-  constructor(message: string, readonly details?: Record<string, any>[]) {
+export class ValidationErrorResponse extends ErrorResponse {
+  constructor(message: string, readonly details?: iValidationError[]) {
     super(HttpStatus.BAD_REQUEST, message);
   }
 }

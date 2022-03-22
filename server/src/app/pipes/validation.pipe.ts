@@ -1,13 +1,13 @@
 import { BadRequestException } from '@nestjs/common';
 import { ValidationError } from 'class-validator';
 
-import { iValidationError, ValidationException } from '../models/http.model';
-import { Messages } from '../utils/const';
+import { iValidationError, ValidationErrorResponse } from '../../common/models/http.model';
+import { Messages } from '../../common/utils/const';
 
 export const exceptionFactory = (errorsArg: ValidationError[]): void => {
   const errors = errorsArg.map(extractError);
   throw new BadRequestException(
-    new ValidationException(Messages.fail.INVALID_PAYLOAD, errors),
+    new ValidationErrorResponse(Messages.fail.INVALID_PAYLOAD, errors),
   );
 };
 

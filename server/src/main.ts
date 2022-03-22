@@ -5,8 +5,8 @@ const cookieSession = require('cookie-session');
 
 import config, { Config, Env } from './app/app.config';
 import { AppModule } from './app/app.module';
-import { AllExceptionsFilter } from './common/filters/all-exception.filter';
-import { exceptionFactory } from './common/pipes/validation.pipe';
+import { AllExceptionsFilter } from './app/filters/all-exception.filter';
+import { exceptionFactory } from './app/pipes/validation.pipe';
 import logger from './common/utils/logger';
 
 if (require.main === module)

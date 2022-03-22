@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Observable, of, tap } from 'rxjs';
-import { Error } from '../models/http.model';
+import { ErrorResponse } from '../models/http.model';
 
 //####################
 // LOG OPERATOR
@@ -67,7 +67,7 @@ export function handleHttpError<T>(
     // TODO: send the error to remote logging infrastructure
     console.error(httpErr); // log to console instead
 
-    const err = httpErr.error as Error;
+    const err = httpErr.error as ErrorResponse;
     // TODO: better job of transforming error for user consumption
     console.info(`${operation} failed: ${err.message}`);
     alert(err.message);

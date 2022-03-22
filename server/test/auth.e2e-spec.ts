@@ -17,8 +17,8 @@ import {
 import { Credentials, hash } from '../src/auth/auth.model';
 import { getUsers } from '../src/user/user.seed';
 import {
-  Exception,
-  ValidationException,
+  ErrorResponse,
+  ValidationErrorResponse,
 } from '../src/common/models/http.model';
 
 describe('AuthController (e2e)', () => {
@@ -63,7 +63,7 @@ describe('AuthController (e2e)', () => {
 
     it(`400: invalid payload`, async () => {
       const res = await exec(new User());
-      const error: ValidationException = res.body;
+      const error: ValidationErrorResponse = res.body;
 
       expect(res.status).toBe(HttpStatus.BAD_REQUEST);
       expect(error.status).toBe(HttpStatus.BAD_REQUEST);
@@ -73,7 +73,7 @@ describe('AuthController (e2e)', () => {
 
     it(`400: duplicate email`, async () => {
       const res = await exec(users[0]);
-      const error: Exception = res.body;
+      const error: ErrorResponse = res.body;
 
       expect(res.status).toBe(HttpStatus.BAD_REQUEST);
       expect(error.status).toBe(HttpStatus.BAD_REQUEST);
@@ -84,7 +84,7 @@ describe('AuthController (e2e)', () => {
       const user = clone(users[0]);
       user.email = 'newUser@people.com';
       const res = await exec(user);
-      const error: Exception = res.body;
+      const error: ErrorResponse = res.body;
 
       expect(res.status).toBe(HttpStatus.BAD_REQUEST);
       expect(error.status).toBe(HttpStatus.BAD_REQUEST);
@@ -124,7 +124,7 @@ describe('AuthController (e2e)', () => {
 
     it(`400: invalid payload`, async () => {
       const res = await exec(new Credentials());
-      const error: ValidationException = res.body;
+      const error: ValidationErrorResponse = res.body;
 
       expect(res.status).toBe(HttpStatus.BAD_REQUEST);
       expect(error.status).toBe(HttpStatus.BAD_REQUEST);
@@ -135,7 +135,7 @@ describe('AuthController (e2e)', () => {
     it(`400: unknown email`, async () => {
       const credentials = new Credentials('some@email.com', 'password');
       const res = await exec(credentials);
-      const error: Exception = res.body;
+      const error: ErrorResponse = res.body;
 
       expect(res.status).toBe(HttpStatus.BAD_REQUEST);
       expect(error.status).toBe(HttpStatus.BAD_REQUEST);
@@ -145,7 +145,7 @@ describe('AuthController (e2e)', () => {
     it(`400: invalid password`, async () => {
       const credentials = new Credentials(users[1].email, 'password');
       const res = await exec(credentials);
-      const error: Exception = res.body;
+      const error: ErrorResponse = res.body;
 
       expect(res.status).toBe(HttpStatus.BAD_REQUEST);
       expect(error.status).toBe(HttpStatus.BAD_REQUEST);

@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { PersonDetailComponent } from './person/pages/person-detail/person-detail.component';
-import { PersonFormComponent } from './person/pages/person-form/person-form.component';
-import { PersonListComponent } from './person/pages/person-list/person-list.component';
-import { UiUrls } from './common/utils/urls';
+import { PersonDetailComponent } from '../person/pages/person-detail/person-detail.component';
+import { PersonFormComponent } from '../person/pages/person-form/person-form.component';
+import { PersonListComponent } from '../person/pages/person-list/person-list.component';
+import { UiUrls } from '../common/utils/urls';
 
 const routes: Routes = [
   { path: '', redirectTo: UiUrls.people.VIEW_ALL, pathMatch: 'full' },
