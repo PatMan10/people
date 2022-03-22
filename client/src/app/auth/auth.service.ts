@@ -5,7 +5,7 @@ import { Observable, catchError } from 'rxjs';
 import { handleHttpError } from '../common/utils/rxjs';
 import { log, LogLevel } from '../common/utils/rxjs';
 import { ApiUrls } from '../common/utils/urls';
-import { Person, CreatePersonDto, UpdatePersonDto } from './person.model';
+import { Person } from './person.model';
 
 @Injectable({
   providedIn: 'root',
@@ -15,7 +15,7 @@ export class PersonService {
 
   getAll(): Observable<Person[]> {
     return this.http
-      .get<Person[]>(ApiUrls.person.getAll())
+      .get<Person[]>(ApiUrls.people.getAll())
       .pipe(
         log(LogLevel.INFO, 'fetched people'),
         catchError(handleHttpError<Person[]>('fetchPeople', []))
@@ -24,7 +24,7 @@ export class PersonService {
 
   getById(id: string): Observable<Person> {
     return this.http
-      .get<Person>(ApiUrls.person.getById(id))
+      .get<Person>(ApiUrls.people.getById(id))
       .pipe(
         log(LogLevel.INFO, 'fetched person'),
         catchError(
@@ -33,9 +33,9 @@ export class PersonService {
       );
   }
 
-  add(person: CreatePersonDto): Observable<Person> {
+  add(person: Person): Observable<Person> {
     return this.http
-      .post<Person>(ApiUrls.person.add(), person, {
+      .post<Person>(ApiUrls.people.add(), person, {
         headers: new HttpHeaders({ 'content-type': 'application/json' }),
       })
       .pipe(
@@ -44,22 +44,22 @@ export class PersonService {
       );
   }
 
-  update(id: string, person: UpdatePersonDto): Observable<Person> {
+  update(person: Person): Observable<Person> {
     return this.http
-      .put<Person>(ApiUrls.person.update(id), person, {
+      .put<Person>(ApiUrls.people.update(person._id), person, {
         headers: new HttpHeaders({ 'content-type': 'application/json' }),
       })
       .pipe(
         log(LogLevel.INFO, 'update person'),
         catchError(
-          handleHttpError<Person>(`updatePerson id=${id}`, new Person())
+          handleHttpError<Person>(`savePerson id=${person._id}`, new Person())
         )
       );
   }
 
   delete(id: string): Observable<Person> {
     return this.http
-      .delete<Person>(ApiUrls.person.getById(id))
+      .delete<Person>(ApiUrls.people.getById(id))
       .pipe(
         log(LogLevel.INFO, 'delete person'),
         catchError(

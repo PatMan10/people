@@ -39,11 +39,11 @@ export class PersonFormComponent implements OnInit {
     if (e.valid === false) return;
 
     const operation$: Observable<Person> = this.id
-      ? this.peopleService.update(this.person)
+      ? this.peopleService.update(this.id, this.person)
       : this.peopleService.add(this.person);
 
     operation$.subscribe(() => {
-      this.router.navigate([UiUrls.people.VIEW_ALL]);
+      this.router.navigate([UiUrls.person.VIEW_ALL]);
     });
   }
 }

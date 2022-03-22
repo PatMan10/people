@@ -31,7 +31,7 @@ export class PersonConst extends GenericConst {
 
   static readonly BIRTHDAY = new StringConst(
     new Length(10, 10),
-    /^\d{4}-\d{2}-\d{2}$/
+    /^[\d{4}-\d{2}-\d{2}]+$/
   );
 
   static readonly CONTACT = class {
@@ -54,7 +54,6 @@ export class Name {
   first: string;
   middle: string[];
   last: string;
-
   nick: string[];
 
   constructor(
@@ -126,4 +125,20 @@ export class Person extends GenericModel {
     this.birthday = birthday;
     this.contact = contact;
   }
+}
+
+export class CreatePersonDto {
+  constructor(
+    public name: Name = new Name(),
+    public birthday: string = '',
+    public contact: Contact = new Contact()
+  ) {}
+}
+
+export class UpdatePersonDto {
+  constructor(
+    public name: Name = new Name(),
+    public birthday: string = '',
+    public contact: Contact = new Contact()
+  ) {}
 }

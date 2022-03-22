@@ -46,7 +46,7 @@ export class PersonConst extends GenericConst {
 
   static readonly BIRTHDAY = new StringConst(
     new Length(10, 10),
-    /^\d{4}-\d{2}-\d{2}$/,
+    /^[\d{4}-\d{2}-\d{2}]+$/,
   );
 
   static readonly CONTACT = class {

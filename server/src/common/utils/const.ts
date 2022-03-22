@@ -6,7 +6,6 @@ enum Param {
 export class Urls {
   static readonly ROOT = 'http://localhost:8000';
   static readonly INDEX = '/';
-  static readonly WILD = '*';
 
   static readonly auth = class {
     static readonly REGISTER = `/auth/register`;

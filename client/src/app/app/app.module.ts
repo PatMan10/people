@@ -8,16 +8,34 @@ import { AppComponent } from './app.component';
 import { ToolbarComponent } from '../common/components/toolbar/toolbar.component';
 import { BackdropComponent } from '../common/components/backdrop/backdrop.component';
 import { NavDrawerComponent } from '../common/components/nav-drawer/nav-drawer.component';
+
+import { RegisterComponent } from '../auth/pages/register/register.component';
+import { LoginComponent } from '../auth/pages/login/login.component';
+
+import { UserDetailComponent } from '../user/pages/user-detail/user-detail.component';
+import { UserFormComponent } from '../user/pages/user-form/user-form.component';
+
 import { PersonFormComponent } from '../person/pages/person-form/person-form.component';
 import { PersonDetailComponent } from '../person/pages/person-detail/person-detail.component';
 import { PersonListComponent } from '../person/pages/person-list/person-list.component';
 
 @NgModule({
   declarations: [
+    // comps
     AppComponent,
     ToolbarComponent,
     BackdropComponent,
     NavDrawerComponent,
+
+    // auth
+    RegisterComponent,
+    LoginComponent,
+
+    // user
+    UserDetailComponent,
+    UserFormComponent,
+
+    // person
     PersonFormComponent,
     PersonDetailComponent,
     PersonListComponent,

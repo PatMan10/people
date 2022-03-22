@@ -14,7 +14,7 @@
         <tr *ngFor="let person of people; let i = index">
           <th scope="row">{{ i + 1 }}</th>
           <td>
-            <a [routerLink]="Urls.people.viewById(person._id)">
+            <a [routerLink]="Urls.person.viewById(person._id)">
               {{ person.name.first }}
             </a>
           </td>
