@@ -1,8 +1,8 @@
 import { BadRequestException } from '@nestjs/common';
 import { ValidationError } from 'class-validator';
 
-import { iValidationError, ValidationErrorResponse } from '../../common/models/http.model';
-import { Messages } from '../../common/utils/const';
+import { iValidationError, ValidationErrorResponse } from '../common/models/http.model';
+import { Messages } from '../common/utils/const';
 
 export const exceptionFactory = (errorsArg: ValidationError[]): void => {
   const errors = errorsArg.map(extractError);

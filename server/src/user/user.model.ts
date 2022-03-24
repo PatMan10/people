@@ -82,7 +82,7 @@ export class User extends GenericModel {
   }
 }
 
-export class UserDao extends PickType(User, [
+export class GetUserDto extends PickType(User, [
   '_id',
   'handle',
   'email',

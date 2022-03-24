@@ -10,7 +10,7 @@ import { Messages, Urls } from '../src/common/utils/const';
 import { clone, id } from '../src/common/models/generic.model';
 import {
   User,
-  UserDao,
+  GetUserDto,
   UpdateUserDto,
   UserSchema,
 } from '../src/user/user.model';
@@ -81,7 +81,7 @@ describe('UserController (e2e)', () => {
     it(`200: return user`, async () => {
       const user = users[0];
       const res = await exec(user._id.toString());
-      const payload: UserDao = res.body;
+      const payload: GetUserDto = res.body;
 
       expect(res.status).toBe(HttpStatus.OK);
       expect(payload._id).toBe(user._id.toString());
@@ -162,7 +162,7 @@ describe('UserController (e2e)', () => {
       const updateUserDto = new UpdateUserDto('siya', 'siya@gmail.com');
 
       const res = await exec(_id.toString(), updateUserDto);
-      const payload: UserDao = res.body;
+      const payload: GetUserDto = res.body;
 
       expect(res.status).toBe(HttpStatus.OK);
       expect(payload._id).toBe(_id.toString());
@@ -206,7 +206,7 @@ describe('UserController (e2e)', () => {
     it(`200: return user`, async () => {
       const user = users[0];
       const res = await exec(user._id.toString());
-      const payload: UserDao = res.body;
+      const payload: GetUserDto = res.body;
 
       expect(res.status).toBe(HttpStatus.OK);
       expect(payload._id).toBe(user._id.toString());

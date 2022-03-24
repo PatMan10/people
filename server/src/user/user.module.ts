@@ -7,7 +7,7 @@ import { Urls } from '../common/utils/const';
 import { UserController } from './user.controller';
 import { User, UserSchema } from './user.model';
 import { UserService } from './user.service';
-import { CurrentUserInterceptor } from './user.interceptor';
+import { CurrentUserInterceptor } from './user.interceptors';
 
 @Module({
   imports: [

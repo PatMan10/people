@@ -11,11 +11,11 @@ import {
 } from '@nestjs/common';
 
 import { UserService } from '../user/user.service';
-import { UserDao, CreateUserDto } from '../user/user.model';
+import { GetUserDto, CreateUserDto } from '../user/user.model';
 import { Credentials } from './auth.model';
 import { Messages, Urls } from '../common/utils/const';
 import { AuthGuard } from './auth.guard';
-import { CurrentUser } from '../user/user.decorator';
+import { CurrentUser } from '../user/user.decorators';
 
 @Controller()
 export class AuthController {
@@ -23,7 +23,7 @@ export class AuthController {
 
   @Get(Urls.auth.WHO_AM_I)
   @UseGuards(AuthGuard)
-  async whoAmI(@CurrentUser() user: UserDao): Promise<UserDao> {
+  async whoAmI(@CurrentUser() user: GetUserDto): Promise<GetUserDto> {
     return user;
   }
 
@@ -31,7 +31,7 @@ export class AuthController {
   async register(
     @Body() user: CreateUserDto,
     @Session() session: Record<string, any>,
-  ): Promise<UserDao> {
+  ): Promise<GetUserDto> {
     // 400: invalid payload
 
     // 400: duplicate email
@@ -56,7 +56,7 @@ export class AuthController {
   async login(
     @Body() credentials: Credentials,
     @Session() session: Record<string, any>,
-  ): Promise<UserDao> {
+  ): Promise<GetUserDto> {
     // 400: invalid payload
 
     // 400: invalid credentials

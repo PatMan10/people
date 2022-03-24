@@ -10,7 +10,7 @@ import { Messages, Urls } from '../src/common/utils/const';
 import { clone } from '../src/common/models/generic.model';
 import {
   User,
-  UserDao,
+  GetUserDto,
   CreateUserDto,
   UserSchema,
 } from '../src/user/user.model';
@@ -156,7 +156,7 @@ describe('AuthController (e2e)', () => {
       const user = users[1];
       const credentials = new Credentials(user.email, user.password);
       const res = await exec(credentials);
-      const payload: UserDao = res.body;
+      const payload: GetUserDto = res.body;
 
       expect(res.status).toBe(HttpStatus.OK);
       expect(payload._id).toBeDefined();
