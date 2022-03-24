@@ -45,6 +45,11 @@ export class ApiUrls {
     static readonly LOGIN = `/auth/login`;
     static readonly LOGOUT = `/auth/logout`;
     static readonly WHO_AM_I = `/auth/whoami`;
+
+    static register = () => ApiUrls.ROOT + this.REGISTER;
+    static login = () => ApiUrls.ROOT + this.LOGIN;
+    static logout = () => ApiUrls.ROOT + this.LOGOUT;
+    static whoami = () => ApiUrls.ROOT + this.WHO_AM_I;
   };
 
   static readonly user = class {
@@ -52,9 +57,12 @@ export class ApiUrls {
     static readonly UPDATE = `/users/${Param.ID}`;
     static readonly DELETE = `/users/${Param.ID}`;
 
-    static getById = (id: string) => this.GET_BY_ID.replace(Param.ID, id);
-    static update = (id: string) => this.UPDATE.replace(Param.ID, id);
-    static delete = (id: string) => this.DELETE.replace(Param.ID, id);
+    static getById = (id: string) =>
+      ApiUrls.ROOT + this.GET_BY_ID.replace(Param.ID, id);
+    static update = (id: string) =>
+      ApiUrls.ROOT + this.UPDATE.replace(Param.ID, id);
+    static delete = (id: string) =>
+      ApiUrls.ROOT + this.DELETE.replace(Param.ID, id);
   };
 
   static readonly person = class {

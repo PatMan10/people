@@ -17,8 +17,8 @@ export class PersonService {
     return this.http
       .get<Person[]>(ApiUrls.person.getAll())
       .pipe(
-        log(LogLevel.INFO, 'fetched people'),
-        catchError(handleHttpError<Person[]>('fetchPeople', []))
+        log(LogLevel.INFO, 'get people'),
+        catchError(handleHttpError<Person[]>('getPeople', []))
       );
   }
 
@@ -26,10 +26,8 @@ export class PersonService {
     return this.http
       .get<Person>(ApiUrls.person.getById(id))
       .pipe(
-        log(LogLevel.INFO, 'fetched person'),
-        catchError(
-          handleHttpError<Person>(`fetchPerson id=${id}`, new Person())
-        )
+        log(LogLevel.INFO, 'get person'),
+        catchError(handleHttpError<Person>(`getPerson id=${id}`, new Person()))
       );
   }
 
