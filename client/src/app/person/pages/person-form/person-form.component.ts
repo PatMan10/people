@@ -2,9 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { Person } from 'src/app/person/person.model';
-import { PersonService } from 'src/app/person/person.service';
-import { UiUrls } from 'src/app/common/utils/urls';
+
+import { Person } from '../../../person/person.model';
+import { PersonService } from '../../../person/person.service';
+import { UiUrls } from '../../../common/utils/urls';
 
 @Component({
   selector: 'app-person-form',
