@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { DrawerService } from 'src/app/common/services/drawer.service';
-import { Visibility } from 'src/app/common/utils/enums';
+import { DrawerService } from 'src/app/app/services/drawer.service';
+import { Visibility } from 'src/app/app/utils/enums';
 
 @Component({
   selector: 'app-backdrop',

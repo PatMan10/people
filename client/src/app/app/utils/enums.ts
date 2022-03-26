@@ -4,7 +4,6 @@ export enum Drawer {
 }
 
 export enum Visibility {
-  _ = '',
   HIDDEN = 'hidden',
   VISIBLE = 'visible',
 }

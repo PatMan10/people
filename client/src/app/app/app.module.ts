@@ -5,9 +5,9 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { ToolbarComponent } from '../common/components/toolbar/toolbar.component';
-import { BackdropComponent } from '../common/components/backdrop/backdrop.component';
-import { NavDrawerComponent } from '../common/components/nav-drawer/nav-drawer.component';
+import { ToolbarComponent } from './components/toolbar/toolbar.component';
+import { BackdropComponent } from './components/backdrop/backdrop.component';
+import { NavDrawerComponent } from './components/nav-drawer/nav-drawer.component';
 
 import { RegisterComponent } from '../auth/pages/register/register.component';
 import { LoginComponent } from '../auth/pages/login/login.component';
