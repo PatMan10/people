@@ -27,13 +27,14 @@ export class AuthService {
   }
 
   login(credentials: Credentials): Observable<GetUserDto> {
-    return this.http.post<GetUserDto>(ApiUrls.auth.login(), credentials, {
-      headers: new HttpHeaders({ 'content-type': 'application/json' }),
-    });
-    // .pipe(
-    //   log(LogLevel.INFO, 'login user'),
-    //   catchError(handleHttpError<GetUserDto>(`loginUser`, new GetUserDto()))
-    // );
+    return this.http
+      .post<GetUserDto>(ApiUrls.auth.login(), credentials, {
+        headers: new HttpHeaders({ 'content-type': 'application/json' }),
+      })
+      .pipe(
+        log(LogLevel.INFO, 'login user'),
+        catchError(handleHttpError<GetUserDto>(`loginUser`, new GetUserDto()))
+      );
   }
 
   logout(): Observable<void> {

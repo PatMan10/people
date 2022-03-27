@@ -1,19 +1,14 @@
+import { ValidationError } from 'class-validator';
+
 export class ErrorResponse {
   constructor(readonly status: number, readonly message: string) {}
-}
-
-export interface iValidationError {
-  property: string;
-  value: any;
-  constraints?: Record<string, string>;
-  children?: iValidationError[];
 }
 
 export class ValidationErrorResponse extends ErrorResponse {
   constructor(
     status: number,
     message: string,
-    readonly details?: iValidationError[]
+    readonly details?: ValidationError[]
   ) {
     super(status, message);
   }
@@ -21,8 +16,8 @@ export class ValidationErrorResponse extends ErrorResponse {
 
 export function extractErrorMessages(
   propertyArg: string,
-  errors: iValidationError[]
-): string[] | undefined {
+  errors: ValidationError[]
+): string[] {
   for (let i = 0; i < errors.length; i++) {
     const { property, constraints, children } = errors[i];
     if (propertyArg === property && constraints)
@@ -32,5 +27,5 @@ export function extractErrorMessages(
       return extractErrorMessages(propertyArg, children);
   }
 
-  return undefined;
+  return [];
 }

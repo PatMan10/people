@@ -10,9 +10,6 @@ import { ToolbarComponent } from './components/toolbar/toolbar.component';
 import { BackdropComponent } from './components/backdrop/backdrop.component';
 import { NavDrawerComponent } from './components/nav-drawer/nav-drawer.component';
 
-// common
-import { InputValidationErrorsComponent } from '../common/components/input-validation-errors/input-validation-errors.component';
-
 // auth
 import { RegisterComponent } from '../auth/pages/register/register.component';
 import { LoginComponent } from '../auth/pages/login/login.component';
@@ -46,9 +43,6 @@ import { PersonListComponent } from '../person/pages/person-list/person-list.com
     PersonFormComponent,
     PersonDetailComponent,
     PersonListComponent,
-
-    // common
-    InputValidationErrorsComponent,
   ],
   imports: [
     BrowserModule,

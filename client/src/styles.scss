@@ -1,8 +1,22 @@
 /* You can add global styles to this file, and also import other style files */
+@import "~bootstrap/dist/css/bootstrap-reboot.min.css";
+@import "~bootstrap/dist/css/bootstrap.min.css";
+@import "~@patman10/kickstart.css/dist/kickstart.css";
+
 * {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+body {
+  background-color: whitesmoke;
+}
+
 h1 {
   margin: 30px 0;
+}
+
+.invalid-feedback {
+  span {
+    display: block;
+  }
 }

@@ -5,26 +5,24 @@
     <div class="form-floating mb-3">
       <input
         formControlName="email"
+        [ngClass]="emailErrors.length > 0 ? 'is-invalid' : ''"
         id="email"
         name="email"
         type="email"
         class="form-control"
         placeholder="email"
-        [ngClass]="
-          email.valid && (email.touched || email.dirty) ? 'is-invalid' : ''
-        "
       />
       <label for="email">Email</label>
 
-      <app-input-validation-errors
-        property="email"
-        [errors]="validationErrors"
-      ></app-input-validation-errors>
+      <div *ngIf="emailErrors.length > 0" class="invalid-feedback">
+        <span *ngFor="let eMsg of emailErrors">{{ eMsg }}</span>
+      </div>
     </div>
 
     <div class="form-floating mb-3">
       <input
         formControlName="password"
+        [ngClass]="passwordErrors.length > 0 ? 'is-invalid' : ''"
         id="password"
         name="password"
         type="password"
@@ -33,15 +31,8 @@
       />
       <label for="password">Password</label>
 
-      <div *ngIf="validationErrors" class="invalid-feedback">
-        <span
-          *ngFor="
-            let eMsg of extractErrorMessages('password', validationErrors)
-          "
-          style="display: block"
-        >
-          {{ eMsg }}
-        </span>
+      <div *ngIf="passwordErrors.length > 0" class="invalid-feedback">
+        <span *ngFor="let eMsg of passwordErrors">{{ eMsg }}</span>
       </div>
     </div>
 
