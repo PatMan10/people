@@ -1,45 +1,35 @@
 <div class="container">
+  {{ form.value | json }}
   <h1>Login</h1>
-  <form
-    (ngSubmit)="submit(form)"
-    #form="ngForm"
-    novalidate
-    class="needs-validation"
-    [ngClass]="submitted ? 'was-validated' : ''"
-  >
+  <form [formGroup]="form" (ngSubmit)="submit()">
     <div class="form-floating mb-3">
       <input
-        #emailCtrl="ngModel"
-        [(ngModel)]="credentials.email"
+        formControlName="email"
         id="email"
         name="email"
         type="email"
         class="form-control"
-        placeholder="email@example.com"
-        required
+        placeholder="email"
+        [ngClass]="
+          email.valid && (email.touched || email.dirty) ? 'is-invalid' : ''
+        "
       />
-      <label for="email">Email address</label>
+      <label for="email">Email</label>
 
-      <div *ngIf="validationErrors" class="invalid-feedback">
-        <span
-          *ngFor="let eMsg of extractErrorMessages('email', validationErrors)"
-          style="display: block"
-        >
-          {{ eMsg }}
-        </span>
-      </div>
+      <app-input-validation-errors
+        property="email"
+        [errors]="validationErrors"
+      ></app-input-validation-errors>
     </div>
 
     <div class="form-floating mb-3">
       <input
-        [(ngModel)]="credentials.password"
-        #passwordCtrl="ngModel"
+        formControlName="password"
         id="password"
         name="password"
         type="password"
         class="form-control"
         placeholder="password"
-        required
       />
       <label for="password">Password</label>
 

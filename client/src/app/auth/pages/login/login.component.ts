@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 import { catchError, of } from 'rxjs';
@@ -20,24 +20,34 @@ import {
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
-  submitted = false;
-  credentials = new Credentials();
+  form: FormGroup;
   validationErrors: iValidationError[] | undefined;
   extractErrorMessages = extractErrorMessages;
 
   constructor(
     private readonly authService: AuthService,
-    private router: Router
-  ) {}
+    private readonly router: Router,
+    readonly fb: FormBuilder
+  ) {
+    this.form = fb.group(new Credentials());
+  }
+
+  get email() {
+    return this.form.get('email') as FormControl;
+  }
+
+  get password() {
+    return this.form.get('password') as FormControl;
+  }
 
   ngOnInit(): void {}
 
-  submit(e: NgForm) {
-    this.submitted = true;
-    if (!e.valid) return;
+  async submit() {
+    if (!this.form.valid) return;
+    console.log('SUBMiT');
 
     this.authService
-      .login(this.credentials)
+      .login(this.form.value)
       .pipe(
         catchError(({ error }: HttpErrorResponse) => {
           const { details } = error as ValidationErrorResponse;
