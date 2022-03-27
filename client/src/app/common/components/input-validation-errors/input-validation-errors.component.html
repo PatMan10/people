@@ -1,0 +1,5 @@
+<div *ngIf="errorMessages" class="invalid-feedback">
+  <span *ngFor="let eMsg of errorMessages" style="display: block">
+    {{ eMsg }}
+  </span>
+</div>

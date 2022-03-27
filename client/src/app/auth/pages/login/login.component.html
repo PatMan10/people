@@ -1,48 +1,60 @@
 <div class="container">
   <h1>Login</h1>
-  <form (ngSubmit)="submit(form)" #form="ngForm">
-    <div class="mb-3">
-      <label for="email" class="form-label">Email</label>
+  <form
+    (ngSubmit)="submit(form)"
+    #form="ngForm"
+    novalidate
+    class="needs-validation"
+    [ngClass]="submitted ? 'was-validated' : ''"
+  >
+    <div class="form-floating mb-3">
       <input
+        #emailCtrl="ngModel"
         [(ngModel)]="credentials.email"
-        type="email"
         id="email"
         name="email"
+        type="email"
         class="form-control"
-        placeholder="your email"
+        placeholder="email@example.com"
         required
-        #emailCtrl="ngModel"
       />
-      <span
-        *ngIf="emailCtrl.invalid && emailCtrl.touched"
-        class="help-block color-danger"
-      >
-        Please enter an email!
-      </span>
+      <label for="email">Email address</label>
+
+      <div *ngIf="validationErrors" class="invalid-feedback">
+        <span
+          *ngFor="let eMsg of extractErrorMessages('email', validationErrors)"
+          style="display: block"
+        >
+          {{ eMsg }}
+        </span>
+      </div>
     </div>
 
-    <div class="mb-3">
-      <label for="password" class="form-label">Password</label>
+    <div class="form-floating mb-3">
       <input
         [(ngModel)]="credentials.password"
-        type="password"
+        #passwordCtrl="ngModel"
         id="password"
         name="password"
+        type="password"
         class="form-control"
-        placeholder="your password"
+        placeholder="password"
         required
-        #passwordCtrl="ngModel"
       />
-      <span
-        *ngIf="passwordCtrl.invalid && passwordCtrl.touched"
-        class="help-block color-danger"
-      >
-        Please enter an password!
-      </span>
+      <label for="password">Password</label>
+
+      <div *ngIf="validationErrors" class="invalid-feedback">
+        <span
+          *ngFor="
+            let eMsg of extractErrorMessages('password', validationErrors)
+          "
+          style="display: block"
+        >
+          {{ eMsg }}
+        </span>
+      </div>
     </div>
 
-    <button type="submit" class="btn btn-primary" [disabled]="form.invalid">
-      login
-    </button>
+    <button type="submit" class="btn btn-primary">login</button>
   </form>
 </div>
