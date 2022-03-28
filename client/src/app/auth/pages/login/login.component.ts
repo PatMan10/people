@@ -1,15 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
-import { HttpErrorResponse } from '@angular/common/http';
-import { catchError, of } from 'rxjs';
 import { validate, ValidationError } from 'class-validator';
 import { plainToInstance } from 'class-transformer';
 
 import { UiUrls } from '../../../common/utils/urls';
 import { Credentials } from '../../auth.model';
 import { AuthService } from '../../auth.service';
-import { GetUserDto } from 'src/app/user/user.model';
 import { extractErrorMessages } from '../../../common/models/http.model';
 
 @Component({
@@ -49,11 +46,9 @@ export class LoginComponent implements OnInit {
     await this.validateForm();
     if (this.validationErrors.length > 0) return;
 
-    console.log('SUBMiT');
-
     this.authService.login(this.form.value).subscribe((user) => {
       console.log(user);
-      //this.router.navigate([UiUrls.person.VIEW_ALL]);
+      this.router.navigate([UiUrls.person.VIEW_ALL]);
     });
   }
 }
