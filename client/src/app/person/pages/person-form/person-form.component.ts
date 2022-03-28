@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { validate, ValidationError } from 'class-validator';
+import { plainToInstance } from 'class-transformer';
 
 import { Person } from '../../../person/person.model';
 import { PersonService } from '../../../person/person.service';
 import { UiUrls } from '../../../common/utils/urls';
+import { extractErrorMessages } from '../../../common/models/http.model';
 
 @Component({
   selector: 'app-person-form',
@@ -14,34 +16,57 @@ import { UiUrls } from '../../../common/utils/urls';
 })
 export class PersonFormComponent implements OnInit {
   id: string | null = null;
-  person = new Person();
   title = 'Add Person';
   btnText = 'Add';
+  form = this.fb.group(new Person());
+  private validationErrors: ValidationError[] = [];
 
   constructor(
-    private peopleService: PersonService,
-    private route: ActivatedRoute,
-    private router: Router
-  ) {}
-
-  ngOnInit(): void {
-    const id = this.route.snapshot.paramMap.get('id');
+    private readonly fb: FormBuilder,
+    private readonly route: ActivatedRoute,
+    private readonly router: Router,
+    private readonly peopleService: PersonService
+  ) {
+    const id = route.snapshot.paramMap.get('id');
     if (id) {
       this.id = id;
-      this.peopleService.getById(id).subscribe((p) => {
-        this.person = p;
-      });
-      this.title = 'Edit Character';
+      this.title = 'Edit Person';
       this.btnText = 'Save';
+      const $ = peopleService.getById(id).subscribe((p) => {
+        this.form = this.fb.group(p);
+        $.unsubscribe();
+      });
     }
   }
 
-  submit(e: NgForm) {
-    if (e.valid === false) return;
+  get nameErrors() {
+    const { validationErrors } = this;
+    return {
+      first: extractErrorMessages('first', validationErrors),
+      last: extractErrorMessages('last', validationErrors),
+    };
+  }
 
-    const operation$: Observable<Person> = this.id
-      ? this.peopleService.update(this.id, this.person)
-      : this.peopleService.add(this.person);
+  get birthdayErrors() {
+    const { validationErrors } = this;
+    return extractErrorMessages('birthday', validationErrors);
+  }
+
+  ngOnInit(): void {}
+
+  private async validateForm() {
+    this.validationErrors = await validate(
+      plainToInstance(Person, this.form.value)
+    );
+  }
+
+  async submit() {
+    await this.validateForm();
+    if (this.validationErrors.length > 0) return;
+
+    const operation$ = this.id
+      ? this.peopleService.update(this.id, this.form.value)
+      : this.peopleService.add(this.form.value);
 
     operation$.subscribe(() => {
       this.router.navigate([UiUrls.person.VIEW_ALL]);

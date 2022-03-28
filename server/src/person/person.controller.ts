@@ -12,7 +12,7 @@ import {
 
 import { Messages, Urls } from '../common/utils/const';
 import logger from '../common/utils/logger';
-import { Person, CreatePersonDto, UpdatePersonDto } from './person.model';
+import { Person } from './person.model';
 import { PersonService } from './person.service';
 import { AuthGuard } from '../auth/auth.guard';
 
@@ -41,7 +41,7 @@ export class PersonController {
 
   @Post(Urls.person.ADD)
   @UseGuards(AuthGuard)
-  add(@Body() person: CreatePersonDto): Promise<Person> {
+  add(@Body() person: Person): Promise<Person> {
     // 400: invalid payload
     logger.debug('person to add => ', person);
 

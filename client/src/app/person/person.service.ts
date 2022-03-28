@@ -5,7 +5,7 @@ import { Observable, catchError } from 'rxjs';
 import { handleHttpError } from '../common/utils/rxjs';
 import { log, LogLevel } from '../common/utils/rxjs';
 import { ApiUrls } from '../common/utils/urls';
-import { Person, CreatePersonDto, UpdatePersonDto } from './person.model';
+import { Person } from './person.model';
 
 @Injectable({
   providedIn: 'root',
@@ -31,7 +31,7 @@ export class PersonService {
       );
   }
 
-  add(person: CreatePersonDto): Observable<Person> {
+  add(person: Person): Observable<Person> {
     return this.http
       .post<Person>(ApiUrls.person.add(), person, {
         headers: new HttpHeaders({ 'content-type': 'application/json' }),
@@ -42,7 +42,7 @@ export class PersonService {
       );
   }
 
-  update(id: string, person: UpdatePersonDto): Observable<Person> {
+  update(id: string, person: Person): Observable<Person> {
     return this.http
       .put<Person>(ApiUrls.person.update(id), person, {
         headers: new HttpHeaders({ 'content-type': 'application/json' }),

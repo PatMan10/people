@@ -9,7 +9,6 @@ import {
   IsObject,
   IsDefined,
 } from 'class-validator';
-import { PickType } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
 import { Schema } from 'mongoose';
 import {
@@ -198,34 +197,6 @@ export class Person extends GenericModel {
     this.name = name;
     this.birthday = birthday;
     this.contact = contact;
-  }
-}
-
-export class CreatePersonDto extends PickType(Person, [
-  'name',
-  'birthday',
-  'contact',
-]) {
-  constructor(
-    public name: Name = new Name(),
-    public birthday: string = '',
-    public contact: Contact = new Contact(),
-  ) {
-    super();
-  }
-}
-
-export class UpdatePersonDto extends PickType(Person, [
-  'name',
-  'birthday',
-  'contact',
-]) {
-  constructor(
-    public name: Name = new Name(),
-    public birthday: string = '',
-    public contact: Contact = new Contact(),
-  ) {
-    super();
   }
 }
 

@@ -1,64 +1,27 @@
+{{ form.value | json }}
 <div class="container">
   <h1>{{ title }}</h1>
-  <!--<form (ngSubmit)="submit(form)" #form="ngForm">
-    <div class="mb-3">
-      <label for="firstName" class="form-label">First Name</label>
-      <input
-        [(ngModel)]="person.name.first"
-        type="text"
-        id="firstName"
-        name="firstName"
-        class="form-control"
-        placeholder="first name"
-        required
-        #firstNameCtrl="ngModel"
-      />
-      <span
-        *ngIf="firstNameCtrl.invalid && firstNameCtrl.touched"
-        class="help-block color-danger"
-        >Please enter a first name!</span
-      >
+  <form [formGroup]="form" (ngSubmit)="submit()">
+    <div formGroupName="name">
+      <div class="form-floating mb-3">
+        <input
+          formControlName="first"
+          [ngClass]="nameErrors.first.length > 0 ? 'is-invalid' : ''"
+          id="first"
+          type="text"
+          class="form-control"
+          placeholder="first name"
+        />
+        <label for="first">First Name</label>
+
+        <div *ngIf="nameErrors.first.length > 0" class="invalid-feedback">
+          <span *ngFor="let eMsg of nameErrors.first">{{ eMsg }}</span>
+        </div>
+      </div>
     </div>
 
-    <div class="mb-3">
-      <label for="lastName" class="form-label">Last Name</label>
-      <input
-        [(ngModel)]="person.name.last"
-        type="text"
-        id="lastName"
-        name="lastName"
-        class="form-control"
-        placeholder="last name"
-        required
-        #lastNameCtrl="ngModel"
-      />
-      <span
-        *ngIf="lastNameCtrl.invalid && lastNameCtrl.touched"
-        class="help-block color-danger"
-        >Please enter a last name!</span
-      >
-    </div>
-
-    <div class="mb-3">
-      <label for="birthday" class="form-label">Birthday</label>
-      <input
-        [(ngModel)]="person.birthday"
-        type="date"
-        id="birthday"
-        name="birthday"
-        class="form-control"
-        required
-        #birthdayCtrl="ngModel"
-      />
-      <span
-        *ngIf="birthdayCtrl.invalid && birthdayCtrl.touched"
-        class="help-block color-danger"
-        >Please enter a last name!</span
-      >
-    </div>
-
-    <button type="submit" class="btn btn-primary" [disabled]="form.invalid">
+    <button type="submit" class="btn btn-primary">
       {{ btnText }}
     </button>
-  </form>-->
+  </form>
 </div>

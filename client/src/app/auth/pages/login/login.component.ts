@@ -15,8 +15,8 @@ import { extractErrorMessages } from '../../../common/models/http.model';
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
-  private validationErrors: ValidationError[] = [];
   form = this.fb.group(new Credentials());
+  private validationErrors: ValidationError[] = [];
 
   constructor(
     private readonly fb: FormBuilder,

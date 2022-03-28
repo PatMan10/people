@@ -11,8 +11,6 @@ import { clone, id } from '../src/common/models/generic.model';
 import {
   Name,
   Person,
-  CreatePersonDto,
-  UpdatePersonDto,
   PersonSchema,
 } from '../src/person/person.model';
 import { getPeople } from '../src/person/person.seed';
@@ -119,7 +117,7 @@ describe('PersonController (e2e)', () => {
       await PersonModel.deleteMany();
     });
 
-    const exec = (person: CreatePersonDto) =>
+    const exec = (person: Person) =>
       request(app.getHttpServer()).post(Urls.person.ADD).send(person);
 
     it(`400: invalid payload`, async () => {
@@ -154,7 +152,7 @@ describe('PersonController (e2e)', () => {
       await PersonModel.deleteMany();
     });
 
-    const exec = (id: string, person: UpdatePersonDto) =>
+    const exec = (id: string, person: Person) =>
       request(app.getHttpServer()).put(Urls.person.update(id)).send(person);
 
     it('400 invalid id', async () => {

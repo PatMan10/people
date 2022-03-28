@@ -1,4 +1,17 @@
 import {
+  IsArray,
+  IsString,
+  Length as dLength,
+  Matches,
+  IsEnum,
+  IsEmail,
+  ValidateNested,
+  IsObject,
+  IsDefined,
+} from 'class-validator';
+import { Type } from 'class-transformer';
+
+import {
   GenericConst,
   GenericModel,
   Length,
@@ -51,9 +64,32 @@ export class PersonConst extends GenericConst {
 //####################
 
 export class Name {
+  @IsString()
+  @dLength(PersonConst.NAME.FIRST.LENGTH.MIN, PersonConst.NAME.FIRST.LENGTH.MAX)
+  @Matches(PersonConst.NAME.FIRST.REGEX)
   first: string;
+
+  @IsArray()
+  @IsString({ each: true })
+  @dLength(
+    PersonConst.NAME.MIDDLE.LENGTH.MIN,
+    PersonConst.NAME.MIDDLE.LENGTH.MAX,
+    { each: true }
+  )
+  @Matches(PersonConst.NAME.MIDDLE.REGEX, { each: true })
   middle: string[];
+
+  @IsString()
+  @dLength(PersonConst.NAME.LAST.LENGTH.MIN, PersonConst.NAME.LAST.LENGTH.MAX)
+  @Matches(PersonConst.NAME.LAST.REGEX)
   last: string;
+
+  @IsArray()
+  @IsString({ each: true })
+  @dLength(PersonConst.NAME.NICK.LENGTH.MIN, PersonConst.NAME.NICK.LENGTH.MAX, {
+    each: true,
+  })
+  @Matches(PersonConst.NAME.NICK.REGEX, { each: true })
   nick: string[];
 
   constructor(
@@ -70,7 +106,16 @@ export class Name {
 }
 
 export class Contact {
+  @IsArray()
+  @ValidateNested({ each: true })
+  @Type(() => Phone)
+  @IsObject({ each: true })
   phone: Phone[];
+
+  @IsArray()
+  @ValidateNested({ each: true })
+  @Type(() => Email)
+  @IsObject({ each: true })
   email: Email[];
 
   constructor(phone: Phone[] = [], email: Email[] = []) {
@@ -91,7 +136,16 @@ export enum EmailType {
 }
 
 export class Phone {
+  @IsEnum(PhoneType)
   type: PhoneType;
+
+  @IsString()
+  @dLength(
+    PersonConst.CONTACT.PHONE.LENGTH.MIN,
+    PersonConst.CONTACT.PHONE.LENGTH.MAX
+  )
+  @Matches(PersonConst.CONTACT.PHONE.REGEX)
+  @IsDefined()
   number: string;
 
   constructor(type: PhoneType, number: string) {
@@ -101,7 +155,14 @@ export class Phone {
 }
 
 export class Email {
+  @IsEnum(EmailType)
   type: EmailType;
+
+  @IsEmail()
+  @dLength(
+    PersonConst.CONTACT.EMAIL.LENGTH.MIN,
+    PersonConst.CONTACT.EMAIL.LENGTH.MAX
+  )
   address: string;
 
   constructor(type: EmailType, address: string) {
@@ -111,8 +172,19 @@ export class Email {
 }
 
 export class Person extends GenericModel {
+  @ValidateNested()
+  @Type(() => Name)
+  @IsObject()
   name: Name;
+
+  @IsString()
+  @dLength(PersonConst.BIRTHDAY.LENGTH.MIN, PersonConst.BIRTHDAY.LENGTH.MAX)
+  @Matches(PersonConst.BIRTHDAY.REGEX)
   birthday: string;
+
+  @ValidateNested()
+  @Type(() => Contact)
+  @IsObject()
   contact: Contact;
 
   constructor(
@@ -125,20 +197,4 @@ export class Person extends GenericModel {
     this.birthday = birthday;
     this.contact = contact;
   }
-}
-
-export class CreatePersonDto {
-  constructor(
-    public name: Name = new Name(),
-    public birthday: string = '',
-    public contact: Contact = new Contact()
-  ) {}
-}
-
-export class UpdatePersonDto {
-  constructor(
-    public name: Name = new Name(),
-    public birthday: string = '',
-    public contact: Contact = new Contact()
-  ) {}
 }
