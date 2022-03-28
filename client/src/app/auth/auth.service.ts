@@ -5,20 +5,17 @@ import { Observable, catchError, tap } from 'rxjs';
 import { log, LogLevel, handleHttpError } from '../common/utils/rxjs';
 import { ApiUrls } from '../common/utils/urls';
 import { CreateUserDto, GetUserDto } from '../user/user.model';
+import { AuthCache } from './auth.cache';
 import { Credentials } from './auth.model';
-import { clone } from '../common/models/generic.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  private _user: GetUserDto | undefined;
-
-  get user() {
-    return clone(this._user);
-  }
-
-  constructor(private http: HttpClient) {}
+  constructor(
+    private readonly http: HttpClient,
+    private readonly cache: AuthCache
+  ) {}
 
   register(user: CreateUserDto): Observable<GetUserDto> {
     return this.http
@@ -40,7 +37,7 @@ export class AuthService {
       })
       .pipe(
         log(LogLevel.INFO, 'login user'),
-        tap((payload) => (this._user = payload)),
+        tap((payload) => (this.cache.user = payload)),
         catchError(handleHttpError<GetUserDto>(`loginUser`, new GetUserDto()))
       );
   }
@@ -52,7 +49,7 @@ export class AuthService {
       })
       .pipe(
         log(LogLevel.INFO, 'logout user'),
-        tap(() => (this._user = undefined)),
+        tap((payload) => (this.cache.user = undefined)),
         catchError(handleHttpError<void>(`logoutUser`, undefined))
       );
   }
