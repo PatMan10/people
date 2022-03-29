@@ -8,15 +8,48 @@
           formControlName="first"
           [ngClass]="nameErrors.first.length > 0 ? 'is-invalid' : ''"
           id="first"
+          name="first"
           type="text"
           class="form-control"
-          placeholder="first name"
+          placeholder="First Name"
         />
         <label for="first">First Name</label>
 
         <div *ngIf="nameErrors.first.length > 0" class="invalid-feedback">
           <span *ngFor="let eMsg of nameErrors.first">{{ eMsg }}</span>
         </div>
+      </div>
+      <div class="form-floating mb-3">
+        <input
+          formControlName="last"
+          [ngClass]="nameErrors.last.length > 0 ? 'is-invalid' : ''"
+          id="last"
+          name="last"
+          type="text"
+          class="form-control"
+          placeholder="Last Name"
+        />
+        <label for="first">Last Name</label>
+
+        <div *ngIf="nameErrors.last.length > 0" class="invalid-feedback">
+          <span *ngFor="let eMsg of nameErrors.last">{{ eMsg }}</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-floating mb-3">
+      <input
+        formControlName="birthday"
+        [ngClass]="birthdayErrors.length > 0 ? 'is-invalid' : ''"
+        id="birthday"
+        name="birthday"
+        type="date"
+        class="form-control"
+      />
+      <label for="birthday">Birthday</label>
+
+      <div *ngIf="birthdayErrors.length > 0" class="invalid-feedback">
+        <span *ngFor="let eMsg of birthdayErrors">{{ eMsg }}</span>
       </div>
     </div>
 

@@ -18,12 +18,18 @@ export class PersonFormComponent implements OnInit {
   id: string | null = null;
   title = 'Add Person';
   btnText = 'Add';
-  form = this.fb.group(new Person());
+  form = this.fb.group({
+    name: this.fb.group({
+      first: this.fb.control(''),
+      last: this.fb.control(''),
+    }),
+    birthday: '',
+  });
   private validationErrors: ValidationError[] = [];
 
   constructor(
     private readonly fb: FormBuilder,
-    private readonly route: ActivatedRoute,
+    route: ActivatedRoute,
     private readonly router: Router,
     private readonly peopleService: PersonService
   ) {
