@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { validate, ValidationError } from 'class-validator';
 import { plainToInstance } from 'class-transformer';
 
+import { buildForm } from '../../../common/utils/misc';
 import { Person } from '../../../person/person.model';
 import { PersonService } from '../../../person/person.service';
 import { UiUrls } from '../../../common/utils/urls';
@@ -18,17 +18,10 @@ export class PersonFormComponent implements OnInit {
   id: string | null = null;
   title = 'Add Person';
   btnText = 'Add';
-  form = this.fb.group({
-    name: this.fb.group({
-      first: this.fb.control(''),
-      last: this.fb.control(''),
-    }),
-    birthday: '',
-  });
+  form = buildForm(new Person());
   private validationErrors: ValidationError[] = [];
 
   constructor(
-    private readonly fb: FormBuilder,
     route: ActivatedRoute,
     private readonly router: Router,
     private readonly peopleService: PersonService
@@ -39,10 +32,11 @@ export class PersonFormComponent implements OnInit {
       this.title = 'Edit Person';
       this.btnText = 'Save';
       const $ = peopleService.getById(id).subscribe((p) => {
-        this.form = this.fb.group(p);
+        this.form = buildForm(p);
         $.unsubscribe();
       });
     }
+    console.warn(this.form);
   }
 
   get nameErrors() {

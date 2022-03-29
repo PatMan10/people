@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { validate, ValidationError } from 'class-validator';
 import { plainToInstance } from 'class-transformer';
 
+import { buildForm } from '../../../common/utils/misc';
 import { UiUrls } from '../../../common/utils/urls';
 import { Credentials } from '../../auth.model';
 import { AuthService } from '../../auth.service';
@@ -15,11 +15,10 @@ import { extractErrorMessages } from '../../../common/models/http.model';
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
-  form = this.fb.group(new Credentials());
+  form = buildForm(new Credentials());
   private validationErrors: ValidationError[] = [];
 
   constructor(
-    private readonly fb: FormBuilder,
     private readonly router: Router,
     private readonly authService: AuthService
   ) {}
