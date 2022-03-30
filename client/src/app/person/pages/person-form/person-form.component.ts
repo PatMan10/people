@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { validate, ValidationError } from 'class-validator';
 import { plainToInstance } from 'class-transformer';
 
-import { buildForm } from '../../../common/utils/misc';
+import { buildFormGroup } from '../../../common/utils/misc';
 import { Person } from '../../../person/person.model';
 import { PersonService } from '../../../person/person.service';
 import { UiUrls } from '../../../common/utils/urls';
@@ -18,7 +18,7 @@ export class PersonFormComponent implements OnInit {
   id: string | null = null;
   title = 'Add Person';
   btnText = 'Add';
-  form = buildForm(new Person());
+  form = buildFormGroup(new Person());
   private validationErrors: ValidationError[] = [];
 
   constructor(
@@ -32,11 +32,11 @@ export class PersonFormComponent implements OnInit {
       this.title = 'Edit Person';
       this.btnText = 'Save';
       const $ = peopleService.getById(id).subscribe((p) => {
-        this.form = buildForm(p);
+        this.form = buildFormGroup(p);
+        console.warn(this.form);
         $.unsubscribe();
       });
     }
-    console.warn(this.form);
   }
 
   get nameErrors() {
