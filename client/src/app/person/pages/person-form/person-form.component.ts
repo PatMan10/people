@@ -1,13 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { validate, ValidationError } from 'class-validator';
-import { plainToInstance } from 'class-transformer';
+import { ValidationError } from 'class-validator';
 
-import { buildFormGroup } from '../../../common/utils/misc';
 import { Person } from '../../../person/person.model';
 import { PersonService } from '../../../person/person.service';
 import { UiUrls } from '../../../common/utils/urls';
 import { extractErrorMessages } from '../../../common/models/http.model';
+import { buildFormGroup, validateForm } from '../../../common/utils/form';
 
 @Component({
   selector: 'app-person-form',
@@ -54,14 +53,8 @@ export class PersonFormComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  private async validateForm() {
-    this.validationErrors = await validate(
-      plainToInstance(Person, this.form.value)
-    );
-  }
-
   async submit() {
-    await this.validateForm();
+    this.validationErrors = await validateForm(Person, this.form.value);
     if (this.validationErrors.length > 0) return;
 
     const operation$ = this.id

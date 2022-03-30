@@ -1,13 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { validate, ValidationError } from 'class-validator';
-import { plainToInstance } from 'class-transformer';
+import { ValidationError } from 'class-validator';
 
-import { buildFormGroup } from '../../../common/utils/misc';
 import { UiUrls } from '../../../common/utils/urls';
 import { Credentials } from '../../auth.model';
 import { AuthService } from '../../auth.service';
 import { extractErrorMessages } from '../../../common/models/http.model';
+import { buildFormGroup, validateForm } from '../../../common/utils/form';
 
 @Component({
   selector: 'app-login',
@@ -35,14 +34,8 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  private async validateForm() {
-    this.validationErrors = await validate(
-      plainToInstance(Credentials, this.form.value)
-    );
-  }
-
   async submit() {
-    await this.validateForm();
+    this.validationErrors = await validateForm(Credentials, this.form.value);
     if (this.validationErrors.length > 0) return;
 
     this.authService.login(this.form.value).subscribe((user) => {
