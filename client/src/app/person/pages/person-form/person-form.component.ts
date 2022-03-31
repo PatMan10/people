@@ -6,7 +6,7 @@ import { Person } from '../../../person/person.model';
 import { PersonService } from '../../../person/person.service';
 import { UiUrls } from '../../../common/utils/urls';
 import { extractErrorMessages } from '../../../common/models/http.model';
-import { buildFormGroup, validateForm } from '../../../common/utils/form';
+import { buildFormGroup, oldValidateForm } from '../../../common/utils/form';
 
 @Component({
   selector: 'app-person-form',
@@ -40,6 +40,7 @@ export class PersonFormComponent implements OnInit {
 
   get nameErrors() {
     const { validationErrors } = this;
+    console.log('GET NAME ERS');
     return {
       first: extractErrorMessages('first', validationErrors),
       last: extractErrorMessages('last', validationErrors),
@@ -47,6 +48,7 @@ export class PersonFormComponent implements OnInit {
   }
 
   get birthdayErrors() {
+    console.log('GET BIRTHDAY ERS');
     const { validationErrors } = this;
     return extractErrorMessages('birthday', validationErrors);
   }
@@ -54,7 +56,7 @@ export class PersonFormComponent implements OnInit {
   ngOnInit(): void {}
 
   async submit() {
-    this.validationErrors = await validateForm(Person, this.form.value);
+    this.validationErrors = await oldValidateForm(Person, this.form.value);
     if (this.validationErrors.length > 0) return;
 
     const operation$ = this.id

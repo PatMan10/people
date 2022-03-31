@@ -4,7 +4,7 @@
     <div class="form-floating mb-3">
       <input
         formControlName="email"
-        [ngClass]="emailErrors.length > 0 ? 'is-invalid' : ''"
+        [ngClass]="(vErs | vEr: 'email') ? 'is-invalid' : ''"
         id="email"
         name="email"
         type="email"
@@ -13,15 +13,17 @@
       />
       <label for="email">Email</label>
 
-      <div *ngIf="emailErrors.length > 0" class="invalid-feedback">
-        <span *ngFor="let eMsg of emailErrors">{{ eMsg }}</span>
-      </div>
+      <ng-container *ngIf="vErs | getVErs: 'email' as emailErs">
+        <div *ngIf="emailErs.length > 0" class="invalid-feedback">
+          <span *ngFor="let eMsg of emailErs">{{ eMsg }}</span>
+        </div>
+      </ng-container>
     </div>
 
     <div class="form-floating mb-3">
       <input
         formControlName="password"
-        [ngClass]="passwordErrors.length > 0 ? 'is-invalid' : ''"
+        [ngClass]="(vErs | vEr: 'password') ? 'is-invalid' : ''"
         id="password"
         name="password"
         type="password"
@@ -30,9 +32,11 @@
       />
       <label for="password">Password</label>
 
-      <div *ngIf="passwordErrors.length > 0" class="invalid-feedback">
-        <span *ngFor="let eMsg of passwordErrors">{{ eMsg }}</span>
-      </div>
+      <ng-container *ngIf="vErs | getVErs: 'password' as passwordErs">
+        <div *ngIf="passwordErs.length > 0" class="invalid-feedback">
+          <span *ngFor="let eMsg of passwordErs">{{ eMsg }}</span>
+        </div>
+      </ng-container>
     </div>
 
     <button type="submit" class="btn btn-primary">login</button>
