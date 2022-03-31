@@ -27,9 +27,9 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {}
 
   async submit() {
-    this.vErs = await validateForm(Credentials, this.form.value);
-    console.log(this.vErs);
-    if (Object.keys(this.vErs).length > 0) return;
+    const { valid, vErs } = await validateForm(Credentials, this.form.value);
+    this.vErs = vErs;
+    if (!valid) return;
 
     this.authService.login(this.form.value).subscribe((user) => {
       console.log(user);

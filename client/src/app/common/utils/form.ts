@@ -22,9 +22,9 @@ export function buildFormArray(a: any[]): FormArray {
 export async function validateForm(
   cls: ClassConstructor<object>,
   value: Record<string, any>
-): Promise<ValidationErrorRecord> {
+): Promise<{ valid: boolean; vErs: ValidationErrorRecord }> {
   const errors = await validate(plainToInstance(cls, value));
-  return buildErrorRecord(value, errors);
+  return { valid: errors.length === 0, vErs: buildErrorRecord(value, errors) };
 }
 
 export async function oldValidateForm(
@@ -57,7 +57,7 @@ export function buildErrorRecord(
   o: Record<string, any>,
   errors: ValidationError[]
 ): ValidationErrorRecord {
-  const rec: ValidationErrorRecord = {};
+  const rec = new ValidationErrorRecord();
 
   for (const k in o)
     if (o[k] instanceof Array) rec[k] = extractErrorMessages(k, errors);

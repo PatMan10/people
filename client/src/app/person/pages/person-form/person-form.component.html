@@ -6,7 +6,7 @@
       <div class="form-floating mb-3">
         <input
           formControlName="first"
-          [ngClass]="nameErrors.first.length > 0 ? 'is-invalid' : ''"
+          [ngClass]="(vErs | vEr: 'first') ? 'is-invalid' : ''"
           id="first"
           name="first"
           type="text"
@@ -15,14 +15,17 @@
         />
         <label for="first">First Name</label>
 
-        <div *ngIf="nameErrors.first.length > 0" class="invalid-feedback">
-          <span *ngFor="let eMsg of nameErrors.first">{{ eMsg }}</span>
-        </div>
+        <ng-container *ngIf="vErs | getVErs: 'first' as firstErs">
+          <div *ngIf="firstErs.length > 0" class="invalid-feedback">
+            <span *ngFor="let eMsg of firstErs">{{ eMsg }}</span>
+          </div>
+        </ng-container>
       </div>
+
       <div class="form-floating mb-3">
         <input
           formControlName="last"
-          [ngClass]="nameErrors.last.length > 0 ? 'is-invalid' : ''"
+          [ngClass]="(vErs | vEr: 'last') ? 'is-invalid' : ''"
           id="last"
           name="last"
           type="text"
@@ -31,16 +34,18 @@
         />
         <label for="first">Last Name</label>
 
-        <div *ngIf="nameErrors.last.length > 0" class="invalid-feedback">
-          <span *ngFor="let eMsg of nameErrors.last">{{ eMsg }}</span>
-        </div>
+        <ng-container *ngIf="vErs | getVErs: 'last' as lastErs">
+          <div *ngIf="lastErs.length > 0" class="invalid-feedback">
+            <span *ngFor="let eMsg of lastErs">{{ eMsg }}</span>
+          </div>
+        </ng-container>
       </div>
     </div>
 
     <div class="form-floating mb-3">
       <input
         formControlName="birthday"
-        [ngClass]="birthdayErrors.length > 0 ? 'is-invalid' : ''"
+        [ngClass]="(vErs | vEr: 'birthday') ? 'is-invalid' : ''"
         id="birthday"
         name="birthday"
         type="date"
@@ -48,9 +53,11 @@
       />
       <label for="birthday">Birthday</label>
 
-      <div *ngIf="birthdayErrors.length > 0" class="invalid-feedback">
-        <span *ngFor="let eMsg of birthdayErrors">{{ eMsg }}</span>
-      </div>
+      <ng-container *ngIf="vErs | getVErs: 'birthday' as birthdayErs">
+        <div *ngIf="birthdayErs.length > 0" class="invalid-feedback">
+          <span *ngFor="let eMsg of birthdayErs">{{ eMsg }}</span>
+        </div>
+      </ng-container>
     </div>
 
     <button type="submit" class="btn btn-primary">

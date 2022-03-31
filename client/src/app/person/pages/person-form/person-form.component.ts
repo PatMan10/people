@@ -1,12 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ValidationError } from 'class-validator';
 
 import { Person } from '../../../person/person.model';
 import { PersonService } from '../../../person/person.service';
 import { UiUrls } from '../../../common/utils/urls';
-import { extractErrorMessages } from '../../../common/models/http.model';
-import { buildFormGroup, oldValidateForm } from '../../../common/utils/form';
+import {
+  buildFormGroup,
+  validateForm,
+  ValidationErrorRecord,
+  getErrorMessages,
+} from '../../../common/utils/form';
 
 @Component({
   selector: 'app-person-form',
@@ -18,7 +21,7 @@ export class PersonFormComponent implements OnInit {
   title = 'Add Person';
   btnText = 'Add';
   form = buildFormGroup(new Person());
-  private validationErrors: ValidationError[] = [];
+  vErs: ValidationErrorRecord = {};
 
   constructor(
     route: ActivatedRoute,
@@ -38,26 +41,12 @@ export class PersonFormComponent implements OnInit {
     }
   }
 
-  get nameErrors() {
-    const { validationErrors } = this;
-    console.log('GET NAME ERS');
-    return {
-      first: extractErrorMessages('first', validationErrors),
-      last: extractErrorMessages('last', validationErrors),
-    };
-  }
-
-  get birthdayErrors() {
-    console.log('GET BIRTHDAY ERS');
-    const { validationErrors } = this;
-    return extractErrorMessages('birthday', validationErrors);
-  }
-
   ngOnInit(): void {}
 
   async submit() {
-    this.validationErrors = await oldValidateForm(Person, this.form.value);
-    if (this.validationErrors.length > 0) return;
+    const { valid, vErs } = await validateForm(Person, this.form.value);
+    this.vErs = vErs;
+    if (!valid) return;
 
     const operation$ = this.id
       ? this.peopleService.update(this.id, this.form.value)
