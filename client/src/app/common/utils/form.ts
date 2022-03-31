@@ -27,13 +27,6 @@ export async function validateForm(
   return { valid: errors.length === 0, vErs: buildErrorRecord(value, errors) };
 }
 
-export async function oldValidateForm(
-  cls: ClassConstructor<object>,
-  value: Record<string, any>
-): Promise<ValidationError[]> {
-  return validate(plainToInstance(cls, value));
-}
-
 export function extractErrorMessages(
   property: string,
   errors: ValidationError[]
