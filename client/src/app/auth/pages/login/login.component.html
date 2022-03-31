@@ -4,7 +4,7 @@
     <div class="form-floating mb-3">
       <input
         formControlName="email"
-        [ngClass]="(vErs | vEr: 'email') ? 'is-invalid' : ''"
+        [ngClass]="(vErs | vErX: 'email') ? 'is-invalid' : ''"
         id="email"
         name="email"
         type="email"
@@ -13,7 +13,7 @@
       />
       <label for="email">Email</label>
 
-      <ng-container *ngIf="vErs | getVErs: 'email' as emailErs">
+      <ng-container *ngIf="vErs | vErs: 'email' as emailErs">
         <div *ngIf="emailErs.length > 0" class="invalid-feedback">
           <span *ngFor="let eMsg of emailErs">{{ eMsg }}</span>
         </div>
@@ -23,7 +23,7 @@
     <div class="form-floating mb-3">
       <input
         formControlName="password"
-        [ngClass]="(vErs | vEr: 'password') ? 'is-invalid' : ''"
+        [ngClass]="(vErs | vErX: 'password') ? 'is-invalid' : ''"
         id="password"
         name="password"
         type="password"
@@ -32,7 +32,7 @@
       />
       <label for="password">Password</label>
 
-      <ng-container *ngIf="vErs | getVErs: 'password' as passwordErs">
+      <ng-container *ngIf="vErs | vErs: 'password' as passwordErs">
         <div *ngIf="passwordErs.length > 0" class="invalid-feedback">
           <span *ngFor="let eMsg of passwordErs">{{ eMsg }}</span>
         </div>

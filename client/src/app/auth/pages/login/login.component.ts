@@ -17,7 +17,7 @@ import {
 })
 export class LoginComponent implements OnInit {
   form = buildFormGroup(new Credentials());
-  vErs: ValidationErrorRecord = {};
+  vErs = new ValidationErrorRecord();
 
   constructor(
     private readonly router: Router,

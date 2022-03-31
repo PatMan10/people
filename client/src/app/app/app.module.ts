@@ -14,7 +14,7 @@ import { NavDrawerComponent } from './components/nav-drawer/nav-drawer.component
 import {
   ValidationErrorsExistPipe,
   GetValidationErrorsPipe,
-} from '../common/pipes/validation-errors.pipe';
+} from '../common/pipes/validation-error.pipes';
 
 // auth
 import { RegisterComponent } from '../auth/pages/register/register.component';
