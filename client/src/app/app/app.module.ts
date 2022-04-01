@@ -28,6 +28,7 @@ import { UserFormComponent } from '../user/pages/user-form/user-form.component';
 import { PersonFormComponent } from '../person/pages/person-form/person-form.component';
 import { PersonDetailComponent } from '../person/pages/person-detail/person-detail.component';
 import { PersonListComponent } from '../person/pages/person-list/person-list.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -59,6 +60,7 @@ import { PersonListComponent } from '../person/pages/person-list/person-list.com
     AppRoutingModule,
     ReactiveFormsModule,
     HttpClientModule,
+    NgbModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
