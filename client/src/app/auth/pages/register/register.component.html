@@ -1,1 +1,63 @@
-<p>register works!</p>
+<div class="container">
+  <h1>Register</h1>
+  <form [formGroup]="form" (ngSubmit)="submit()">
+    <div class="form-floating mb-3">
+      <input
+        formControlName="handle"
+        [ngClass]="(vErs | vErX: 'handle') ? 'is-invalid' : ''"
+        id="handle"
+        name="handle"
+        type="handle"
+        class="form-control"
+        placeholder="handle"
+      />
+      <label for="handle">Handle</label>
+
+      <ng-container *ngIf="vErs | vErs: 'handle' as handleErs">
+        <div *ngIf="handleErs.length > 0" class="invalid-feedback">
+          <span *ngFor="let eMsg of handleErs">{{ eMsg }}</span>
+        </div>
+      </ng-container>
+    </div>
+
+    <div class="form-floating mb-3">
+      <input
+        formControlName="email"
+        [ngClass]="(vErs | vErX: 'email') ? 'is-invalid' : ''"
+        id="email"
+        name="email"
+        type="email"
+        class="form-control"
+        placeholder="email"
+      />
+      <label for="email">Email</label>
+
+      <ng-container *ngIf="vErs | vErs: 'email' as emailErs">
+        <div *ngIf="emailErs.length > 0" class="invalid-feedback">
+          <span *ngFor="let eMsg of emailErs">{{ eMsg }}</span>
+        </div>
+      </ng-container>
+    </div>
+
+    <div class="form-floating mb-3">
+      <input
+        formControlName="password"
+        [ngClass]="(vErs | vErX: 'password') ? 'is-invalid' : ''"
+        id="password"
+        name="password"
+        type="password"
+        class="form-control"
+        placeholder="password"
+      />
+      <label for="password">Password</label>
+
+      <ng-container *ngIf="vErs | vErs: 'password' as passwordErs">
+        <div *ngIf="passwordErs.length > 0" class="invalid-feedback">
+          <span *ngFor="let eMsg of passwordErs">{{ eMsg }}</span>
+        </div>
+      </ng-container>
+    </div>
+
+    <button type="submit" class="btn btn-primary">register</button>
+  </form>
+</div>

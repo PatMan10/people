@@ -1,4 +1,12 @@
 import {
+  IsString,
+  Length as dLength,
+  Matches,
+  IsEmail,
+  IsEnum,
+} from 'class-validator';
+
+import {
   GenericConst,
   GenericModel,
   Length,
@@ -36,9 +44,21 @@ export enum UserRole {
 }
 
 export class User extends GenericModel {
+  @IsString()
+  @dLength(UserConst.HANDLE.LENGTH.MIN, UserConst.HANDLE.LENGTH.MAX)
+  @Matches(UserConst.HANDLE.REGEX)
   handle: string;
+
+  @IsEmail()
+  @dLength(UserConst.EMAIL.LENGTH.MIN, UserConst.EMAIL.LENGTH.MAX)
   email: string;
+
+  @IsString()
+  @dLength(UserConst.PASSWORD.LENGTH.MIN, UserConst.PASSWORD.LENGTH.MAX)
+  @Matches(UserConst.PASSWORD.REGEX)
   password: string;
+
+  @IsEnum(UserRole)
   role: UserRole;
 
   constructor(
@@ -66,13 +86,39 @@ export class GetUserDto {
 }
 
 export class CreateUserDto {
-  constructor(
-    public handle: string = '',
-    public email: string = '',
-    public password: string = ''
-  ) {}
+  @IsString()
+  @dLength(UserConst.HANDLE.LENGTH.MIN, UserConst.HANDLE.LENGTH.MAX)
+  @Matches(UserConst.HANDLE.REGEX)
+  handle: string;
+
+  @IsEmail()
+  @dLength(UserConst.EMAIL.LENGTH.MIN, UserConst.EMAIL.LENGTH.MAX)
+  email: string;
+
+  @IsString()
+  @dLength(UserConst.PASSWORD.LENGTH.MIN, UserConst.PASSWORD.LENGTH.MAX)
+  @Matches(UserConst.PASSWORD.REGEX)
+  password: string;
+
+  constructor(handle: string = '', email: string = '', password: string = '') {
+    this.handle = handle;
+    this.email = email;
+    this.password = password;
+  }
 }
 
 export class UpdateUserDto {
-  constructor(public handle: string = '', public email: string = '') {}
+  @IsString()
+  @dLength(UserConst.HANDLE.LENGTH.MIN, UserConst.HANDLE.LENGTH.MAX)
+  @Matches(UserConst.HANDLE.REGEX)
+  handle: string;
+
+  @IsEmail()
+  @dLength(UserConst.EMAIL.LENGTH.MIN, UserConst.EMAIL.LENGTH.MAX)
+  email: string;
+
+  constructor(handle: string = '', email: string = '') {
+    this.handle = handle;
+    this.email = email;
+  }
 }
