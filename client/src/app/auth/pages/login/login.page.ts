@@ -9,6 +9,8 @@ import {
   validateForm,
   ValidationErrorRecord,
 } from '../../../common/utils/form';
+import { ErrorHandlingService } from 'src/app/common/services/error-handling.service';
+import { GetUserDto } from 'src/app/user/user.model';
 
 @Component({
   selector: 'app-login',
@@ -21,7 +23,8 @@ export class LoginPage implements OnInit {
 
   constructor(
     private readonly router: Router,
-    private readonly authService: AuthService
+    private readonly authService: AuthService,
+    private readonly erService: ErrorHandlingService
   ) {}
 
   ngOnInit(): void {}
@@ -31,9 +34,11 @@ export class LoginPage implements OnInit {
     this.vErs = vErs;
     if (!valid) return;
 
-    this.authService.login(this.form.value).subscribe((user) => {
-      console.log(user);
-      this.router.navigate([UiUrls.person.VIEW_ALL]);
+    this.authService.login(this.form.value).subscribe({
+      next: (_user: GetUserDto) => {
+        this.router.navigate([UiUrls.person.VIEW_ALL]);
+      },
+      error: this.erService.handleHttpError('login', undefined),
     });
   }
 }

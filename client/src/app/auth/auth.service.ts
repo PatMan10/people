@@ -1,9 +1,8 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, catchError, tap } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 
 import { log, LogLevel } from '../common/utils/rxjs';
-import { ErrorHandlingService } from '../common/services/error-handling.service';
 import { ApiUrls } from '../common/utils/urls';
 import { CreateUserDto, GetUserDto } from '../user/user.model';
 import { AuthCache } from './auth.cache';
@@ -15,8 +14,7 @@ import { Credentials } from './auth.model';
 export class AuthService {
   constructor(
     private readonly http: HttpClient,
-    private readonly cache: AuthCache,
-    private readonly erService: ErrorHandlingService
+    private readonly cache: AuthCache
   ) {}
 
   register(user: CreateUserDto): Observable<GetUserDto> {
@@ -24,10 +22,7 @@ export class AuthService {
       .post<GetUserDto>(ApiUrls.auth.register(), user, {
         headers: new HttpHeaders({ 'content-type': 'application/json' }),
       })
-      .pipe(
-        log(LogLevel.INFO, 'register user'),
-        catchError(this.erService.handleHttpError('register', new GetUserDto()))
-      );
+      .pipe(log(LogLevel.INFO, 'register user'));
   }
 
   login(credentials: Credentials): Observable<GetUserDto> {
@@ -37,8 +32,7 @@ export class AuthService {
       })
       .pipe(
         log(LogLevel.INFO, 'login user'),
-        tap((payload) => (this.cache.user = payload)),
-        catchError(this.erService.handleHttpError('login', new GetUserDto()))
+        tap((payload) => (this.cache.user = payload))
       );
   }
 
@@ -49,8 +43,7 @@ export class AuthService {
       })
       .pipe(
         log(LogLevel.INFO, 'logout user'),
-        tap(() => (this.cache.user = undefined)),
-        catchError(this.erService.handleHttpError(`logout`, undefined))
+        tap(() => (this.cache.user = undefined))
       );
   }
 }
