@@ -4,6 +4,7 @@ import { Observable, of } from 'rxjs';
 import { Person } from 'src/app/person/person.model';
 import { PersonService } from 'src/app/person/person.service';
 import { UiUrls } from 'src/app/common/utils/urls';
+import { ErrorHandlingService } from 'src/app/common/services/error-handling.service';
 
 @Component({
   selector: 'app-person-detail',
@@ -15,9 +16,10 @@ export class PersonDetailPage implements OnInit {
   person$: Observable<Person> = of(new Person());
 
   constructor(
-    private peopleService: PersonService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private peopleService: PersonService,
+    private erService: ErrorHandlingService
   ) {}
 
   ngOnInit(): void {
@@ -26,8 +28,11 @@ export class PersonDetailPage implements OnInit {
   }
 
   delete(id: string) {
-    this.peopleService.delete(id).subscribe(() => {
-      this.router.navigate([UiUrls.person.viewAll()]);
+    this.peopleService.delete(id).subscribe({
+      next: () => {
+        this.router.navigate([UiUrls.person.viewAll()]);
+      },
+      error: this.erService.handleHttpError('delete person', new Person()),
     });
   }
 }

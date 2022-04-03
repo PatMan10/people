@@ -8,8 +8,9 @@ import {
   buildFormGroup,
   validateForm,
   ValidationErrorRecord,
-  getErrorMessages,
 } from '../../../common/utils/form';
+import { ErrorHandlingService } from 'src/app/common/services/error-handling.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-person-form',
@@ -26,7 +27,8 @@ export class PersonFormPage implements OnInit {
   constructor(
     route: ActivatedRoute,
     private readonly router: Router,
-    private readonly peopleService: PersonService
+    private readonly peopleService: PersonService,
+    private readonly erService: ErrorHandlingService
   ) {
     const id = route.snapshot.paramMap.get('id');
     if (id) {
@@ -48,12 +50,19 @@ export class PersonFormPage implements OnInit {
     this.vErs = vErs;
     if (!valid) return;
 
-    const operation$ = this.id
-      ? this.peopleService.update(this.id, this.form.value)
-      : this.peopleService.add(this.form.value);
+    let $ = this.peopleService.add(this.form.value);
+    let operation = 'add person';
 
-    operation$.subscribe(() => {
-      this.router.navigate([UiUrls.person.VIEW_ALL]);
+    if (this.id) {
+      $ = this.peopleService.update(this.id, this.form.value);
+      operation = 'update person';
+    }
+
+    $.subscribe({
+      next: () => {
+        this.router.navigate([UiUrls.person.VIEW_ALL]);
+      },
+      error: this.erService.handleHttpError(operation, new Person()),
     });
   }
 }
