@@ -2,8 +2,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, catchError } from 'rxjs';
 
-import { handleHttpError } from '../common/utils/rxjs';
 import { log, LogLevel } from '../common/utils/rxjs';
+import { ErrorHandlingService } from '../common/services/error-handling.service';
 import { ApiUrls } from '../common/utils/urls';
 import { Person } from './person.model';
 
@@ -11,14 +11,17 @@ import { Person } from './person.model';
   providedIn: 'root',
 })
 export class PersonService {
-  constructor(private http: HttpClient) {}
+  constructor(
+    private readonly http: HttpClient,
+    private readonly erService: ErrorHandlingService
+  ) {}
 
   getAll(): Observable<Person[]> {
     return this.http
       .get<Person[]>(ApiUrls.person.getAll())
       .pipe(
         log(LogLevel.INFO, 'get people'),
-        catchError(handleHttpError<Person[]>('getPeople', []))
+        catchError(this.erService.handleHttpError('get people', []))
       );
   }
 
@@ -27,7 +30,7 @@ export class PersonService {
       .get<Person>(ApiUrls.person.getById(id))
       .pipe(
         log(LogLevel.INFO, 'get person'),
-        catchError(handleHttpError<Person>(`getPerson id=${id}`, new Person()))
+        catchError(this.erService.handleHttpError('get person', new Person()))
       );
   }
 
@@ -38,7 +41,7 @@ export class PersonService {
       })
       .pipe(
         log(LogLevel.INFO, 'add person'),
-        catchError(handleHttpError<Person>(`addPerson`, new Person()))
+        catchError(this.erService.handleHttpError('add person', new Person()))
       );
   }
 
@@ -50,7 +53,7 @@ export class PersonService {
       .pipe(
         log(LogLevel.INFO, 'update person'),
         catchError(
-          handleHttpError<Person>(`updatePerson id=${id}`, new Person())
+          this.erService.handleHttpError('update person', new Person())
         )
       );
   }
@@ -61,7 +64,7 @@ export class PersonService {
       .pipe(
         log(LogLevel.INFO, 'delete person'),
         catchError(
-          handleHttpError<Person>(`deletePerson id=${id}`, new Person())
+          this.erService.handleHttpError('delete person', new Person())
         )
       );
   }

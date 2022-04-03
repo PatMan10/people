@@ -2,7 +2,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, catchError } from 'rxjs';
 
-import { log, LogLevel, handleHttpError } from '../common/utils/rxjs';
+import { ErrorHandlingService } from '../common/services/error-handling.service';
+import { log, LogLevel } from '../common/utils/rxjs';
 import { ApiUrls } from '../common/utils/urls';
 import { GetUserDto, UpdateUserDto } from './user.model';
 
@@ -10,16 +11,17 @@ import { GetUserDto, UpdateUserDto } from './user.model';
   providedIn: 'root',
 })
 export class UserService {
-  constructor(private http: HttpClient) {}
+  constructor(
+    private readonly http: HttpClient,
+    private readonly erService: ErrorHandlingService
+  ) {}
 
   getById(id: string): Observable<GetUserDto> {
     return this.http
       .get<GetUserDto>(ApiUrls.user.getById(id))
       .pipe(
         log(LogLevel.INFO, 'get user'),
-        catchError(
-          handleHttpError<GetUserDto>(`getUser id=${id}`, new GetUserDto())
-        )
+        catchError(this.erService.handleHttpError('get user', new GetUserDto()))
       );
   }
 
@@ -31,7 +33,7 @@ export class UserService {
       .pipe(
         log(LogLevel.INFO, 'update user'),
         catchError(
-          handleHttpError<GetUserDto>(`updateUser id=${id}`, new GetUserDto())
+          this.erService.handleHttpError('update user', new GetUserDto())
         )
       );
   }
@@ -42,7 +44,7 @@ export class UserService {
       .pipe(
         log(LogLevel.INFO, 'delete user'),
         catchError(
-          handleHttpError<GetUserDto>(`deleteUser id=${id}`, new GetUserDto())
+          this.erService.handleHttpError('delete user', new GetUserDto())
         )
       );
   }

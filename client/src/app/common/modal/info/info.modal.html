@@ -1,5 +1,7 @@
 <div class="modal-header">
-  <h4 class="modal-title text-{{ data.type | bc }}">{{ data.title }}</h4>
+  <h4 class="modal-title text-{{ data.type | bc }}">
+    {{ data.title | titlecase }}
+  </h4>
   <button
     type="button"
     class="btn-close"

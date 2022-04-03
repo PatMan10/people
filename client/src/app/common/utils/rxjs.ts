@@ -1,6 +1,4 @@
-import { HttpErrorResponse } from '@angular/common/http';
-import { Observable, of, tap } from 'rxjs';
-import { ErrorResponse } from '../models/http.model';
+import { Observable, tap } from 'rxjs';
 
 //####################
 // LOG OPERATOR
@@ -46,33 +44,4 @@ export function log<T>(
         }
       })
     );
-}
-
-//####################
-// ERROR HANDLING OPERATOR
-//####################
-
-/**
- * Handle Http operation that failed.
- * Let the app continue.
- *
- * @param operation - name of the operation that failed
- * @param result - optional value to return as the observable result
- */
-export function handleHttpError<T>(
-  operation: string,
-  result: T
-): (e: HttpErrorResponse) => Observable<T> {
-  return (httpErr: HttpErrorResponse): Observable<T> => {
-    // TODO: send the error to remote logging infrastructure
-    console.error(httpErr); // log to console instead
-
-    const err = httpErr.error as ErrorResponse;
-    // TODO: better job of transforming error for user consumption
-    console.info(`${operation} failed: ${err.message}`);
-    alert(err.message);
-
-    // Let the app keep running by returning an empty result.
-    return of(result);
-  };
 }
