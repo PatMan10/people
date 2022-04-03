@@ -1,14 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { ValidationError } from 'class-validator';
 
 import { UiUrls } from '../../../common/utils/urls';
 import { CreateUserDto, GetUserDto } from '../../../user/user.model';
 import { AuthService } from '../../auth.service';
-import {
-  buildFormGroup,
-  validateForm,
-  ValidationErrorRecord,
-} from '../../../common/utils/form';
+import { buildFormGroup, validateForm } from '../../../common/utils/form';
 import { ErrorHandlingService } from 'src/app/common/services/error-handling.service';
 
 @Component({
@@ -18,7 +15,7 @@ import { ErrorHandlingService } from 'src/app/common/services/error-handling.ser
 })
 export class RegisterPage implements OnInit {
   form = buildFormGroup(new CreateUserDto());
-  vErs = new ValidationErrorRecord();
+  vErs: ValidationError[] = [];
 
   constructor(
     private readonly router: Router,
@@ -29,9 +26,8 @@ export class RegisterPage implements OnInit {
   ngOnInit(): void {}
 
   async submit() {
-    const { valid, vErs } = await validateForm(CreateUserDto, this.form.value);
-    this.vErs = vErs;
-    if (!valid) return;
+    this.vErs = await validateForm(CreateUserDto, this.form.value);
+    if (this.vErs.length > 0) return;
 
     this.authService.register(this.form.value).subscribe({
       next: (_user: GetUserDto) => {

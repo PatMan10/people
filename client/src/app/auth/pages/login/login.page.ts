@@ -1,14 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { ValidationError } from 'class-validator';
 
 import { UiUrls } from '../../../common/utils/urls';
 import { Credentials } from '../../auth.model';
 import { AuthService } from '../../auth.service';
-import {
-  buildFormGroup,
-  validateForm,
-  ValidationErrorRecord,
-} from '../../../common/utils/form';
+import { buildFormGroup, validateForm } from '../../../common/utils/form';
 import { ErrorHandlingService } from 'src/app/common/services/error-handling.service';
 import { GetUserDto } from 'src/app/user/user.model';
 
@@ -19,7 +16,7 @@ import { GetUserDto } from 'src/app/user/user.model';
 })
 export class LoginPage implements OnInit {
   form = buildFormGroup(new Credentials());
-  vErs = new ValidationErrorRecord();
+  vErs: ValidationError[] = [];
 
   constructor(
     private readonly router: Router,
@@ -30,9 +27,8 @@ export class LoginPage implements OnInit {
   ngOnInit(): void {}
 
   async submit() {
-    const { valid, vErs } = await validateForm(Credentials, this.form.value);
-    this.vErs = vErs;
-    if (!valid) return;
+    this.vErs = await validateForm(Credentials, this.form.value);
+    if (this.vErs.length > 0) return;
 
     this.authService.login(this.form.value).subscribe({
       next: (_user: GetUserDto) => {

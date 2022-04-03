@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ValidationError } from 'class-validator';
 
 import { Person } from '../../../person/person.model';
 import { PersonService } from '../../../person/person.service';
@@ -7,10 +8,9 @@ import { UiUrls } from '../../../common/utils/urls';
 import {
   buildFormGroup,
   validateForm,
-  ValidationErrorRecord,
+  extractErrorMessages,
 } from '../../../common/utils/form';
 import { ErrorHandlingService } from 'src/app/common/services/error-handling.service';
-import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-person-form',
@@ -22,7 +22,7 @@ export class PersonFormPage implements OnInit {
   title = 'Add Person';
   btnText = 'Add';
   form = buildFormGroup(new Person());
-  vErs: ValidationErrorRecord = {};
+  vErs: ValidationError[] = [];
 
   constructor(
     route: ActivatedRoute,
@@ -46,9 +46,9 @@ export class PersonFormPage implements OnInit {
   ngOnInit(): void {}
 
   async submit() {
-    const { valid, vErs } = await validateForm(Person, this.form.value);
-    this.vErs = vErs;
-    if (!valid) return;
+    this.vErs = await validateForm(Person, this.form.value);
+
+    if (this.vErs.length > 0) return;
 
     let $ = this.peopleService.add(this.form.value);
     let operation = 'add person';

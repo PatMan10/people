@@ -19,12 +19,11 @@ export function buildFormArray(a: any[]): FormArray {
   );
 }
 
-export async function validateForm(
+export function validateForm(
   cls: ClassConstructor<object>,
   value: Record<string, any>
-): Promise<{ valid: boolean; vErs: ValidationErrorRecord }> {
-  const errors = await validate(plainToInstance(cls, value));
-  return { valid: errors.length === 0, vErs: buildErrorRecord(value, errors) };
+): Promise<ValidationError[]> {
+  return validate(plainToInstance(cls, value));
 }
 
 export function extractErrorMessages(
@@ -32,43 +31,15 @@ export function extractErrorMessages(
   errors: ValidationError[]
 ): string[] {
   for (let i = 0; i < errors.length; i++) {
-    const { property: prop, constraints, children } = errors[i];
-    if (property === prop && constraints) return Object.values(constraints);
+    const { property: prop, constraints } = errors[i];
+    if (prop === property && constraints) return Object.values(constraints);
+  }
+
+  for (let i = 0; i < errors.length; i++) {
+    const { children } = errors[i];
 
     if (children && children.length > 0)
       return extractErrorMessages(property, children);
-  }
-
-  return [];
-}
-
-export class ValidationErrorRecord {
-  [k: string]: string[] | ValidationErrorRecord;
-}
-
-export function buildErrorRecord(
-  o: Record<string, any>,
-  errors: ValidationError[]
-): ValidationErrorRecord {
-  const rec = new ValidationErrorRecord();
-
-  for (const k in o)
-    if (o[k] instanceof Array) rec[k] = extractErrorMessages(k, errors);
-    else if (o[k] instanceof Object) rec[k] = buildErrorRecord(o[k], errors);
-    else rec[k] = extractErrorMessages(k, errors);
-
-  return rec;
-}
-
-export function getErrorMessages(
-  property: string,
-  o: ValidationErrorRecord
-): string[] {
-  for (const k in o) {
-    if (k === property) return o[k] as string[];
-
-    if (o[k] instanceof ValidationErrorRecord)
-      return getErrorMessages(property, o[k] as ValidationErrorRecord);
   }
 
   return [];

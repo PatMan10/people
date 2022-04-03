@@ -1,17 +1,18 @@
 import { Pipe, PipeTransform } from '@angular/core';
+import { ValidationError } from 'class-validator';
 
-import { ValidationErrorRecord, getErrorMessages } from '../utils/form';
+import { extractErrorMessages } from '../utils/form';
 
 @Pipe({ name: 'vErX' })
 export class ValidationErrorsExistPipe implements PipeTransform {
-  transform(o: ValidationErrorRecord, property: string): boolean {
-    return getErrorMessages(property, o).length > 0;
+  transform(errors: ValidationError[], property: string): boolean {
+    return extractErrorMessages(property, errors).length > 0;
   }
 }
 
 @Pipe({ name: 'vErs' })
 export class GetValidationErrorsPipe implements PipeTransform {
-  transform(o: ValidationErrorRecord, property: string): string[] {
-    return getErrorMessages(property, o);
+  transform(errors: ValidationError[], property: string): string[] {
+    return extractErrorMessages(property, errors);
   }
 }
