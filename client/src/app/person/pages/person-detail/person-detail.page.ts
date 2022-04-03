@@ -7,10 +7,10 @@ import { UiUrls } from 'src/app/common/utils/urls';
 
 @Component({
   selector: 'app-person-detail',
-  templateUrl: './person-detail.component.html',
-  styleUrls: ['./person-detail.component.scss'],
+  templateUrl: './person-detail.page.html',
+  styleUrls: ['./person-detail.page.scss'],
 })
-export class PersonDetailComponent implements OnInit {
+export class PersonDetailPage implements OnInit {
   readonly Urls = UiUrls;
   person$: Observable<Person> = of(new Person());
 

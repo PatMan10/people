@@ -13,10 +13,10 @@ import {
 
 @Component({
   selector: 'app-person-form',
-  templateUrl: './person-form.component.html',
-  styleUrls: ['./person-form.component.scss'],
+  templateUrl: './person-form.page.html',
+  styleUrls: ['./person-form.page.scss'],
 })
-export class PersonFormComponent implements OnInit {
+export class PersonFormPage implements OnInit {
   id: string | null = null;
   title = 'Add Person';
   btnText = 'Add';

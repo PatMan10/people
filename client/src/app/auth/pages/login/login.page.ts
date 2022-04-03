@@ -9,22 +9,26 @@ import {
   validateForm,
   ValidationErrorRecord,
 } from '../../../common/utils/form';
+import { ModalService } from '../../../common/modal/modal.service';
 
 @Component({
   selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss'],
+  templateUrl: './login.page.html',
+  styleUrls: ['./login.page.scss'],
 })
-export class LoginComponent implements OnInit {
+export class LoginPage implements OnInit {
   form = buildFormGroup(new Credentials());
   vErs = new ValidationErrorRecord();
 
   constructor(
     private readonly router: Router,
-    private readonly authService: AuthService
+    private readonly authService: AuthService,
+    private readonly modalService: ModalService
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.modalService.info(['INIT LOGIN PAGE']);
+  }
 
   async submit() {
     const { valid, vErs } = await validateForm(Credentials, this.form.value);

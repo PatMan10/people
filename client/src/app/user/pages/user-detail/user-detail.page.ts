@@ -2,10 +2,10 @@ import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-user-detail',
-  templateUrl: './user-detail.component.html',
-  styleUrls: ['./user-detail.component.scss']
+  templateUrl: './user-detail.page.html',
+  styleUrls: ['./user-detail.page.scss']
 })
-export class UserDetailComponent implements OnInit {
+export class UserDetailPage implements OnInit {
 
   constructor() { }
 

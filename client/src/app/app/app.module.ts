@@ -15,19 +15,20 @@ import {
   ValidationErrorsExistPipe,
   GetValidationErrorsPipe,
 } from '../common/pipes/validation-error.pipes';
+import { InfoModal } from '../common/modal/info/info.modal';
 
 // auth
-import { RegisterComponent } from '../auth/pages/register/register.component';
-import { LoginComponent } from '../auth/pages/login/login.component';
+import { RegisterPage } from '../auth/pages/register/register.page';
+import { LoginPage } from '../auth/pages/login/login.page';
 
 // user
-import { UserDetailComponent } from '../user/pages/user-detail/user-detail.component';
-import { UserFormComponent } from '../user/pages/user-form/user-form.component';
+import { UserDetailPage } from '../user/pages/user-detail/user-detail.page';
+import { UserFormPage } from '../user/pages/user-form/user-form.page';
 
 // person
-import { PersonFormComponent } from '../person/pages/person-form/person-form.component';
-import { PersonDetailComponent } from '../person/pages/person-detail/person-detail.component';
-import { PersonListComponent } from '../person/pages/person-list/person-list.component';
+import { PersonFormPage } from '../person/pages/person-form/person-form.page';
+import { PersonDetailPage } from '../person/pages/person-detail/person-detail.page';
+import { PersonListPage } from '../person/pages/person-list/person-list.page';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
@@ -41,19 +42,20 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     // common
     ValidationErrorsExistPipe,
     GetValidationErrorsPipe,
+    InfoModal,
 
     // auth
-    RegisterComponent,
-    LoginComponent,
+    RegisterPage,
+    LoginPage,
 
     // user
-    UserDetailComponent,
-    UserFormComponent,
+    UserDetailPage,
+    UserFormPage,
 
     // person
-    PersonFormComponent,
-    PersonDetailComponent,
-    PersonListComponent,
+    PersonFormPage,
+    PersonDetailPage,
+    PersonListPage,
   ],
   imports: [
     BrowserModule,

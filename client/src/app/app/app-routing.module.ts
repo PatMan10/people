@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { RegisterComponent } from '../auth/pages/register/register.component';
-import { LoginComponent } from '../auth/pages/login/login.component';
-import { UserDetailComponent } from '../user/pages/user-detail/user-detail.component';
-import { UserFormComponent } from '../user/pages/user-form/user-form.component';
-import { PersonDetailComponent } from '../person/pages/person-detail/person-detail.component';
-import { PersonFormComponent } from '../person/pages/person-form/person-form.component';
-import { PersonListComponent } from '../person/pages/person-list/person-list.component';
+import { RegisterPage } from '../auth/pages/register/register.page';
+import { LoginPage } from '../auth/pages/login/login.page';
+import { UserDetailPage } from '../user/pages/user-detail/user-detail.page';
+import { UserFormPage } from '../user/pages/user-form/user-form.page';
+import { PersonDetailPage } from '../person/pages/person-detail/person-detail.page';
+import { PersonFormPage } from '../person/pages/person-form/person-form.page';
+import { PersonListPage } from '../person/pages/person-list/person-list.page';
 import { UiUrls } from '../common/utils/urls';
 
 const routes: Routes = [
@@ -15,18 +15,18 @@ const routes: Routes = [
   { path: '', redirectTo: UiUrls.person.VIEW_ALL, pathMatch: 'full' },
 
   // auth
-  { path: UiUrls.auth.REGISTER, component: RegisterComponent },
-  { path: UiUrls.auth.LOGIN, component: LoginComponent },
+  { path: UiUrls.auth.REGISTER, component: RegisterPage },
+  { path: UiUrls.auth.LOGIN, component: LoginPage },
 
   // users
-  { path: UiUrls.user.GET_BY_ID, component: UserDetailComponent },
-  { path: UiUrls.user.UPDATE, component: UserFormComponent },
+  { path: UiUrls.user.GET_BY_ID, component: UserDetailPage },
+  { path: UiUrls.user.UPDATE, component: UserFormPage },
 
   // person
-  { path: UiUrls.person.VIEW_ALL, component: PersonListComponent },
-  { path: UiUrls.person.VIEW_BY_ID, component: PersonDetailComponent },
-  { path: UiUrls.person.ADD, component: PersonFormComponent },
-  { path: UiUrls.person.EDIT, component: PersonFormComponent },
+  { path: UiUrls.person.VIEW_ALL, component: PersonListPage },
+  { path: UiUrls.person.VIEW_BY_ID, component: PersonDetailPage },
+  { path: UiUrls.person.ADD, component: PersonFormPage },
+  { path: UiUrls.person.EDIT, component: PersonFormPage },
 ];
 
 @NgModule({
