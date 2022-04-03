@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
-import { InfoModal } from './info/info.modal';
+import { InfoModal, InfoModalData } from './info/info.modal';
 
 @Injectable({
   providedIn: 'root',
@@ -9,10 +9,10 @@ import { InfoModal } from './info/info.modal';
 export class ModalService {
   constructor(private readonly ngbModal: NgbModal) {}
 
-  info(message: string[]) {
+  info(data: InfoModalData) {
     const modalRef = this.ngbModal.open(InfoModal);
     const inst: InfoModal = modalRef.componentInstance;
-    inst.message = message;
+    inst.data = data;
     return modalRef.result;
   }
 }

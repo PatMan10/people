@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Pipe, PipeTransform } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
@@ -7,18 +7,36 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
   styleUrls: ['./info.modal.scss'],
 })
 export class InfoModal implements OnInit {
-  title = 'Info';
-  message: string[] = [];
+  data = new InfoModalData();
 
   constructor(private readonly activeModal: NgbActiveModal) {}
 
   ngOnInit(): void {}
 
-  dismiss(reason: string) {
-    this.activeModal.dismiss(reason);
+  dismiss() {
+    this.activeModal.dismiss();
   }
 
-  close(result: string) {
-    this.activeModal.close(result);
+  close() {
+    this.activeModal.close();
+  }
+}
+
+export type InfoModalType = 'info' | 'warn' | 'error';
+
+export class InfoModalData {
+  constructor(
+    readonly type: InfoModalType = 'info',
+    readonly title: string = '',
+    readonly message: string[] = []
+  ) {}
+}
+
+@Pipe({ name: 'bc' })
+export class GetBootstrapColorPipe implements PipeTransform {
+  transform(type: InfoModalType): string {
+    if (type === 'error') return 'danger';
+    if (type === 'warn') return 'warning';
+    return 'info';
   }
 }

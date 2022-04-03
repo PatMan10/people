@@ -1,20 +1,23 @@
 <div class="modal-header">
-  <h4 class="modal-title" id="modal-basic-title">{{ title }}</h4>
+  <h4 class="modal-title text-{{ data.type | bc }}">{{ data.title }}</h4>
   <button
     type="button"
     class="btn-close"
     aria-label="Close"
-    (click)="dismiss('Cross click')"
+    (click)="dismiss()"
   ></button>
 </div>
 <div class="modal-body">
-  <p *ngFor="let m of message">{{ m }}</p>
+  <p *ngFor="let m of data.message" class="alert alert-{{ data.type | bc }}">
+    {{ m }}
+  </p>
 </div>
 <div class="modal-footer">
   <button
     type="button"
     class="btn btn-outline-dark"
-    (click)="close('Save click')"
+    (click)="close()"
+    ngbAutofocus
   >
     Ok
   </button>

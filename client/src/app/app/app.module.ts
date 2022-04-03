@@ -15,7 +15,10 @@ import {
   ValidationErrorsExistPipe,
   GetValidationErrorsPipe,
 } from '../common/pipes/validation-error.pipes';
-import { InfoModal } from '../common/modal/info/info.modal';
+import {
+  InfoModal,
+  GetBootstrapColorPipe,
+} from '../common/modal/info/info.modal';
 
 // auth
 import { RegisterPage } from '../auth/pages/register/register.page';
@@ -40,9 +43,10 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     NavDrawerComponent,
 
     // common
+    InfoModal,
     ValidationErrorsExistPipe,
     GetValidationErrorsPipe,
-    InfoModal,
+    GetBootstrapColorPipe,
 
     // auth
     RegisterPage,
