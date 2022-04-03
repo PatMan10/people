@@ -2,7 +2,6 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, tap } from 'rxjs';
 
-import { log, LogLevel } from '../common/utils/rxjs';
 import { ApiUrls } from '../common/utils/urls';
 import { CreateUserDto, GetUserDto } from '../user/user.model';
 import { AuthCache } from './auth.cache';
@@ -18,11 +17,9 @@ export class AuthService {
   ) {}
 
   register(user: CreateUserDto): Observable<GetUserDto> {
-    return this.http
-      .post<GetUserDto>(ApiUrls.auth.register(), user, {
-        headers: new HttpHeaders({ 'content-type': 'application/json' }),
-      })
-      .pipe(log(LogLevel.INFO, 'register user'));
+    return this.http.post<GetUserDto>(ApiUrls.auth.register(), user, {
+      headers: new HttpHeaders({ 'content-type': 'application/json' }),
+    });
   }
 
   login(credentials: Credentials): Observable<GetUserDto> {
@@ -30,10 +27,7 @@ export class AuthService {
       .post<GetUserDto>(ApiUrls.auth.login(), credentials, {
         headers: new HttpHeaders({ 'content-type': 'application/json' }),
       })
-      .pipe(
-        log(LogLevel.INFO, 'login user'),
-        tap((payload) => (this.cache.user = payload))
-      );
+      .pipe(tap((payload) => (this.cache.user = payload)));
   }
 
   logout(): Observable<void> {
@@ -41,9 +35,6 @@ export class AuthService {
       .post<void>(ApiUrls.auth.logout(), undefined, {
         headers: new HttpHeaders({ 'content-type': 'application/json' }),
       })
-      .pipe(
-        log(LogLevel.INFO, 'logout user'),
-        tap(() => (this.cache.user = undefined))
-      );
+      .pipe(tap(() => (this.cache.user = undefined)));
   }
 }

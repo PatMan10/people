@@ -2,13 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { UiUrls } from '../../../common/utils/urls';
-import { CreateUserDto } from '../../../user/user.model';
+import { CreateUserDto, GetUserDto } from '../../../user/user.model';
 import { AuthService } from '../../auth.service';
 import {
   buildFormGroup,
   validateForm,
   ValidationErrorRecord,
 } from '../../../common/utils/form';
+import { ErrorHandlingService } from 'src/app/common/services/error-handling.service';
 
 @Component({
   selector: 'app-register',
@@ -21,7 +22,8 @@ export class RegisterPage implements OnInit {
 
   constructor(
     private readonly router: Router,
-    private readonly authService: AuthService
+    private readonly authService: AuthService,
+    private readonly erService: ErrorHandlingService
   ) {}
 
   ngOnInit(): void {}
@@ -31,9 +33,11 @@ export class RegisterPage implements OnInit {
     this.vErs = vErs;
     if (!valid) return;
 
-    this.authService.register(this.form.value).subscribe((user) => {
-      console.log(user);
-      this.router.navigate([UiUrls.person.VIEW_ALL]);
+    this.authService.register(this.form.value).subscribe({
+      next: (_user: GetUserDto) => {
+        this.router.navigate([UiUrls.person.VIEW_ALL]);
+      },
+      error: this.erService.handleHttpError('register', undefined),
     });
   }
 }
