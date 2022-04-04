@@ -1,4 +1,3 @@
-{{ form.value | json }}
 <div class="container">
   <h1>{{ title }}</h1>
   <form [formGroup]="form" (ngSubmit)="submit()">
@@ -30,7 +29,7 @@
       >
         <div
           *ngFor="let middle of middleArr.controls; let i = index"
-          class="form-floating mb-3"
+          class="input-group mb-3"
           style="align-self: stretch"
         >
           <input
@@ -40,7 +39,15 @@
             class="form-control"
             placeholder="Middle Name"
           />
-          <label>Middle Name</label>
+          <div class="input-group-append">
+            <button
+              class="btn btn-outline-danger"
+              type="button"
+              (click)="removeFromArr('name.middle', i)"
+            >
+              X
+            </button>
+          </div>
 
           <ng-container *ngIf="errors | getErs: 'middle' as firstErs">
             <div *ngIf="firstErs.length > 0" class="invalid-feedback">
@@ -50,7 +57,7 @@
         </div>
         <button
           type="button"
-          class="btn btn-secondary"
+          class="btn btn-outline-success"
           (click)="addToArr('name.middle')"
         >
           Add Middle Name
@@ -83,7 +90,7 @@
       >
         <div
           *ngFor="let nick of nickArr.controls; let i = index"
-          class="form-floating mb-3"
+          class="input-group mb-3"
           style="align-self: stretch"
         >
           <input
@@ -91,9 +98,17 @@
             [ngClass]="(errors | ersExist: 'nick') ? 'is-invalid' : ''"
             type="text"
             class="form-control"
-            placeholder="Middle Name"
+            placeholder="Nick Name"
           />
-          <label>Nick Name</label>
+          <div class="input-group-append">
+            <button
+              class="btn btn-outline-danger"
+              type="button"
+              (click)="removeFromArr('name.nick', i)"
+            >
+              X
+            </button>
+          </div>
 
           <ng-container *ngIf="errors | getErs: 'nick' as firstErs">
             <div *ngIf="firstErs.length > 0" class="invalid-feedback">
@@ -103,7 +118,7 @@
         </div>
         <button
           type="button"
-          class="btn btn-secondary"
+          class="btn btn-outline-success"
           (click)="addToArr('name.nick')"
         >
           Add Nick Name
