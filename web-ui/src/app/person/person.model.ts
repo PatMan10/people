@@ -128,11 +128,13 @@ export enum PhoneType {
   MOBILE = 'mobile',
   HOME = 'home',
   WORK = 'work',
+  OTHER = 'other',
 }
 
 export enum EmailType {
   PERSONAL = 'personal',
   WORK = 'work',
+  OTHER = 'other',
 }
 
 export class Phone {
@@ -148,7 +150,7 @@ export class Phone {
   @IsDefined()
   number: string;
 
-  constructor(type: PhoneType, number: string) {
+  constructor(type: PhoneType = PhoneType.HOME, number: string = '') {
     this.type = type;
     this.number = number;
   }
@@ -165,7 +167,7 @@ export class Email {
   )
   address: string;
 
-  constructor(type: EmailType, address: string) {
+  constructor(type: EmailType = EmailType.PERSONAL, address: string = '') {
     this.type = type;
     this.address = address;
   }

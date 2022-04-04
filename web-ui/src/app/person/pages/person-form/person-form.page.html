@@ -2,8 +2,9 @@
 <div class="container">
   <h1>{{ title }}</h1>
   <form [formGroup]="form" (ngSubmit)="submit()">
+    <!----NAME GROUP---->
     <div formGroupName="name">
-      <!----NAME GROUP---->
+      <!----FIRST NAME---->
       <div class="form-floating mb-3">
         <input
           formControlName="first"
@@ -21,15 +22,16 @@
         </ng-container>
       </div>
 
+      <!----MIDDLE NAME ARRAY---->
       <div
         *ngIf="form | getArr: 'name.middle' as middleArr"
         formArrayName="middle"
-        class="mb-3"
+        class="mb-3 flex-col-aiC"
       >
-        <!----MIDDLE ARRAY---->
         <div
           *ngFor="let middle of middleArr.controls; let i = index"
           class="form-floating mb-3"
+          style="align-self: stretch"
         >
           <input
             [formControlName]="i"
@@ -46,8 +48,16 @@
             </div>
           </ng-container>
         </div>
+        <button
+          type="button"
+          class="btn btn-secondary"
+          (click)="addToArr('name.middle')"
+        >
+          Add Middle Name
+        </button>
       </div>
 
+      <!----LAST NAME---->
       <div class="form-floating mb-3">
         <input
           formControlName="last"
@@ -64,8 +74,44 @@
           </div>
         </ng-container>
       </div>
+
+      <!----NICK NAME ARRAY---->
+      <div
+        *ngIf="form | getArr: 'name.nick' as nickArr"
+        formArrayName="nick"
+        class="mb-3 flex-col-aiC"
+      >
+        <div
+          *ngFor="let nick of nickArr.controls; let i = index"
+          class="form-floating mb-3"
+          style="align-self: stretch"
+        >
+          <input
+            [formControlName]="i"
+            [ngClass]="(errors | ersExist: 'nick') ? 'is-invalid' : ''"
+            type="text"
+            class="form-control"
+            placeholder="Middle Name"
+          />
+          <label>Nick Name</label>
+
+          <ng-container *ngIf="errors | getErs: 'nick' as firstErs">
+            <div *ngIf="firstErs.length > 0" class="invalid-feedback">
+              <span *ngFor="let eMsg of firstErs">{{ eMsg }}</span>
+            </div>
+          </ng-container>
+        </div>
+        <button
+          type="button"
+          class="btn btn-secondary"
+          (click)="addToArr('name.nick')"
+        >
+          Add Nick Name
+        </button>
+      </div>
     </div>
 
+    <!----BIRTHDAY---->
     <div class="form-floating mb-3">
       <input
         formControlName="birthday"
