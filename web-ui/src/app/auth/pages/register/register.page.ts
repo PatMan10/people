@@ -15,7 +15,7 @@ import { ErrorHandlingService } from 'src/app/common/services/error-handling.ser
 })
 export class RegisterPage implements OnInit {
   form = buildFormGroup(new CreateUserDto());
-  vErs: ValidationError[] = [];
+  errors: ValidationError[] = [];
 
   constructor(
     private readonly router: Router,
@@ -26,8 +26,8 @@ export class RegisterPage implements OnInit {
   ngOnInit(): void {}
 
   async submit() {
-    this.vErs = await validateForm(CreateUserDto, this.form.value);
-    if (this.vErs.length > 0) return;
+    this.errors = await validateForm(CreateUserDto, this.form.value);
+    if (this.errors.length > 0) return;
 
     this.authService.register(this.form.value).subscribe({
       next: (_user: GetUserDto) => {

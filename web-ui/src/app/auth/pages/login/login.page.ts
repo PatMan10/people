@@ -16,7 +16,7 @@ import { GetUserDto } from 'src/app/user/user.model';
 })
 export class LoginPage implements OnInit {
   form = buildFormGroup(new Credentials());
-  vErs: ValidationError[] = [];
+  errors: ValidationError[] = [];
 
   constructor(
     private readonly router: Router,
@@ -27,8 +27,8 @@ export class LoginPage implements OnInit {
   ngOnInit(): void {}
 
   async submit() {
-    this.vErs = await validateForm(Credentials, this.form.value);
-    if (this.vErs.length > 0) return;
+    this.errors = await validateForm(Credentials, this.form.value);
+    if (this.errors.length > 0) return;
 
     this.authService.login(this.form.value).subscribe({
       next: (_user: GetUserDto) => {

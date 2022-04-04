@@ -1,12 +1,12 @@
-{{ form.value | json }}
 <div class="container">
   <h1>{{ title }}</h1>
   <form [formGroup]="form" (ngSubmit)="submit()">
     <div formGroupName="name">
+      <!----NAME GROUP---->
       <div class="form-floating mb-3">
         <input
           formControlName="first"
-          [ngClass]="(vErs | vErX: 'first') ? 'is-invalid' : ''"
+          [ngClass]="(errors | ersExist: 'first') ? 'is-invalid' : ''"
           id="first"
           name="first"
           type="text"
@@ -15,17 +15,43 @@
         />
         <label for="first">First Name</label>
 
-        <ng-container *ngIf="vErs | vErs: 'first' as firstErs">
+        <ng-container *ngIf="errors | getErs: 'first' as firstErs">
           <div *ngIf="firstErs.length > 0" class="invalid-feedback">
             <span *ngFor="let eMsg of firstErs">{{ eMsg }}</span>
           </div>
         </ng-container>
       </div>
 
+      <div formArrayName="middle" class="mb-3">
+        <!----MIDDLE ARRAY---->
+        <!--<div
+          *ngFor="let middle of form.get('name.middle'); let i = index"
+          [formControlName]="i"
+          class="form-floating mb-3"
+        >
+          <input
+            formControlName="first"
+            [ngClass]="(errors | ersExist: 'first') ? 'is-invalid' : ''"
+            id="first"
+            name="first"
+            type="text"
+            class="form-control"
+            placeholder="First Name"
+          />
+          <label for="first">Middle Name</label>
+
+          <ng-container *ngIf="errors | getErs: 'first' as firstErs">
+            <div *ngIf="firstErs.length > 0" class="invalid-feedback">
+              <span *ngFor="let eMsg of firstErs">{{ eMsg }}</span>
+            </div>
+          </ng-container>
+        </div>-->
+      </div>
+
       <div class="form-floating mb-3">
         <input
           formControlName="last"
-          [ngClass]="(vErs | vErX: 'last') ? 'is-invalid' : ''"
+          [ngClass]="(errors | ersExist: 'last') ? 'is-invalid' : ''"
           id="last"
           name="last"
           type="text"
@@ -34,7 +60,7 @@
         />
         <label for="first">Last Name</label>
 
-        <ng-container *ngIf="vErs | vErs: 'last' as lastErs">
+        <ng-container *ngIf="errors | getErs: 'last' as lastErs">
           <div *ngIf="lastErs.length > 0" class="invalid-feedback">
             <span *ngFor="let eMsg of lastErs">{{ eMsg }}</span>
           </div>
@@ -42,11 +68,10 @@
       </div>
     </div>
 
-    {{ vErs | vErX: "birthday" }}
     <div class="form-floating mb-3">
       <input
         formControlName="birthday"
-        [ngClass]="(vErs | vErX: 'birthday') ? 'is-invalid' : ''"
+        [ngClass]="(errors | ersExist: 'birthday') ? 'is-invalid' : ''"
         id="birthday"
         name="birthday"
         type="date"
@@ -54,7 +79,7 @@
       />
       <label for="birthday">Birthday</label>
 
-      <ng-container *ngIf="vErs | vErs: 'birthday' as birthdayErs">
+      <ng-container *ngIf="errors | getErs: 'birthday' as birthdayErs">
         <div *ngIf="birthdayErs.length > 0" class="invalid-feedback">
           <span *ngFor="let eMsg of birthdayErs">{{ eMsg }}</span>
         </div>

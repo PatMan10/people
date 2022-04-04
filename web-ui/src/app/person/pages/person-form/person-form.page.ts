@@ -22,7 +22,7 @@ export class PersonFormPage implements OnInit {
   title = 'Add Person';
   btnText = 'Add';
   form = buildFormGroup(new Person());
-  vErs: ValidationError[] = [];
+  errors: ValidationError[] = [];
 
   constructor(
     route: ActivatedRoute,
@@ -37,7 +37,8 @@ export class PersonFormPage implements OnInit {
       this.btnText = 'Save';
       const $ = peopleService.getById(id).subscribe((p) => {
         this.form = buildFormGroup(p);
-        console.warn(this.form);
+        console.log(this.form.get('name.middle'));
+        console.log(this.form.get('name.zol'));
         $.unsubscribe();
       });
     }
@@ -46,9 +47,9 @@ export class PersonFormPage implements OnInit {
   ngOnInit(): void {}
 
   async submit() {
-    this.vErs = await validateForm(Person, this.form.value);
+    this.errors = await validateForm(Person, this.form.value);
 
-    if (this.vErs.length > 0) return;
+    if (this.errors.length > 0) return;
 
     let $ = this.peopleService.add(this.form.value);
     let operation = 'add person';

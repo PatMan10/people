@@ -14,7 +14,7 @@ import { NavDrawerComponent } from './components/nav-drawer/nav-drawer.component
 import {
   ValidationErrorsExistPipe,
   GetValidationErrorsPipe,
-} from '../common/pipes/validation-error.pipes';
+} from '../common/pipes/form.pipes';
 import {
   InfoModal,
   GetBootstrapColorPipe,
