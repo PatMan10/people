@@ -14,6 +14,7 @@ import { NavDrawerComponent } from './components/nav-drawer/nav-drawer.component
 import {
   ValidationErrorsExistPipe,
   GetValidationErrorsPipe,
+  GetFormArrayPipe,
 } from '../common/pipes/form.pipes';
 import {
   InfoModal,
@@ -46,6 +47,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     InfoModal,
     ValidationErrorsExistPipe,
     GetValidationErrorsPipe,
+    GetFormArrayPipe,
     GetBootstrapColorPipe,
 
     // auth

@@ -37,8 +37,6 @@ export class PersonFormPage implements OnInit {
       this.btnText = 'Save';
       const $ = peopleService.getById(id).subscribe((p) => {
         this.form = buildFormGroup(p);
-        console.log(this.form.get('name.middle'));
-        console.log(this.form.get('name.zol'));
         $.unsubscribe();
       });
     }

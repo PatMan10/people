@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { FormGroup, FormArray, FormControl } from '@angular/forms';
+import { FormGroup, FormArray } from '@angular/forms';
 import { ValidationError } from 'class-validator';
 
 import { extractErrorMessages } from '../utils/form';
@@ -19,10 +19,10 @@ export class GetValidationErrorsPipe implements PipeTransform {
 }
 
 @Pipe({ name: 'getArr' })
-export class GetFormArray implements PipeTransform {
-  transform(fg: FormGroup, path: string): FormArray {
-    const fa = fg.get(path);
-    if (fa && fa instanceof FormArray) return fa;
-    return new FormArray([]);
+export class GetFormArrayPipe implements PipeTransform {
+  transform(grp: FormGroup, path: string): FormArray | null {
+    const arr = grp.get(path);
+    if (arr && arr instanceof FormArray) return arr;
+    return null;
   }
 }
