@@ -66,6 +66,7 @@ export class PersonFormPage implements OnInit {
           buildFormGroup(new Email())
         );
     }
+    console.log(this.form);
   }
 
   removeFromArr(path: ArrayPath, index: number) {

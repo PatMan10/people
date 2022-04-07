@@ -143,6 +143,67 @@
       </ng-container>
     </div>
 
+    <!----CONTACT GROUP---->
+    <div formGroupName="contact">
+      <!----PHONE ARRAY---->
+      <div
+        *ngIf="form | getArr: 'contact.phone' as phoneArr"
+        formArrayName="phone"
+        class="mb-3 flex-col-aiC"
+      >
+        <div
+          *ngFor="let phone of phoneArr.controls; let i = index"
+          class="input-group mb-3"
+          style="align-self: stretch"
+          [formGroupName]="i"
+        >
+          <div class="input-group-prepend">
+            <select
+              formControlName="type"
+              class="btn btn-outline-primary"
+              type="button"
+            >
+              <option selected>Select Type</option>
+              <option>Mobile</option>
+              <option>Home</option>
+              <option>Work</option>
+              <option>Other</option>
+            </select>
+          </div>
+
+          <input
+            formControlName="number"
+            [ngClass]="(errors | ersExist: 'phone') ? 'is-invalid' : ''"
+            type="text"
+            class="form-control"
+            placeholder="Middle Name"
+          />
+          <div class="input-group-append">
+            <button
+              class="btn btn-outline-danger"
+              type="button"
+              (click)="removeFromArr('contact.phone', i)"
+            >
+              X
+            </button>
+          </div>
+
+          <ng-container *ngIf="errors | getErs: 'phone' as firstErs">
+            <div *ngIf="firstErs.length > 0" class="invalid-feedback">
+              <span *ngFor="let eMsg of firstErs">{{ eMsg }}</span>
+            </div>
+          </ng-container>
+        </div>
+        <button
+          type="button"
+          class="btn btn-outline-success"
+          (click)="addToArr('contact.phone')"
+        >
+          Add Phone
+        </button>
+      </div>
+    </div>
+
     <button type="submit" class="btn btn-primary">
       {{ btnText }}
     </button>
