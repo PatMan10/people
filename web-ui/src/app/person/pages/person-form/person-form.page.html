@@ -162,12 +162,14 @@
               formControlName="type"
               class="btn btn-outline-primary"
               type="button"
+              style="height: 100%"
             >
-              <option selected>Select Type</option>
-              <option>Mobile</option>
-              <option>Home</option>
-              <option>Work</option>
-              <option>Other</option>
+              <option
+                *ngFor="let type of PhoneType | enumToArr"
+                [selected]="phone.value.type === type"
+              >
+                {{ type | titlecase }}
+              </option>
             </select>
           </div>
 
@@ -176,7 +178,7 @@
             [ngClass]="(errors | ersExist: 'phone') ? 'is-invalid' : ''"
             type="text"
             class="form-control"
-            placeholder="Middle Name"
+            placeholder="Phone Number"
           />
           <div class="input-group-append">
             <button
@@ -188,9 +190,9 @@
             </button>
           </div>
 
-          <ng-container *ngIf="errors | getErs: 'phone' as firstErs">
-            <div *ngIf="firstErs.length > 0" class="invalid-feedback">
-              <span *ngFor="let eMsg of firstErs">{{ eMsg }}</span>
+          <ng-container *ngIf="errors | getErs: 'phone' as phoneErs">
+            <div *ngIf="phoneErs.length > 0" class="invalid-feedback">
+              <span *ngFor="let eMsg of phoneErs">{{ eMsg }}</span>
             </div>
           </ng-container>
         </div>
@@ -198,6 +200,66 @@
           type="button"
           class="btn btn-outline-success"
           (click)="addToArr('contact.phone')"
+        >
+          Add Phone
+        </button>
+      </div>
+
+      <!----EMAIL ARRAY---->
+      <div
+        *ngIf="form | getArr: 'contact.email' as emailArr"
+        formArrayName="email"
+        class="mb-3 flex-col-aiC"
+      >
+        <div
+          *ngFor="let email of emailArr.controls; let i = index"
+          class="input-group mb-3"
+          style="align-self: stretch"
+          [formGroupName]="i"
+        >
+          <div class="input-group-prepend">
+            <select
+              formControlName="type"
+              class="btn btn-outline-primary"
+              type="button"
+              style="height: 100%"
+            >
+              <option
+                *ngFor="let type of EmailType | enumToArr"
+                [selected]="email.value.type === type"
+              >
+                {{ type | titlecase }}
+              </option>
+            </select>
+          </div>
+
+          <input
+            formControlName="address"
+            [ngClass]="(errors | ersExist: 'email') ? 'is-invalid' : ''"
+            type="text"
+            class="form-control"
+            placeholder="Email Address"
+          />
+          <div class="input-group-append">
+            <button
+              class="btn btn-outline-danger"
+              type="button"
+              (click)="removeFromArr('contact.email', i)"
+            >
+              X
+            </button>
+          </div>
+
+          <ng-container *ngIf="errors | getErs: 'email' as emailErs">
+            <div *ngIf="emailErs.length > 0" class="invalid-feedback">
+              <span *ngFor="let eMsg of emailErs">{{ eMsg }}</span>
+            </div>
+          </ng-container>
+        </div>
+        <button
+          type="button"
+          class="btn btn-outline-success"
+          (click)="addToArr('contact.email')"
         >
           Add Phone
         </button>

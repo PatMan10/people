@@ -3,7 +3,13 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FormArray, FormControl } from '@angular/forms';
 import { ValidationError } from 'class-validator';
 
-import { Person, Phone, Email } from '../../../person/person.model';
+import {
+  Person,
+  Phone,
+  Email,
+  PhoneType,
+  EmailType,
+} from '../../../person/person.model';
 import { PersonService } from '../../../person/person.service';
 import { UiUrls } from '../../../common/utils/urls';
 import {
@@ -25,6 +31,9 @@ type ArrayPath =
   styleUrls: ['./person-form.page.scss'],
 })
 export class PersonFormPage implements OnInit {
+  readonly PhoneType = PhoneType;
+  readonly EmailType = EmailType;
+
   id: string | null = null;
   title = 'Add Person';
   btnText = 'Add';

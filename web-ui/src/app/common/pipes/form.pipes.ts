@@ -26,3 +26,10 @@ export class GetFormArrayPipe implements PipeTransform {
     return null;
   }
 }
+
+@Pipe({ name: 'enumToArr' })
+export class EnumToArrayPipe implements PipeTransform {
+  transform(e: Record<string, string>): string[] {
+    return Object.keys(e).map((k) => e[k]);
+  }
+}

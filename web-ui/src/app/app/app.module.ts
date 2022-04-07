@@ -15,6 +15,7 @@ import {
   ValidationErrorsExistPipe,
   GetValidationErrorsPipe,
   GetFormArrayPipe,
+  EnumToArrayPipe,
 } from '../common/pipes/form.pipes';
 import {
   InfoModal,
@@ -49,6 +50,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     GetValidationErrorsPipe,
     GetFormArrayPipe,
     GetBootstrapColorPipe,
+    EnumToArrayPipe,
 
     // auth
     RegisterPage,
