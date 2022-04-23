@@ -14,7 +14,7 @@ export class PersonListPage implements OnInit {
   people$: Observable<Person[]>;
 
   constructor(peopleService: PersonService) {
-    this.people$ = peopleService.getAll();
+    this.people$ = peopleService.getByQuery();
   }
 
   ngOnInit(): void {}

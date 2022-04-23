@@ -1,10 +1,12 @@
-import { Injectable } from '@angular/core';
+export enum LogLevel {
+  ERROR = 0,
+  WARN = 1,
+  INFO = 2,
+  DEBUG = 3,
+}
 
-@Injectable({
-  providedIn: 'root',
-})
 export class Logger {
-  public level: number = LogLevel.DEBUG;
+  level = LogLevel.DEBUG;
 
   error(...data: any[]) {
     if (this.level >= LogLevel.ERROR) console.error('error:', ...data);
@@ -22,10 +24,5 @@ export class Logger {
     if (this.level >= LogLevel.DEBUG) console.log('debug:', ...data);
   }
 }
-
-export enum LogLevel {
-  ERROR = 0,
-  WARN = 1,
-  INFO = 2,
-  DEBUG = 3,
-}
+const logger = new Logger;
+export default logger;

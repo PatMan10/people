@@ -12,11 +12,7 @@ import {
 } from '../../../person/person.model';
 import { PersonService } from '../../../person/person.service';
 import { UiUrls } from '../../../common/utils/urls';
-import {
-  buildFormGroup,
-  validateForm,
-  extractErrorMessages,
-} from '../../../common/utils/form';
+import { buildFormGroup, validateForm } from '../../../common/utils/form';
 import { ErrorHandlingService } from 'src/app/common/services/error-handling.service';
 
 type ArrayPath =
@@ -43,7 +39,7 @@ export class PersonFormPage implements OnInit {
   constructor(
     route: ActivatedRoute,
     private readonly router: Router,
-    private readonly peopleService: PersonService,
+    private readonly peopleApi: PersonService,
     private readonly erService: ErrorHandlingService
   ) {
     const id = route.snapshot.paramMap.get('id');
@@ -51,7 +47,7 @@ export class PersonFormPage implements OnInit {
       this.id = id;
       this.title = 'Edit Person';
       this.btnText = 'Save';
-      const $ = peopleService.getById(id).subscribe((p) => {
+      const $ = peopleApi.getById(id).subscribe((p) => {
         this.form = buildFormGroup(p);
         $.unsubscribe();
       });
@@ -75,7 +71,6 @@ export class PersonFormPage implements OnInit {
           buildFormGroup(new Email())
         );
     }
-    console.log(this.form);
   }
 
   removeFromArr(path: ArrayPath, index: number) {
@@ -87,19 +82,11 @@ export class PersonFormPage implements OnInit {
 
     if (this.errors.length > 0) return;
 
-    let $ = this.peopleService.add(this.form.value);
-    let operation = 'add person';
-
-    if (this.id) {
-      $ = this.peopleService.update(this.id, this.form.value);
-      operation = 'update person';
-    }
-
-    $.subscribe({
+    this.peopleApi.save(this.form.value).subscribe({
       next: () => {
         this.router.navigate([UiUrls.person.VIEW_ALL]);
       },
-      error: this.erService.handleHttpError(operation, new Person()),
+      error: this.erService.handleHttpError('save person', new Person()),
     });
   }
 }
