@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { DrawerService } from 'src/app/app/services/drawer.service';
-import { Drawer } from 'src/app/app/utils/enums';
-import { UiUrls } from 'src/app/common/utils/urls';
+import { DrawerService } from 'src/app/services/drawer.service';
+import { UiUrls } from 'src/app/modules/common/utils/urls';
+import {Drawer} from "../../app.utils";
 
 @Component({
   selector: 'app-nav-drawer',

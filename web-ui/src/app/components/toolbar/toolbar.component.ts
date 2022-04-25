@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { DrawerService } from 'src/app/app/services/drawer.service';
-import { Drawer } from 'src/app/app/utils/enums';
+import { DrawerService } from 'src/app/services/drawer.service';
+import {Drawer} from "../../app.utils";
 
 @Component({
   selector: 'app-toolbar',

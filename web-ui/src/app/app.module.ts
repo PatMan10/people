@@ -16,24 +16,24 @@ import {
   GetValidationErrorsPipe,
   GetFormArrayPipe,
   EnumToArrayPipe,
-} from '../common/pipes/form.pipes';
+} from './modules/common/pipes/form.pipes';
 import {
   InfoModal,
   GetBootstrapColorPipe,
-} from '../common/modal/info/info.modal';
+} from './modules/common/modal/info/info.modal';
 
 // auth
-import { RegisterPage } from '../auth/pages/register/register.page';
-import { LoginPage } from '../auth/pages/login/login.page';
+import { RegisterPage } from './modules/auth/pages/register/register.page';
+import { LoginPage } from './modules/auth/pages/login/login.page';
 
 // user
-import { UserDetailPage } from '../user/pages/user-detail/user-detail.page';
-import { UserFormPage } from '../user/pages/user-form/user-form.page';
+import { UserDetailPage } from './modules/user/pages/user-detail/user-detail.page';
+import { UserFormPage } from './modules/user/pages/user-form/user-form.page';
 
 // person
-import { PersonFormPage } from '../person/pages/person-form/person-form.page';
-import { PersonDetailPage } from '../person/pages/person-detail/person-detail.page';
-import { PersonListPage } from '../person/pages/person-list/person-list.page';
+import { PersonFormPage } from './modules/person/pages/person-form/person-form.page';
+import { PersonDetailPage } from './modules/person/pages/person-detail/person-detail.page';
+import { PersonListPage } from './modules/person/pages/person-list/person-list.page';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({

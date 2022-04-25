@@ -9,11 +9,11 @@ import {
   Email,
   PhoneType,
   EmailType,
-} from '../../../person/person.model';
-import { PersonService } from '../../../person/person.service';
+} from '../../person.model';
+import { PersonService } from '../../person.service';
 import { UiUrls } from '../../../common/utils/urls';
 import { buildFormGroup, validateForm } from '../../../common/utils/form';
-import { ErrorHandlingService } from 'src/app/common/services/error-handling.service';
+import { ErrorHandlingService } from 'src/app/modules/common/services/error-handling.service';
 
 type ArrayPath =
   | 'name.middle'

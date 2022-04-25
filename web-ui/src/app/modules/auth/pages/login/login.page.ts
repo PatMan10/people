@@ -6,8 +6,8 @@ import { UiUrls } from '../../../common/utils/urls';
 import { Credentials } from '../../auth.model';
 import { AuthService } from '../../auth.service';
 import { buildFormGroup, validateForm } from '../../../common/utils/form';
-import { ErrorHandlingService } from 'src/app/common/services/error-handling.service';
-import { GetUserDto } from 'src/app/user/user.model';
+import { ErrorHandlingService } from 'src/app/modules/common/services/error-handling.service';
+import { GetUserDto } from 'src/app/modules/user/user.model';
 
 @Component({
   selector: 'app-login',

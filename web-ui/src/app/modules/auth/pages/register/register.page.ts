@@ -6,7 +6,7 @@ import { UiUrls } from '../../../common/utils/urls';
 import { CreateUserDto, GetUserDto } from '../../../user/user.model';
 import { AuthService } from '../../auth.service';
 import { buildFormGroup, validateForm } from '../../../common/utils/form';
-import { ErrorHandlingService } from 'src/app/common/services/error-handling.service';
+import { ErrorHandlingService } from 'src/app/modules/common/services/error-handling.service';
 
 @Component({
   selector: 'app-register',

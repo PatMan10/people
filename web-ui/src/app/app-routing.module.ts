@@ -1,14 +1,14 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { RegisterPage } from '../auth/pages/register/register.page';
-import { LoginPage } from '../auth/pages/login/login.page';
-import { UserDetailPage } from '../user/pages/user-detail/user-detail.page';
-import { UserFormPage } from '../user/pages/user-form/user-form.page';
-import { PersonDetailPage } from '../person/pages/person-detail/person-detail.page';
-import { PersonFormPage } from '../person/pages/person-form/person-form.page';
-import { PersonListPage } from '../person/pages/person-list/person-list.page';
-import { UiUrls } from '../common/utils/urls';
+import { RegisterPage } from './modules/auth/pages/register/register.page';
+import { LoginPage } from './modules/auth/pages/login/login.page';
+import { UserDetailPage } from './modules/user/pages/user-detail/user-detail.page';
+import { UserFormPage } from './modules/user/pages/user-form/user-form.page';
+import { PersonDetailPage } from './modules/person/pages/person-detail/person-detail.page';
+import { PersonFormPage } from './modules/person/pages/person-form/person-form.page';
+import { PersonListPage } from './modules/person/pages/person-list/person-list.page';
+import { UiUrls } from './modules/common/utils/urls';
 
 const routes: Routes = [
   // index
