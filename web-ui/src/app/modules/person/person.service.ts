@@ -31,6 +31,7 @@ export class PersonService {
     const { _id } = person;
     const options = {
       headers: { 'content-type': 'application/json' },
+      withCredentials: true,
     };
     const $ = _id
       ? this.http.put<Person>(ApiUrls.person.update(_id), person, options)

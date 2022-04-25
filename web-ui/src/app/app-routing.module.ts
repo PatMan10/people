@@ -9,6 +9,7 @@ import { PersonDetailPage } from './modules/person/pages/person-detail/person-de
 import { PersonFormPage } from './modules/person/pages/person-form/person-form.page';
 import { PersonListPage } from './modules/person/pages/person-list/person-list.page';
 import { UiUrls } from './modules/common/utils/urls';
+import { LogoutComponent } from './modules/auth/pages/logout/logout.component';
 
 const routes: Routes = [
   // index
@@ -17,6 +18,7 @@ const routes: Routes = [
   // auth
   { path: UiUrls.auth.REGISTER, component: RegisterPage },
   { path: UiUrls.auth.LOGIN, component: LoginPage },
+  { path: UiUrls.auth.LOGOUT, component: LogoutComponent },
 
   // users
   { path: UiUrls.user.GET_BY_ID, component: UserDetailPage },

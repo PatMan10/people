@@ -19,6 +19,7 @@ export class AuthService {
   register(user: CreateUserDto): Observable<GetUserDto> {
     return this.http.post<GetUserDto>(ApiUrls.auth.register(), user, {
       headers: new HttpHeaders({ 'content-type': 'application/json' }),
+      withCredentials: true,
     });
   }
 
@@ -26,6 +27,7 @@ export class AuthService {
     return this.http
       .post<GetUserDto>(ApiUrls.auth.login(), credentials, {
         headers: new HttpHeaders({ 'content-type': 'application/json' }),
+        withCredentials: true,
       })
       .pipe(tap((payload) => (this.cache.user = payload)));
   }
@@ -34,6 +36,7 @@ export class AuthService {
     return this.http
       .post<void>(ApiUrls.auth.logout(), undefined, {
         headers: new HttpHeaders({ 'content-type': 'application/json' }),
+        withCredentials: true,
       })
       .pipe(tap(() => (this.cache.user = undefined)));
   }

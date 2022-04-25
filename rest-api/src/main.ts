@@ -11,9 +11,8 @@ import logger from './common/utils/logger';
 
 if (require.main === module)
   (async () => {
-    const app = await NestFactory.create(AppModule, {
-      cors: true,
-    });
+    const app = await NestFactory.create(AppModule);
+    app.enableCors({ origin: /http:\/\/localhost*/, credentials: true });
     setupMiddleware(app, config);
 
     await app.listen(config.PORT);

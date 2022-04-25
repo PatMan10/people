@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { DrawerService } from 'src/app/services/drawer.service';
 import { UiUrls } from 'src/app/modules/common/utils/urls';
-import {Drawer} from "../../app.utils";
+import { Drawer } from '../../app.utils';
+import { AuthCache } from 'src/app/modules/auth/auth.cache';
 
 @Component({
   selector: 'app-nav-drawer',
@@ -12,7 +13,10 @@ export class NavDrawerComponent implements OnInit {
   left = '-250px';
   Urls = UiUrls;
 
-  constructor(public drawer: DrawerService) {}
+  constructor(
+    public readonly drawer: DrawerService,
+    public readonly authCache: AuthCache
+  ) {}
 
   ngOnInit(): void {
     this.drawer.state.subscribe((s) => {

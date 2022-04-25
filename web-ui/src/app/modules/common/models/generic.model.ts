@@ -36,7 +36,8 @@ export class GenericConst {
 // TS MODEL UTILS
 //####################
 
-export const clone = <T>(o: T): T => JSON.parse(JSON.stringify(o));
+export const clone = <T>(o: T): T =>
+  o ? JSON.parse(JSON.stringify(o)) : undefined;
 
 export const json = <T>(o: T): T => Object.assign({}, o);
 

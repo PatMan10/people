@@ -1,7 +1,29 @@
-<div id="nav-drawer" class="nav-drawer" [style.left]="left">
+<div class="nav-drawer" [style.left]="left">
+  <div *ngIf="authCache.user" class="flex-row-aiC p-2">
+    <div class="static-icon-container-l-circle">
+      <img
+        src="../../../assets//images/anonymous.png"
+        class="responsive-image"
+      />
+    </div>
+    <div>
+      <span class="ml-3">{{ authCache.user.handle }}</span>
+      <br />
+      <span class="ml-3">{{ authCache.user.email }}</span>
+    </div>
+  </div>
+
   <nav id="nav-bar" class="nav-bar">
-    <a [routerLink]="Urls.auth.LOGIN" (click)="drawer.close()">Login</a>
-    <a [routerLink]="Urls.auth.REGISTER" (click)="drawer.close()">Register</a>
+    <div *ngIf="!authCache.user">
+      <a [routerLink]="Urls.auth.LOGIN" (click)="drawer.close()">Login</a>
+      <a [routerLink]="Urls.auth.REGISTER" (click)="drawer.close()">Register</a>
+    </div>
+    <a
+      *ngIf="authCache.user"
+      [routerLink]="Urls.auth.LOGOUT"
+      (click)="drawer.close()"
+      >Logout</a
+    >
     <a [routerLink]="Urls.person.VIEW_ALL" (click)="drawer.close()">People</a>
   </nav>
 </div>
