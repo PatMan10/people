@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, tap } from 'rxjs';
 
@@ -17,27 +17,18 @@ export class AuthService {
   ) {}
 
   register(user: CreateUserDto): Observable<GetUserDto> {
-    return this.http.post<GetUserDto>(ApiUrls.auth.register(), user, {
-      headers: new HttpHeaders({ 'content-type': 'application/json' }),
-      withCredentials: true,
-    });
+    return this.http.post<GetUserDto>(ApiUrls.auth.register(), user);
   }
 
   login(credentials: Credentials): Observable<GetUserDto> {
     return this.http
-      .post<GetUserDto>(ApiUrls.auth.login(), credentials, {
-        headers: new HttpHeaders({ 'content-type': 'application/json' }),
-        withCredentials: true,
-      })
+      .post<GetUserDto>(ApiUrls.auth.login(), credentials)
       .pipe(tap((payload) => (this.cache.user = payload)));
   }
 
   logout(): Observable<void> {
     return this.http
-      .post<void>(ApiUrls.auth.logout(), undefined, {
-        headers: new HttpHeaders({ 'content-type': 'application/json' }),
-        withCredentials: true,
-      })
+      .post<void>(ApiUrls.auth.logout(), undefined)
       .pipe(tap(() => (this.cache.user = undefined)));
   }
 }

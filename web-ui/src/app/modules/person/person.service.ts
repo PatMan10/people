@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
@@ -29,13 +29,9 @@ export class PersonService {
 
   save(person: Person): Observable<Person> {
     const { _id } = person;
-    const options = {
-      headers: { 'content-type': 'application/json' },
-      withCredentials: true,
-    };
     const $ = _id
-      ? this.http.put<Person>(ApiUrls.person.update(_id), person, options)
-      : this.http.post<Person>(ApiUrls.person.add(), person, options);
+      ? this.http.put<Person>(ApiUrls.person.update(_id), person)
+      : this.http.post<Person>(ApiUrls.person.add(), person);
 
     return $.pipe(tap((res) => logger.debug('save', res)));
   }
