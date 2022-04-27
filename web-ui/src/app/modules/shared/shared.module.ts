@@ -14,7 +14,9 @@ import { InfoModal, GetBootstrapColorPipe } from './modals/info/info.modal';
 
 @NgModule({
   declarations: [
+    // modals
     InfoModal,
+    // pipes
     ValidationErrorsExistPipe,
     GetValidationErrorsPipe,
     GetFormArrayPipe,
@@ -24,8 +26,9 @@ import { InfoModal, GetBootstrapColorPipe } from './modals/info/info.modal';
   imports: [CommonModule, ReactiveFormsModule, HttpClientModule, NgbModule],
   exports: [
     // modules
-    ReactiveFormsModule,
+    CommonModule,
     HttpClientModule,
+    ReactiveFormsModule,
     NgbModule,
     // modals
     InfoModal,
