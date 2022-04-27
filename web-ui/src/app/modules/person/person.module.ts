@@ -3,12 +3,12 @@ import { CommonModule } from '@angular/common';
 
 import { SharedModule } from '../shared/shared.module';
 import { PersonRoutingModule } from './person-routing.module';
-import { PersonListPage } from './pages/person-list/person-list.page';
-import { PersonDetailPage } from './pages/person-detail/person-detail.page';
-import { PersonFormPage } from './pages/person-form/person-form.page';
+import { PersonListComponent } from './components/person-list/person-list.component';
+import { PersonDetailComponent } from './components/person-detail/person-detail.component';
+import { PersonFormComponent } from './components/person-form/person-form.component';
 
 @NgModule({
-  declarations: [PersonListPage, PersonDetailPage, PersonFormPage],
+  declarations: [PersonListComponent, PersonDetailComponent, PersonFormComponent],
   imports: [CommonModule, SharedModule, PersonRoutingModule],
 })
 export class PersonModule {}

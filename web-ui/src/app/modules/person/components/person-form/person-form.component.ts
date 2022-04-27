@@ -23,10 +23,10 @@ type ArrayPath =
 
 @Component({
   selector: 'app-person-form',
-  templateUrl: './person-form.page.html',
-  styleUrls: ['./person-form.page.scss'],
+  templateUrl: './person-form.component.html',
+  styleUrls: ['./person-form.component.scss'],
 })
-export class PersonFormPage implements OnInit {
+export class PersonFormComponent implements OnInit {
   readonly PhoneType = PhoneType;
   readonly EmailType = EmailType;
 

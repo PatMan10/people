@@ -6,10 +6,10 @@ import { UiUrls } from 'src/app/modules/shared/utils/urls';
 
 @Component({
   selector: 'app-person-list',
-  templateUrl: './person-list.page.html',
-  styleUrls: ['./person-list.page.scss'],
+  templateUrl: './person-list.component.html',
+  styleUrls: ['./person-list.component.scss'],
 })
-export class PersonListPage implements OnInit {
+export class PersonListComponent implements OnInit {
   Urls = UiUrls;
   people$: Observable<Person[]>;
 

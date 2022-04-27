@@ -10,7 +10,7 @@ import {
   GetFormArrayPipe,
   EnumToArrayPipe,
 } from './pipes/form.pipes';
-import { InfoModal, GetBootstrapColorPipe } from './modal/info/info.modal';
+import { InfoModal, GetBootstrapColorPipe } from './modals/info/info.modal';
 
 @NgModule({
   declarations: [

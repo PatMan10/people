@@ -8,10 +8,10 @@ import { ErrorHandlingService } from 'src/app/modules/shared/services/error-hand
 
 @Component({
   selector: 'app-person-detail',
-  templateUrl: './person-detail.page.html',
-  styleUrls: ['./person-detail.page.scss'],
+  templateUrl: './person-detail.component.html',
+  styleUrls: ['./person-detail.component.scss'],
 })
-export class PersonDetailPage implements OnInit {
+export class PersonDetailComponent implements OnInit {
   readonly Urls = UiUrls;
   person$: Observable<Person> = of(new Person());
 

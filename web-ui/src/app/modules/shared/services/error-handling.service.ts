@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 
-import { ModalService } from '../modal/modal.service';
-import { InfoModalData } from '../modal/info/info.modal';
+import { ModalService } from '../modals/modal.service';
+import { InfoModalData } from '../modals/info/info.modal';
 import { ErrorResponse } from '../models/http.model';
 
 @Injectable({

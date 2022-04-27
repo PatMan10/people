@@ -2,15 +2,15 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { UiUrls } from '../shared/utils/urls';
-import { PersonListPage } from './pages/person-list/person-list.page';
-import { PersonDetailPage } from './pages/person-detail/person-detail.page';
-import { PersonFormPage } from './pages/person-form/person-form.page';
+import { PersonListComponent } from './components/person-list/person-list.component';
+import { PersonDetailComponent } from './components/person-detail/person-detail.component';
+import { PersonFormComponent } from './components/person-form/person-form.component';
 
 const routes: Routes = [
-  { path: UiUrls.person.VIEW_ALL, component: PersonListPage },
-  { path: UiUrls.person.VIEW_BY_ID, component: PersonDetailPage },
-  { path: UiUrls.person.ADD, component: PersonFormPage },
-  { path: UiUrls.person.EDIT, component: PersonFormPage },
+  { path: UiUrls.person.VIEW_ALL, component: PersonListComponent },
+  { path: UiUrls.person.VIEW_BY_ID, component: PersonDetailComponent },
+  { path: UiUrls.person.ADD, component: PersonFormComponent },
+  { path: UiUrls.person.EDIT, component: PersonFormComponent },
 ];
 
 @NgModule({
