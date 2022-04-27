@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ValidationError } from 'class-validator';
 
-import { UiUrls } from '../../../common/utils/urls';
+import { UiUrls } from '../../../shared/utils/urls';
 import { CreateUserDto, GetUserDto } from '../../../user/user.model';
 import { AuthService } from '../../auth.service';
-import { buildFormGroup, validateForm } from '../../../common/utils/form';
-import { ErrorHandlingService } from 'src/app/modules/common/services/error-handling.service';
+import { buildFormGroup, validateForm } from '../../../shared/utils/form';
+import { ErrorHandlingService } from 'src/app/modules/shared/services/error-handling.service';
 
 @Component({
   selector: 'app-register',

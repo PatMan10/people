@@ -3,9 +3,9 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
-import { ApiUrls } from '../common/utils/urls';
+import { ApiUrls } from '../shared/utils/urls';
 import { Person } from './person.model';
-import logger from '../common/utils/logger';
+import logger from '../shared/utils/logger';
 
 @Injectable({
   providedIn: 'root',

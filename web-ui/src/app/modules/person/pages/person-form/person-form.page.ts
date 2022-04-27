@@ -11,9 +11,9 @@ import {
   EmailType,
 } from '../../person.model';
 import { PersonService } from '../../person.service';
-import { UiUrls } from '../../../common/utils/urls';
-import { buildFormGroup, validateForm } from '../../../common/utils/form';
-import { ErrorHandlingService } from 'src/app/modules/common/services/error-handling.service';
+import { UiUrls } from '../../../shared/utils/urls';
+import { buildFormGroup, validateForm } from '../../../shared/utils/form';
+import { ErrorHandlingService } from 'src/app/modules/shared/services/error-handling.service';
 
 type ArrayPath =
   | 'name.middle'

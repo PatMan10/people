@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DrawerService } from 'src/app/services/drawer.service';
-import { UiUrls } from 'src/app/modules/common/utils/urls';
+import { UiUrls } from 'src/app/modules/shared/utils/urls';
 import { Drawer } from '../../app.utils';
 import { AuthCache } from 'src/app/modules/auth/auth.cache';
 

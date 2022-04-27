@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { GetUserDto } from '../user/user.model';
-import { clone } from '../common/models/generic.model';
+import { clone } from '../shared/models/generic.model';
 
 @Injectable({
   providedIn: 'root',

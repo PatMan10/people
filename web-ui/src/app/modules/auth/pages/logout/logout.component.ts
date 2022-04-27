@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { UiUrls } from '../../../common/utils/urls';
+import { UiUrls } from '../../../shared/utils/urls';
 import { AuthService } from '../../auth.service';
-import { ErrorHandlingService } from '../../../common/services/error-handling.service';
+import { ErrorHandlingService } from '../../../shared/services/error-handling.service';
 
 @Component({ template: '' })
 export class LogoutComponent implements OnInit {

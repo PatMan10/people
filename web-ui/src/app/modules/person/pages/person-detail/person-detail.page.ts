@@ -3,8 +3,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { Person } from 'src/app/modules/person/person.model';
 import { PersonService } from 'src/app/modules/person/person.service';
-import { UiUrls } from 'src/app/modules/common/utils/urls';
-import { ErrorHandlingService } from 'src/app/modules/common/services/error-handling.service';
+import { UiUrls } from 'src/app/modules/shared/utils/urls';
+import { ErrorHandlingService } from 'src/app/modules/shared/services/error-handling.service';
 
 @Component({
   selector: 'app-person-detail',

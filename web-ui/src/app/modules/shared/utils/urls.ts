@@ -11,12 +11,12 @@ export class UiUrls {
   };
 
   static readonly user = class {
-    static readonly GET_BY_ID = `users/${Param.ID}`;
-    static readonly UPDATE = `users/${Param.ID}`;
+    static readonly VIEW_BY_ID = `users/${Param.ID}`;
+    static readonly EDIT = `users/${Param.ID}`;
     static readonly DELETE = `users/${Param.ID}`;
 
-    static getById = (id: string) => this.GET_BY_ID.replace(Param.ID, id);
-    static update = (id: string) => this.UPDATE.replace(Param.ID, id);
+    static getById = (id: string) => this.VIEW_BY_ID.replace(Param.ID, id);
+    static edit = (id: string) => this.EDIT.replace(Param.ID, id);
     static delete = (id: string) => this.DELETE.replace(Param.ID, id);
   };
 
