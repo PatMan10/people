@@ -1,38 +1,44 @@
 export enum LogLevel {
-  ERROR = 0,
-  WARN = 1,
-  INFO = 2,
-  DEBUG = 3,
-  VERBOSE = 4,
+  None = 0,
+  Error = 1,
+  Warn = 2,
+  Info = 3,
+  Debug = 4,
+  Verbose = 5,
 }
 
 export class Logger {
-  level = LogLevel.VERBOSE;
+  constructor(public context: string, public level: LogLevel){}
+
+  private get ctx(){
+    return this.context ? `${this.context} ` : '';
+  }
 
   error(...data: any[]) {
-    if (this.level >= LogLevel.ERROR)
-      console.log('%c error:', 'color: red;', ...data);
+    if (this.level >= LogLevel.Error)
+      console.log(`%c${this.ctx}error:`, 'color: red;', ...data);
   }
 
   warn(...data: any[]) {
-    if (this.level >= LogLevel.WARN)
-      console.log('%c warn:', 'color: orange;', ...data);
+    if (this.level >= LogLevel.Warn)
+      console.log(`%c${this.ctx}warn:`, 'color: orange;', ...data);
   }
 
   info(...data: any[]) {
-    if (this.level >= LogLevel.INFO)
-      console.log('%c info:', 'color: green;', ...data);
+    if (this.level >= LogLevel.Info)
+      console.log(`%c${this.ctx}info:`, 'color: green;', ...data);
   }
 
   debug(...data: any[]) {
-    if (this.level >= LogLevel.DEBUG)
-      console.log('%c debug:', 'color: blue;', ...data);
+    if (this.level >= LogLevel.Debug)
+      console.log(`%c${this.ctx}debug:`, 'color: blue;', ...data);
   }
 
   verbose(...data: any[]) {
-    if (this.level >= LogLevel.VERBOSE)
-      console.log('%c verbose:', 'color: black;', ...data);
+    if (this.level >= LogLevel.Verbose)
+      console.log(`%c${this.ctx}verbose:`, 'color: black;', ...data);
   }
 }
-const logger = new Logger();
+
+const logger = new Logger('App', LogLevel.Debug);
 export default logger;
