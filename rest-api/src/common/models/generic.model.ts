@@ -83,10 +83,10 @@ export class GenericModelDbSchema extends Generic<any> {
 
 export class Query {
   constructor(
-    public options: Options = new Options(),
-    public values: Generic<string[]> = new Generic(),
-    public page: Page = new Page(),
-    public sort: Sort = new Sort('_id', Order.ASCENDING),
+    public options = new Options(),
+    public values = new Generic<string[]>(),
+    public page = new Page(),
+    public sort = new Sort('_id', Order.ASCENDING),
   ) {}
 }
 

@@ -10,9 +10,7 @@ export const compare = (password: string, hash: string): Promise<boolean> =>
   bcrypt.compare(password, hash);
 
 export class Credentials extends PickType(User, ['email', 'password']) {
-  constructor(email: string = '', password: string = '') {
+  constructor(public override email = '', public override password = '') {
     super();
-    this.email = email;
-    this.password = password;
   }
 }

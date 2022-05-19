@@ -1,3 +1,4 @@
+import { HttpStatusCode } from '@angular/common/http';
 import { ValidationError } from 'class-validator';
 
 export class ErrorResponse {
@@ -5,11 +6,7 @@ export class ErrorResponse {
 }
 
 export class ValidationErrorResponse extends ErrorResponse {
-  constructor(
-    status: number,
-    message: string,
-    readonly details?: ValidationError[]
-  ) {
-    super(status, message);
+  constructor(message: string, readonly details?: ValidationError[]) {
+    super(HttpStatusCode.BadRequest, message);
   }
 }

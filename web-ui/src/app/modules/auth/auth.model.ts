@@ -12,7 +12,7 @@ export class Credentials {
   @Matches(UserConst.PASSWORD.REGEX)
   password: string;
 
-  constructor(email: string = '', password: string = '') {
+  constructor(email = '', password = '') {
     this.email = email;
     this.password = password;
   }

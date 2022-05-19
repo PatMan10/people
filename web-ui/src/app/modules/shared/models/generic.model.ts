@@ -1,3 +1,5 @@
+import { IsString } from 'class-validator';
+
 //####################
 // CONSTRAINTS
 //####################
@@ -50,11 +52,8 @@ export class Generic<T> {
 }
 
 export class GenericModel extends Generic<any> {
-  readonly _id: string = '';
-
-  constructor() {
-    super();
-  }
+  @IsString()
+  readonly _id = '';
 }
 
 //####################
@@ -63,10 +62,10 @@ export class GenericModel extends Generic<any> {
 
 export class Query {
   constructor(
-    public options: Options = new Options(),
-    public values: Generic<string[]> = new Generic(),
-    public page: Page = new Page(),
-    public sort: Sort = new Sort('_id', Order.ASCENDING)
+    public options = new Options(),
+    public values = new Generic<string[]>(),
+    public page = new Page(),
+    public sort = new Sort('_id', Order.ASCENDING)
   ) {}
 }
 

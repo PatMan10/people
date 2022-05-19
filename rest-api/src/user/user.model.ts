@@ -68,12 +68,7 @@ export class User extends GenericModel {
   @ApiProperty()
   role: UserRole;
 
-  constructor(
-    handle: string = '',
-    email: string = '',
-    password: string = '',
-    role: UserRole = UserRole.USER,
-  ) {
+  constructor(handle = '', email = '', password = '', role = UserRole.USER) {
     super();
     this.handle = handle;
     this.email = email;
@@ -88,13 +83,9 @@ export class GetUserDto extends PickType(User, [
   'email',
   'role',
 ]) {
-  readonly _id: string | ObjectId;
+  override readonly _id: string | ObjectId;
 
-  constructor(
-    public handle: string = '',
-    public email: string = '',
-    public password: string = '',
-  ) {
+  constructor(public override handle = '', public override email = '') {
     super();
   }
 }
@@ -105,16 +96,16 @@ export class CreateUserDto extends PickType(User, [
   'password',
 ]) {
   constructor(
-    public handle: string = '',
-    public email: string = '',
-    public password: string = '',
+    public override handle = '',
+    public override email = '',
+    public override password = '',
   ) {
     super();
   }
 }
 
 export class UpdateUserDto extends PickType(User, ['handle', 'email']) {
-  constructor(public handle: string = '', public email: string = '') {
+  constructor(public override handle = '', public override email = '') {
     super();
   }
 }

@@ -92,12 +92,7 @@ export class Name {
   @Matches(PersonConst.NAME.NICK.REGEX, { each: true })
   nick: string[];
 
-  constructor(
-    first: string = '',
-    middle: string[] = [],
-    last: string = '',
-    nick: string[] = []
-  ) {
+  constructor(first = '', middle = [], last = '', nick = []) {
     this.first = first;
     this.middle = middle;
     this.last = last;
@@ -118,7 +113,7 @@ export class Contact {
   @IsObject({ each: true })
   email: Email[];
 
-  constructor(phone: Phone[] = [], email: Email[] = []) {
+  constructor(phone = [], email = []) {
     this.phone = phone;
     this.email = email;
   }
@@ -150,7 +145,7 @@ export class Phone {
   @IsDefined()
   number: string;
 
-  constructor(type: PhoneType = PhoneType.HOME, number: string = '') {
+  constructor(type = PhoneType.MOBILE, number = '') {
     this.type = type;
     this.number = number;
   }
@@ -167,7 +162,7 @@ export class Email {
   )
   address: string;
 
-  constructor(type: EmailType = EmailType.PERSONAL, address: string = '') {
+  constructor(type = EmailType.PERSONAL, address = '') {
     this.type = type;
     this.address = address;
   }
@@ -189,11 +184,7 @@ export class Person extends GenericModel {
   @IsObject()
   contact: Contact;
 
-  constructor(
-    name: Name = new Name(),
-    birthday: string = '',
-    contact: Contact = new Contact()
-  ) {
+  constructor(name = new Name(), birthday = '', contact = new Contact()) {
     super();
     this.name = name;
     this.birthday = birthday;

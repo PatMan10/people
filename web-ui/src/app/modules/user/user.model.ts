@@ -61,12 +61,7 @@ export class User extends GenericModel {
   @IsEnum(UserRole)
   role: UserRole;
 
-  constructor(
-    handle: string = '',
-    email: string = '',
-    password: string = '',
-    role: UserRole = UserRole.USER
-  ) {
+  constructor(handle = '', email = '', password = '', role = UserRole.USER) {
     super();
     this.handle = handle;
     this.email = email;
@@ -78,11 +73,7 @@ export class User extends GenericModel {
 export class GetUserDto {
   readonly _id: string = '';
 
-  constructor(
-    public handle: string = '',
-    public email: string = '',
-    public password: string = ''
-  ) {}
+  constructor(public handle = '', public email = '', public password = '') {}
 }
 
 export class CreateUserDto {
@@ -100,7 +91,7 @@ export class CreateUserDto {
   @Matches(UserConst.PASSWORD.REGEX)
   password: string;
 
-  constructor(handle: string = '', email: string = '', password: string = '') {
+  constructor(handle = '', email = '', password = '') {
     this.handle = handle;
     this.email = email;
     this.password = password;
@@ -117,7 +108,7 @@ export class UpdateUserDto {
   @dLength(UserConst.EMAIL.LENGTH.MIN, UserConst.EMAIL.LENGTH.MAX)
   email: string;
 
-  constructor(handle: string = '', email: string = '') {
+  constructor(handle = '', email = '') {
     this.handle = handle;
     this.email = email;
   }
