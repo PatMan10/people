@@ -19,7 +19,7 @@ export class NavDrawerComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.drawer.state.subscribe((s) => {
+    this.drawer.state$.subscribe((s) => {
       this.left = s.openDrawer === Drawer.NAV_DRAWER ? '0px' : '-250px';
     });
   }

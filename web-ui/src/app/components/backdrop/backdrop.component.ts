@@ -14,7 +14,7 @@ export class BackdropComponent implements OnInit {
   constructor(public drawer: DrawerCache) {}
 
   ngOnInit(): void {
-    this.drawer.state.subscribe((s) => {
+    this.drawer.state$.subscribe((s) => {
       this.visibility = s.backdropVisibility;
     });
   }

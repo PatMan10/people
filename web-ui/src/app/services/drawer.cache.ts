@@ -12,7 +12,7 @@ export class DrawerCache {
     this.stateSub.next(new DrawerState());
   }
 
-  get state(): Observable<DrawerState> {
+  get state$(): Observable<DrawerState> {
     return this.stateSub.asObservable();
   }
 
