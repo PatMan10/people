@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { DrawerService } from 'src/app/services/drawer.service';
+import { DrawerCache } from 'src/app/services/drawer.cache';
 import {Visibility} from "../../app.utils";
 
 @Component({
@@ -11,7 +11,7 @@ export class BackdropComponent implements OnInit {
   readonly Visibility = Visibility;
   visibility = Visibility.HIDDEN;
 
-  constructor(public drawer: DrawerService) {}
+  constructor(public drawer: DrawerCache) {}
 
   ngOnInit(): void {
     this.drawer.state.subscribe((s) => {

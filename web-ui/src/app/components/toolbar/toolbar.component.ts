@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { DrawerService } from 'src/app/services/drawer.service';
+import { DrawerCache } from 'src/app/services/drawer.cache';
 import { Drawer } from '../../app.utils';
 
 @Component({
@@ -10,7 +10,7 @@ import { Drawer } from '../../app.utils';
 export class ToolbarComponent implements OnInit {
   readonly Drawer = Drawer;
 
-  constructor(readonly drawer: DrawerService) {}
+  constructor(readonly drawer: DrawerCache) {}
 
   ngOnInit(): void {}
 }

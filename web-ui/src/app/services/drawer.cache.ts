@@ -5,29 +5,29 @@ import {Drawer, Visibility} from "../app.utils";
 @Injectable({
   providedIn: 'root',
 })
-export class DrawerService {
-  private stateSub = new Subject<DrawerServiceState>();
+export class DrawerCache {
+  private stateSub = new Subject<DrawerState>();
 
   constructor() {
-    this.stateSub.next(new DrawerServiceState());
+    this.stateSub.next(new DrawerState());
   }
 
-  get state(): Observable<DrawerServiceState> {
+  get state(): Observable<DrawerState> {
     return this.stateSub.asObservable();
   }
 
   open(drawer: Drawer): void {
-    this.stateSub.next(new DrawerServiceState(drawer, Visibility.VISIBLE));
+    this.stateSub.next(new DrawerState(drawer, Visibility.VISIBLE));
   }
 
   close(): void {
-    this.stateSub.next(new DrawerServiceState());
+    this.stateSub.next(new DrawerState());
   }
 }
 
-export class DrawerServiceState {
+export class DrawerState {
   constructor(
-    readonly visibleDrawer = Drawer._,
+    readonly openDrawer = Drawer._,
     readonly backdropVisibility = Visibility.HIDDEN
   ) {}
 }
