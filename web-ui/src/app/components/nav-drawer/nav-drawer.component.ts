@@ -11,11 +11,11 @@ import { AuthCache } from 'src/app/modules/auth/auth.cache';
 })
 export class NavDrawerComponent implements OnInit {
   left = '-250px';
-  Urls = UiUrls;
+  readonly urls = UiUrls;
 
   constructor(
     public readonly drawer: DrawerService,
-    public readonly authCache: AuthCache
+    public readonly auth: AuthCache
   ) {}
 
   ngOnInit(): void {
