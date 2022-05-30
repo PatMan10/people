@@ -25,7 +25,7 @@
       <div
         *ngIf="form | getArr: 'name.middle' as middleArr"
         formArrayName="middle"
-        class="mb-3 flex-col-aiC"
+        class="d-flex flex-column align-items-center mb-3"
       >
         <div
           *ngFor="let middle of middleArr.controls; let i = index"
@@ -86,7 +86,7 @@
       <div
         *ngIf="form | getArr: 'name.nick' as nickArr"
         formArrayName="nick"
-        class="mb-3 flex-col-aiC"
+        class="mb-3 d-flex flex-column align-items-center"
       >
         <div
           *ngFor="let nick of nickArr.controls; let i = index"
@@ -149,7 +149,7 @@
       <div
         *ngIf="form | getArr: 'contact.phone' as phoneArr"
         formArrayName="phone"
-        class="mb-3 flex-col-aiC"
+        class="mb-3 d-flex flex-column align-items-center"
       >
         <div
           *ngFor="let phone of phoneArr.controls; let i = index"
@@ -209,7 +209,7 @@
       <div
         *ngIf="form | getArr: 'contact.email' as emailArr"
         formArrayName="email"
-        class="mb-3 flex-col-aiC"
+        class="mb-3 d-flex flex-column align-items-center"
       >
         <div
           *ngFor="let email of emailArr.controls; let i = index"
