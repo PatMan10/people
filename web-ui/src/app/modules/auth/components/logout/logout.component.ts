@@ -2,19 +2,15 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { UiUrls } from '../../../shared/utils/urls';
-import { AuthService } from '../../auth.service';
-import { ErrorHandlingService } from '../../../shared/services/error-handling.service';
+import { AuthApi } from '../../auth.api';
+import { ErrorService } from '../../../shared/services/error.service';
 
 @Component({ template: '' })
 export class LogoutComponent implements OnInit {
-  constructor(
-    router: Router,
-    authService: AuthService,
-    erService: ErrorHandlingService
-  ) {
-    authService.logout().subscribe({
+  constructor(router: Router, api: AuthApi, err: ErrorService) {
+    api.logout().subscribe({
       next: () => router.navigate([UiUrls.person.VIEW_ALL]),
-      error: erService.handleHttpError('logout', undefined),
+      error: err.handleHttpError('logout', undefined),
     });
   }
 

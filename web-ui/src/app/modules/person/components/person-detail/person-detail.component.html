@@ -2,11 +2,6 @@
   <h1>Person Details</h1>
   <ng-container *ngIf="person$ | async as person">
     <div class="detail-group">
-      <label>ID: </label>
-      <span>{{ person._id }}</span>
-    </div>
-
-    <div class="detail-group">
       <label>Name: </label>
       <span>{{ person.name.first }} {{ person.name.last }}</span>
     </div>
@@ -33,7 +28,7 @@
     </div>
 
     <div class="detail-group">
-      <a [routerLink]="Urls.person.edit(person._id)" class="btn btn-primary">
+      <a [routerLink]="urls.person.edit(person._id)" class="btn btn-primary">
         Edit
       </a>
       <button class="btn btn-danger" (click)="delete(person._id)">

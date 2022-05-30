@@ -4,9 +4,9 @@ import { ValidationError } from 'class-validator';
 
 import { UiUrls } from '../../../shared/utils/urls';
 import { CreateUserDto, GetUserDto } from '../../../user/user.model';
-import { AuthService } from '../../auth.service';
+import { AuthApi } from '../../auth.api';
 import { buildFormGroup, validateForm } from '../../../shared/utils/form';
-import { ErrorHandlingService } from 'src/app/modules/shared/services/error-handling.service';
+import { ErrorService } from 'src/app/modules/shared/services/error.service';
 
 @Component({
   selector: 'app-register',
@@ -19,8 +19,8 @@ export class RegisterComponent implements OnInit {
 
   constructor(
     private readonly router: Router,
-    private readonly authService: AuthService,
-    private readonly erService: ErrorHandlingService
+    private readonly api: AuthApi,
+    private readonly err: ErrorService
   ) {}
 
   ngOnInit(): void {}
@@ -29,11 +29,11 @@ export class RegisterComponent implements OnInit {
     this.errors = await validateForm(CreateUserDto, this.form.value);
     if (this.errors.length > 0) return;
 
-    this.authService.register(this.form.value).subscribe({
+    this.api.register(this.form.value).subscribe({
       next: (_user: GetUserDto) => {
         this.router.navigate([UiUrls.person.VIEW_ALL]);
       },
-      error: this.erService.handleHttpError('register', undefined),
+      error: this.err.handleHttpError('register', undefined),
     });
   }
 }

@@ -9,7 +9,7 @@ import { ErrorResponse } from '../models/http.model';
 @Injectable({
   providedIn: 'root',
 })
-export class ErrorHandlingService {
+export class ErrorService {
   constructor(private readonly modalService: ModalService) {}
 
   //####################

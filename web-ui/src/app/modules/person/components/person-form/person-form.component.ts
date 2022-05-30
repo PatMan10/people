@@ -3,17 +3,11 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FormArray, FormControl } from '@angular/forms';
 import { ValidationError } from 'class-validator';
 
-import {
-  Person,
-  Phone,
-  Email,
-  PhoneType,
-  EmailType,
-} from '../../person.model';
-import { PersonService } from '../../person.service';
+import { Person, Phone, Email, PhoneType, EmailType } from '../../person.model';
+import { PersonApi } from '../../person.api';
 import { UiUrls } from '../../../shared/utils/urls';
 import { buildFormGroup, validateForm } from '../../../shared/utils/form';
-import { ErrorHandlingService } from 'src/app/modules/shared/services/error-handling.service';
+import { ErrorService } from 'src/app/modules/shared/services/error.service';
 
 type ArrayPath =
   | 'name.middle'
@@ -39,17 +33,16 @@ export class PersonFormComponent implements OnInit {
   constructor(
     route: ActivatedRoute,
     private readonly router: Router,
-    private readonly peopleApi: PersonService,
-    private readonly erService: ErrorHandlingService
+    private readonly api: PersonApi,
+    private readonly err: ErrorService
   ) {
     const id = route.snapshot.paramMap.get('id');
     if (id) {
       this.id = id;
       this.title = 'Edit Person';
       this.btnText = 'Save';
-      const $ = peopleApi.getById(id).subscribe((p) => {
+      api.getById(id).subscribe((p) => {
         this.form = buildFormGroup(p);
-        $.unsubscribe();
       });
     }
   }
@@ -82,11 +75,11 @@ export class PersonFormComponent implements OnInit {
 
     if (this.errors.length > 0) return;
 
-    this.peopleApi.save(this.form.value).subscribe({
+    this.api.save(this.form.value).subscribe({
       next: () => {
         this.router.navigate([UiUrls.person.VIEW_ALL]);
       },
-      error: this.erService.handleHttpError('save person', new Person()),
+      error: this.err.handleHttpError('save person', new Person()),
     });
   }
 }

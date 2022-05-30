@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Person } from 'src/app/modules/person/person.model';
-import { PersonService } from 'src/app/modules/person/person.service';
+import { PersonApi } from 'src/app/modules/person/person.api';
 import { UiUrls } from 'src/app/modules/shared/utils/urls';
 
 @Component({
@@ -10,11 +10,11 @@ import { UiUrls } from 'src/app/modules/shared/utils/urls';
   styleUrls: ['./person-list.component.scss'],
 })
 export class PersonListComponent implements OnInit {
-  Urls = UiUrls;
+  readonly urls = UiUrls;
   people$: Observable<Person[]>;
 
-  constructor(peopleService: PersonService) {
-    this.people$ = peopleService.getByQuery();
+  constructor(api: PersonApi) {
+    this.people$ = api.getByQuery();
   }
 
   ngOnInit(): void {}

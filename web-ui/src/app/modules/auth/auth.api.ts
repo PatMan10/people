@@ -10,7 +10,7 @@ import { Credentials } from './auth.model';
 @Injectable({
   providedIn: 'root',
 })
-export class AuthService {
+export class AuthApi {
   constructor(
     private readonly http: HttpClient,
     private readonly cache: AuthCache

@@ -8,7 +8,7 @@ import { GetUserDto, UpdateUserDto } from './user.model';
 @Injectable({
   providedIn: 'root',
 })
-export class UserService {
+export class UserApi {
   constructor(private readonly http: HttpClient) {}
 
   getById(id: string): Observable<GetUserDto> {

@@ -4,9 +4,9 @@ import { ValidationError } from 'class-validator';
 
 import { UiUrls } from '../../../shared/utils/urls';
 import { Credentials } from '../../auth.model';
-import { AuthService } from '../../auth.service';
+import { AuthApi } from '../../auth.api';
 import { buildFormGroup, validateForm } from '../../../shared/utils/form';
-import { ErrorHandlingService } from 'src/app/modules/shared/services/error-handling.service';
+import { ErrorService } from 'src/app/modules/shared/services/error.service';
 import { GetUserDto } from 'src/app/modules/user/user.model';
 
 @Component({
@@ -20,8 +20,8 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private readonly router: Router,
-    private readonly authService: AuthService,
-    private readonly erService: ErrorHandlingService
+    private readonly api: AuthApi,
+    private readonly err: ErrorService
   ) {}
 
   ngOnInit(): void {}
@@ -30,11 +30,11 @@ export class LoginComponent implements OnInit {
     this.errors = await validateForm(Credentials, this.form.value);
     if (this.errors.length > 0) return;
 
-    this.authService.login(this.form.value).subscribe({
+    this.api.login(this.form.value).subscribe({
       next: (_user: GetUserDto) => {
         this.router.navigate([UiUrls.person.VIEW_ALL]);
       },
-      error: this.erService.handleHttpError('login', undefined),
+      error: this.err.handleHttpError('login', undefined),
     });
   }
 }

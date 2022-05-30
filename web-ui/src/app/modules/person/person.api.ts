@@ -10,7 +10,7 @@ import logger from '../shared/utils/logger';
 @Injectable({
   providedIn: 'root',
 })
-export class PersonService {
+export class PersonApi {
   constructor(private readonly http: HttpClient) {}
 
   getByQuery(): Observable<Person[]> {
