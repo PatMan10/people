@@ -21,11 +21,12 @@ export class PersonService {
   ) {}
 
   async getByQuery(query = new GenericQuery()): Promise<QueryResponse<Person>> {
+    logger.debug(query);
     const { values, sort, page } = query;
     const v = regex(values);
     const [filteredPeople, totalPeople] = await Promise.all([
       this.PersonModel.find(v)
-        .sort({ [sort.path]: sort.order })
+        .sort(sort)
         .skip((page.number - 1) * page.limit)
         .limit(page.limit)
         .exec(),

@@ -88,15 +88,6 @@ export function regex(v: Generic<string[]>): Generic<RegExp> {
   return o;
 }
 
-export class Sort {
-  constructor(public path = '_id', public order = Order.ASCENDING) {}
-}
-
-export enum Order {
-  ASCENDING = 1,
-  DESCENDING = -1,
-}
-
 export class PageQuery {
   constructor(public number = 1, public limit = 30) {}
 }
@@ -105,16 +96,16 @@ export class GenericQuery {
   @Type(() => Generic<string[]>)
   values: Generic<string[]>;
 
+  @Type(() => Generic<1 | -1>)
+  sort: Generic<1 | -1>;
+
   @Type(() => PageQuery)
   page: PageQuery;
-
-  @Type(() => Sort)
-  sort: Sort;
 
   constructor(
     values = new Generic<string[]>(),
     page = new PageQuery(),
-    sort = new Sort(),
+    sort = new Generic<1 | -1>,
   ) {
     this.values = values;
     this.page = page;
