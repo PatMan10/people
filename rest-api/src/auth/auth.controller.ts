@@ -13,7 +13,7 @@ import {
 import { UserService } from '../user/user.service';
 import { GetUserDto, CreateUserDto } from '../user/user.model';
 import { Credentials } from './auth.model';
-import { Messages, Urls } from '../common/utils/const';
+import { Messages, Urls } from '../shared/utils/const';
 import { AuthGuard } from './auth.guard';
 import { CurrentUser } from '../user/user.decorators';
 

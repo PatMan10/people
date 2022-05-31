@@ -6,8 +6,8 @@ import mongoose, { model, Model } from 'mongoose';
 import config from '../src/app/app.config';
 import { setupMiddleware } from '../src/main';
 import { AppModule } from '../src/app/app.module';
-import { Messages, Urls } from '../src/common/utils/const';
-import { clone } from '../src/common/models/generic.model';
+import { Messages, Urls } from '../src/shared/utils/const';
+import { clone } from '../src/shared/models/generic.model';
 import {
   User,
   GetUserDto,
@@ -19,7 +19,7 @@ import { getUsers } from '../src/user/user.seed';
 import {
   ErrorResponse,
   ValidationErrorResponse,
-} from '../src/common/models/http.model';
+} from '../src/shared/models/http.model';
 
 describe('AuthController (e2e)', () => {
   let app: INestApplication;

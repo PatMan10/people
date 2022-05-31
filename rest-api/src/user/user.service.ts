@@ -2,10 +2,10 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Injectable } from '@nestjs/common';
 import { Model } from 'mongoose';
 
-import { id, ObjectId } from '../common/models/generic.model';
+import { id, ObjectId } from '../shared/models/generic.model';
 import { User, GetUserDto, CreateUserDto, UpdateUserDto } from './user.model';
 import { Credentials, hash, compare } from '../auth/auth.model';
-import logger from '../common/utils/logger';
+import logger from '../shared/utils/logger';
 
 @Injectable()
 export class UserService {

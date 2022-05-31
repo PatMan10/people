@@ -1,8 +1,8 @@
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 
-import { ValidateIdMiddleware } from '../common/middleware/validation.middleware';
-import { Urls } from '../common/utils/const';
+import { ValidateIdMiddleware } from '../shared/middleware/validation.middleware';
+import { Urls } from '../shared/utils/const';
 import { PersonController } from './person.controller';
 import { Person, PersonSchema } from './person.model';
 import { PersonService } from './person.service';

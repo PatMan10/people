@@ -1,3 +1,5 @@
+import { GenericQuery } from '../models/generic.model';
+
 // urls
 enum Param {
   ID = ':id',
@@ -25,13 +27,14 @@ export class Urls {
   };
 
   static readonly person = class {
-    static readonly GET_ALL = `/people`;
+    static readonly GET_BY_QUERY = `/people`;
     static readonly GET_BY_ID = `/people/${Param.ID}`;
     static readonly ADD = `/people`;
     static readonly UPDATE = `/people/${Param.ID}`;
     static readonly DELETE = `/people/${Param.ID}`;
 
-    static getAll = () => this.GET_ALL;
+    static getByQuery = (q: GenericQuery) =>
+      this.GET_BY_QUERY + `?q=${JSON.stringify(q)}`;
     static getById = (id: string) => this.GET_BY_ID.replace(Param.ID, id);
     static add = () => this.ADD;
     static update = (id: string) => this.UPDATE.replace(Param.ID, id);

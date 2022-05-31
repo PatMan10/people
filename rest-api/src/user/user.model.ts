@@ -14,7 +14,7 @@ import {
   Length,
   StringConst,
   ObjectId,
-} from '../common/models/generic.model';
+} from '../shared/models/generic.model';
 
 //####################
 // CONSTRAINTS

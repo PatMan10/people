@@ -1,5 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsString } from 'class-validator';
+import { Type } from 'class-transformer';
 import { Schema, Types } from 'mongoose';
 
 //####################
@@ -81,28 +82,55 @@ export class GenericModelDbSchema extends Generic<any> {
 // QUERY MODEL
 //####################
 
-export class Query {
-  constructor(
-    public options = new Options(),
-    public values = new Generic<string[]>(),
-    public page = new Page(),
-    public sort = new Sort('_id', Order.ASCENDING),
-  ) {}
+export function regex(v: Generic<string[]>): Generic<RegExp> {
+  const o = {};
+  Object.keys(v).forEach((k) => (o[k] = new RegExp(v[k].join('|'))));
+  return o;
 }
 
 export class Sort {
-  constructor(readonly path: string, readonly order: Order) {}
+  constructor(public path = '_id', public order = Order.ASCENDING) {}
 }
 
 export enum Order {
-  ASCENDING = 'asc',
-  DESCENDING = 'desc',
+  ASCENDING = 1,
+  DESCENDING = -1,
 }
 
-export class Page {
-  constructor(public number: number = 1, public size: number = 30) {}
+export class PageQuery {
+  constructor(public number = 1, public limit = 30) {}
 }
 
-export class Options {
-  constructor(public exactMatch: boolean = false) {}
+export class GenericQuery {
+  @Type(() => Generic<string[]>)
+  values: Generic<string[]>;
+
+  @Type(() => PageQuery)
+  page: PageQuery;
+
+  @Type(() => Sort)
+  sort: Sort;
+
+  constructor(
+    values = new Generic<string[]>(),
+    page = new PageQuery(),
+    sort = new Sort(),
+  ) {
+    this.values = values;
+    this.page = page;
+    this.sort = sort;
+  }
+}
+
+export class PageResponse extends PageQuery {
+  constructor(number: number, limit: number, public total: number) {
+    super(number, limit);
+  }
+}
+
+export class QueryResponse<T> {
+ constructor(
+  public items: T[],
+  public page: PageResponse,
+ ){} 
 }

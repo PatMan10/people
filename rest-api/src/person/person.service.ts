@@ -2,9 +2,16 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Injectable } from '@nestjs/common';
 import { Model } from 'mongoose';
 
-import { id, ObjectId } from '../common/models/generic.model';
+import {
+  id,
+  ObjectId,
+  GenericQuery,
+  regex,
+  PageResponse,
+  QueryResponse,
+} from '../shared/models/generic.model';
 import { Person } from './person.model';
-import logger from '../common/utils/logger';
+import logger from '../shared/utils/logger';
 
 @Injectable()
 export class PersonService {
@@ -13,8 +20,21 @@ export class PersonService {
     private readonly PersonModel: Model<Person>,
   ) {}
 
-  getAll(): Promise<Person[]> {
-    return this.PersonModel.find().exec();
+  async getByQuery(query = new GenericQuery()): Promise<QueryResponse<Person>> {
+    const { values, sort, page } = query;
+    const v = regex(values);
+    const [filteredPeople, totalPeople] = await Promise.all([
+      this.PersonModel.find(v)
+        .sort({ [sort.path]: sort.order })
+        .skip((page.number - 1) * page.limit)
+        .limit(page.limit)
+        .exec(),
+      this.PersonModel.find(v).count().exec(),
+    ]);
+    const totalPages =
+      totalPeople >= page.limit ? Math.ceil(totalPeople / page.limit) : 1;
+    const pageRes = new PageResponse(page.number, page.limit, totalPages);
+    return new QueryResponse(filteredPeople, pageRes);
   }
 
   getById(id: string | ObjectId): Promise<Person> {

@@ -6,8 +6,8 @@ const cookieSession = require('cookie-session');
 import config, { Config, Env } from './app/app.config';
 import { AppModule } from './app/app.module';
 import { AllExceptionsFilter } from './app/app.filters';
-import { exceptionFactory } from './app/app.pipes';
-import logger from './common/utils/logger';
+import { exceptionFactory, ParseQueryPipe } from './app/app.pipes';
+import logger from './shared/utils/logger';
 
 if (require.main === module)
   (async () => {
@@ -25,6 +25,7 @@ export const setupMiddleware = (
   config: Config,
 ): void => {
   app.useGlobalPipes(
+    new ParseQueryPipe(),
     new ValidationPipe({
       transform: true,
       whitelist: true,

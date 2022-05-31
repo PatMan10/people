@@ -8,22 +8,25 @@ import {
   Body,
   NotFoundException,
   UseGuards,
+  Query,
 } from '@nestjs/common';
 
-import { Messages, Urls } from '../common/utils/const';
-import logger from '../common/utils/logger';
+import { Messages, Urls } from '../shared/utils/const';
+import logger from '../shared/utils/logger';
 import { Person } from './person.model';
 import { PersonService } from './person.service';
 import { AuthGuard } from '../auth/auth.guard';
+import { GenericQuery, QueryResponse } from '../shared/models/generic.model';
 
 @Controller()
 export class PersonController {
   constructor(private readonly personService: PersonService) {}
 
-  @Get(Urls.person.GET_ALL)
-  getAll(): Promise<Person[]> {
+  @Get(Urls.person.GET_BY_QUERY)
+  getByQuery(@Query() query: any): Promise<QueryResponse<Person>> {
     // 200: return people
-    return this.personService.getAll();
+    const q = query.values ? query : new GenericQuery();
+    return this.personService.getByQuery(q);
   }
 
   @Get(Urls.person.GET_BY_ID)

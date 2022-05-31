@@ -2,7 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication, HttpStatus } from '@nestjs/common';
 import * as request from 'supertest';
 import { AppModule } from '../src/app/app.module';
-import { Messages, Urls } from '../src/common/utils/const';
+import { Messages, Urls } from '../src/shared/utils/const';
 
 describe('AppController (e2e)', () => {
   let app: INestApplication;
@@ -21,6 +21,6 @@ describe('AppController (e2e)', () => {
   it('200: return welcome message', async () => {
     const res = await exec();
     expect(res.status).toBe(HttpStatus.OK);
-    expect(res.text).toBe(Messages.success.WELCOME);
+    expect(res.body.message).toBe(Messages.success.WELCOME);
   });
 });

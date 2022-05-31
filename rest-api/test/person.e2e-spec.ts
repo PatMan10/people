@@ -6,18 +6,19 @@ import mongoose, { model, Model } from 'mongoose';
 import config from '../src/app/app.config';
 import { setupMiddleware } from '../src/main';
 import { AppModule } from '../src/app/app.module';
-import { Messages, Urls } from '../src/common/utils/const';
-import { clone, id } from '../src/common/models/generic.model';
+import { Messages, Urls } from '../src/shared/utils/const';
 import {
-  Name,
-  Person,
-  PersonSchema,
-} from '../src/person/person.model';
+  clone,
+  id,
+  GenericQuery,
+  QueryResponse,
+} from '../src/shared/models/generic.model';
+import { Name, Person, PersonSchema } from '../src/person/person.model';
 import { getPeople } from '../src/person/person.seed';
 import {
   ErrorResponse,
   ValidationErrorResponse,
-} from '../src/common/models/http.model';
+} from '../src/shared/models/http.model';
 
 describe('PersonController (e2e)', () => {
   let app: INestApplication;
@@ -56,14 +57,19 @@ describe('PersonController (e2e)', () => {
       await PersonModel.deleteMany();
     });
 
-    const exec = () => request(app.getHttpServer()).get(Urls.person.GET_ALL);
+    const exec = (q = new GenericQuery()) =>
+      request(app.getHttpServer()).get(Urls.person.getByQuery(q));
 
-    it(`200: return list of people`, async () => {
-      const res = await exec();
-      const payload: Person[] = res.body;
+    it(`200: return query response`, async () => {
+      const q = new GenericQuery();
+      q.values['name.first'] = ['shawn', 'marshal'];
+      const res = await exec(q);
+      const payload: QueryResponse<Person> = res.body;
 
       expect(res.status).toBe(HttpStatus.OK);
-      expect(payload.length).toBe(people.length);
+      expect(payload.items.length).toBe(2);
+      expect(payload.page.number).toBe(1);
+      expect(payload.page.total).toBe(1);
     });
   });
 

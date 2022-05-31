@@ -9,8 +9,8 @@ import {
   BadRequestException,
   UseGuards,
 } from '@nestjs/common';
-import { Messages, Urls } from '../common/utils/const';
-import logger from '../common/utils/logger';
+import { Messages, Urls } from '../shared/utils/const';
+import logger from '../shared/utils/logger';
 import { GetUserDto, UpdateUserDto } from './user.model';
 import { UserService } from './user.service';
 import { AuthGuard } from '../auth/auth.guard';
