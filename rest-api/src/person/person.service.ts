@@ -20,17 +20,19 @@ export class PersonService {
     private readonly PersonModel: Model<Person>,
   ) {}
 
-  async getByQuery(query = new GenericQuery()): Promise<QueryResponse<Person>> {
-    logger.debug(query);
+  async getByQuery(
+    userId: string,
+    query = new GenericQuery(),
+  ): Promise<QueryResponse<Person>> {
     const { values, sort, page } = query;
-    const v = regex(values);
-    const [filteredPeople, totalPeople] = await Promise.all([
+    const v = { ...regex(values), creator: userId };
+    const [totalPeople, filteredPeople] = await Promise.all([
+      this.PersonModel.find(v).count().exec(),
       this.PersonModel.find(v)
         .sort(sort)
         .skip((page.number - 1) * page.limit)
         .limit(page.limit)
         .exec(),
-      this.PersonModel.find(v).count().exec(),
     ]);
     const totalPages =
       totalPeople >= page.limit ? Math.ceil(totalPeople / page.limit) : 1;
@@ -38,8 +40,8 @@ export class PersonService {
     return new QueryResponse(filteredPeople, pageRes);
   }
 
-  getById(id: string | ObjectId): Promise<Person> {
-    return this.PersonModel.findById(id).exec();
+  getById(userId: string, _id: string | ObjectId): Promise<Person> {
+    return this.PersonModel.findOne({ _id, creator: userId }).exec();
   }
 
   add(person: Person): Promise<Person> {

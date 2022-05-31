@@ -4,7 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { UiUrls } from './modules/shared/utils/urls';
 
 const routes: Routes = [
-  { path: '', redirectTo: UiUrls.person.VIEW_ALL, pathMatch: 'full' },
+  { path: '', redirectTo: UiUrls.person.VIEW_BY_QUERY, pathMatch: 'full' },
 ];
 
 @NgModule({

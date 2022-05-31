@@ -32,7 +32,7 @@ export class LoginComponent implements OnInit {
 
     this.api.login(this.form.value).subscribe({
       next: (_user: GetUserDto) => {
-        this.router.navigate([UiUrls.person.VIEW_ALL]);
+        this.router.navigate([UiUrls.person.VIEW_BY_QUERY]);
       },
       error: this.err.handleHttpError('login', undefined),
     });

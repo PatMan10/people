@@ -9,6 +9,7 @@ import {
   NotFoundException,
   UseGuards,
   Query,
+  Session,
 } from '@nestjs/common';
 
 import { Messages, Urls } from '../shared/utils/const';
@@ -23,17 +24,25 @@ export class PersonController {
   constructor(private readonly personService: PersonService) {}
 
   @Get(Urls.person.GET_BY_QUERY)
-  getByQuery(@Query() query: any): Promise<QueryResponse<Person>> {
+  @UseGuards(AuthGuard)
+  getByQuery(
+    @Session() session: any,
+    @Query() query: any,
+  ): Promise<QueryResponse<Person>> {
     // 200: return people
     const q = query.values ? query : new GenericQuery();
-    return this.personService.getByQuery(q);
+    return this.personService.getByQuery(session.userId, q);
   }
 
   @Get(Urls.person.GET_BY_ID)
-  async getById(@Param('id') id: string): Promise<Person> {
+  @UseGuards(AuthGuard)
+  async getById(
+    @Session() session: any,
+    @Param('id') id: string,
+  ): Promise<Person> {
     // 400: invalid id
 
-    const person = await this.personService.getById(id);
+    const person = await this.personService.getById(session.userId, id);
 
     // 404: not found
     if (!person) throw new NotFoundException(Messages.fail.NOT_FOUND);
@@ -44,9 +53,11 @@ export class PersonController {
 
   @Post(Urls.person.ADD)
   @UseGuards(AuthGuard)
-  add(@Body() person: Person): Promise<Person> {
+  add(@Session() session: any, @Body() person: Person): Promise<Person> {
     // 400: invalid payload
     logger.debug('person to add => ', person);
+    logger.debug(session);
+    (person as any).creator = session.userId;
 
     // 200: return saved person
     return this.personService.add(person);

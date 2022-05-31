@@ -7,9 +7,11 @@ import {
   Email,
   EmailType,
 } from './person.model';
+import { god } from '../user/user.seed';
 
 const eminem = (): Person =>
   new Person(
+    god._id,
     new Name('marshal', ['bruce'], 'mathers', ['eminem', 'slim shady']),
     '1972-10-17',
     new Contact(
@@ -25,6 +27,7 @@ const eminem = (): Person =>
   );
 const jayZ = (): Person =>
   new Person(
+    god._id,
     new Name('shawn', ['corey'], 'carter', ['jay z', 'hova', 'jigga']),
     '1969-12-04',
     new Contact(
@@ -40,6 +43,7 @@ const jayZ = (): Person =>
   );
 const pac = (): Person =>
   new Person(
+    god._id,
     new Name('lesane', ['parish'], 'crooks', ['2 pac']),
     '1971-06-16',
     new Contact(
@@ -55,6 +59,7 @@ const pac = (): Person =>
   );
 const biggie = (): Person =>
   new Person(
+    god._id,
     new Name('christopher', ['george', 'latore'], 'wallace', ['biggie smalls']),
     '1972-05-21',
     new Contact(
@@ -70,6 +75,7 @@ const biggie = (): Person =>
   );
 const logic = (): Person =>
   new Person(
+    god._id,
     new Name('robert', ['bryson'], 'hall', ['logic']),
     '1990-01-22',
     new Contact(

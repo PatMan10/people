@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Person } from 'src/app/modules/person/person.model';
-import { PersonApi } from 'src/app/modules/person/person.api';
-import { UiUrls } from 'src/app/modules/shared/utils/urls';
+
+import { QueryResponse } from '../../../shared/models/generic.model';
+import { Person } from '../../person.model';
+import { PersonApi } from '../../person.api';
+import { UiUrls } from '../../../shared/utils/urls';
 
 @Component({
   selector: 'app-person-list',
@@ -11,10 +13,10 @@ import { UiUrls } from 'src/app/modules/shared/utils/urls';
 })
 export class PersonListComponent implements OnInit {
   readonly urls = UiUrls;
-  people$: Observable<Person[]>;
+  payload$: Observable<QueryResponse<Person>>;
 
   constructor(api: PersonApi) {
-    this.people$ = api.getByQuery();
+    this.payload$ = api.getByQuery();
   }
 
   ngOnInit(): void {}

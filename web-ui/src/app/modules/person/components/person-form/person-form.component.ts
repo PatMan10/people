@@ -77,7 +77,7 @@ export class PersonFormComponent implements OnInit {
 
     this.api.save(this.form.value).subscribe({
       next: () => {
-        this.router.navigate([UiUrls.person.VIEW_ALL]);
+        this.router.navigate([UiUrls.person.VIEW_BY_QUERY]);
       },
       error: this.err.handleHttpError('save person', new Person()),
     });

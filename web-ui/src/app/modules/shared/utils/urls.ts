@@ -1,3 +1,5 @@
+import { GenericQuery } from '../models/generic.model';
+
 enum Param {
   ID = ':id',
 }
@@ -21,13 +23,13 @@ export class UiUrls {
   };
 
   static readonly person = class {
-    static readonly VIEW_ALL = 'people';
+    static readonly VIEW_BY_QUERY = 'people';
     static readonly VIEW_BY_ID = `people/${Param.ID}`;
     static readonly ADD = 'add-person';
     static readonly EDIT = `edit-person/${Param.ID}`;
     static readonly DELETE = `delete-person/${Param.ID}`;
 
-    static viewAll = () => `/${this.VIEW_ALL}`;
+    static viewByQuery = () => `/${this.VIEW_BY_QUERY}`;
     static viewById = (id: string) =>
       `/${this.VIEW_BY_ID}`.replace(Param.ID, id);
     static add = () => `/${this.ADD}`;
@@ -66,13 +68,14 @@ export class ApiUrls {
   };
 
   static readonly person = class {
-    static readonly GET_ALL = `/people`;
+    static readonly GET_BY_QUERY = `/people`;
     static readonly GET_BY_ID = `/people/${Param.ID}`;
     static readonly ADD = `/people`;
     static readonly UPDATE = `/people/${Param.ID}`;
     static readonly DELETE = `/people/${Param.ID}`;
 
-    static getAll = () => ApiUrls.ROOT + this.GET_ALL;
+    static getByQuery = (q: GenericQuery) =>
+      ApiUrls.ROOT + this.GET_BY_QUERY + `?q=${JSON.stringify(q)}`;
     static getById = (id: string) =>
       ApiUrls.ROOT + this.GET_BY_ID.replace(Param.ID, id);
     static add = () => ApiUrls.ROOT + this.ADD;

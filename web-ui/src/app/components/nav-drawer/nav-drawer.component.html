@@ -14,7 +14,7 @@
       <a [routerLink]="urls.auth.LOGIN" (click)="drawer.close()">Login</a>
       <a [routerLink]="urls.auth.REGISTER" (click)="drawer.close()">Register</a>
     </div>
-    <a [routerLink]="urls.person.VIEW_ALL" (click)="drawer.close()">People</a>
+    <a [routerLink]="urls.person.VIEW_BY_QUERY" (click)="drawer.close()">People</a>
     <a
       *ngIf="auth.user"
       [routerLink]="urls.auth.LOGOUT"

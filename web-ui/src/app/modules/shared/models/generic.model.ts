@@ -60,28 +60,32 @@ export class GenericModel extends Generic<any> {
 // QUERY MODEL
 //####################
 
-export class Query {
+export class PageQuery {
+  constructor(public number = 1, public limit = 30) {}
+}
+
+export class GenericQuery {
+  values: Generic<string[]>;
+  sort: Generic<1 | -1>;
+  page: PageQuery;
+
   constructor(
-    public options = new Options(),
-    public values = new Generic<string[]>(),
-    public page = new Page(),
-    public sort = new Sort('_id', Order.ASCENDING)
-  ) {}
+    values = new Generic<string[]>(),
+    page = new PageQuery(),
+    sort = new Generic<1 | -1>()
+  ) {
+    this.values = values;
+    this.page = page;
+    this.sort = sort;
+  }
 }
 
-export class Sort {
-  constructor(readonly path: string, readonly order: Order) {}
+export class PageResponse extends PageQuery {
+  constructor(number: number, limit: number, public total: number) {
+    super(number, limit);
+  }
 }
 
-export enum Order {
-  ASCENDING = 'asc',
-  DESCENDING = 'desc',
-}
-
-export class Page {
-  constructor(public number: number = 1, public size: number = 30) {}
-}
-
-export class Options {
-  constructor(public exactMatch: boolean = false) {}
+export class QueryResponse<T> {
+  constructor(public items: T[], public page: PageResponse) {}
 }

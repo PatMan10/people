@@ -11,12 +11,14 @@ import {
 } from 'class-validator';
 import { Type } from 'class-transformer';
 import { Schema } from 'mongoose';
+
 import {
   GenericConst,
   GenericModel,
   GenericModelDbSchema,
   Length,
   StringConst,
+  ObjectId,
 } from '../shared/models/generic.model';
 
 //####################
@@ -168,6 +170,9 @@ export class Email {
 }
 
 export class Person extends GenericModel {
+  @IsString()
+  readonly creator: string | ObjectId;
+
   @ValidateNested()
   @Type(() => Name)
   @IsObject()
@@ -183,8 +188,14 @@ export class Person extends GenericModel {
   @IsObject()
   contact: Contact;
 
-  constructor(name = new Name(), birthday = '', contact = new Contact()) {
+  constructor(
+    creator: string | ObjectId,
+    name = new Name(),
+    birthday = '',
+    contact = new Contact(),
+  ) {
     super();
+    this.creator = creator;
     this.name = name;
     this.birthday = birthday;
     this.contact = contact;
@@ -196,6 +207,8 @@ export class Person extends GenericModel {
 //####################
 
 export class PersonDbSchema extends GenericModelDbSchema {
+  readonly creator = { type: Schema.Types.ObjectId };
+
   readonly name = {
     first: {
       type: String,

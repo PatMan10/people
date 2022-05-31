@@ -30,7 +30,7 @@ export class PersonDetailComponent implements OnInit {
   delete(id: string) {
     this.api.delete(id).subscribe({
       next: () => {
-        this.router.navigate([UiUrls.person.viewAll()]);
+        this.router.navigate([UiUrls.person.viewByQuery()]);
       },
       error: this.err.handleHttpError('delete person', new Person()),
     });

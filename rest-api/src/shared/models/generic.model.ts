@@ -66,7 +66,7 @@ export class Generic<T> {
 export class GenericModel extends Generic<any> {
   @IsString()
   @ApiProperty()
-  readonly _id: string | Types.ObjectId = id();
+  readonly _id: string | ObjectId = id();
 }
 
 //####################
@@ -105,7 +105,7 @@ export class GenericQuery {
   constructor(
     values = new Generic<string[]>(),
     page = new PageQuery(),
-    sort = new Generic<1 | -1>,
+    sort = new Generic<1 | -1>(),
   ) {
     this.values = values;
     this.page = page;

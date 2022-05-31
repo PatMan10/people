@@ -19,6 +19,7 @@ import {
   ErrorResponse,
   ValidationErrorResponse,
 } from '../src/shared/models/http.model';
+import { god } from '../src/user/user.seed';
 
 describe('PersonController (e2e)', () => {
   let app: INestApplication;
@@ -127,7 +128,7 @@ describe('PersonController (e2e)', () => {
       request(app.getHttpServer()).post(Urls.person.ADD).send(person);
 
     it(`400: invalid payload`, async () => {
-      const res = await exec(new Person());
+      const res = await exec(new Person(god._id));
       const error: ValidationErrorResponse = res.body;
 
       expect(res.status).toBe(HttpStatus.BAD_REQUEST);
@@ -162,7 +163,7 @@ describe('PersonController (e2e)', () => {
       request(app.getHttpServer()).put(Urls.person.update(id)).send(person);
 
     it('400 invalid id', async () => {
-      const res = await exec('2', new Person());
+      const res = await exec('2', new Person(god._id));
       const error: ErrorResponse = res.body;
 
       expect(res.status).toBe(HttpStatus.BAD_REQUEST);
@@ -171,7 +172,7 @@ describe('PersonController (e2e)', () => {
     });
 
     it('400 invalid data', async () => {
-      const res = await exec(people[0]._id.toString(), new Person());
+      const res = await exec(people[0]._id.toString(), new Person(god._id));
       const error: ValidationErrorResponse = res.body;
 
       expect(res.status).toBe(HttpStatus.BAD_REQUEST);
@@ -181,7 +182,11 @@ describe('PersonController (e2e)', () => {
     });
 
     it('404 person not found', async () => {
-      const person = new Person(new Name('not', [], 'found'), '1234-11-12');
+      const person = new Person(
+        god._id,
+        new Name('not', [], 'found'),
+        '1234-11-12',
+      );
       const res = await exec(person._id.toString(), person);
       const error: ErrorResponse = res.body;
 

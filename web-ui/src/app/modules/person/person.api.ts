@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
 import { ApiUrls } from '../shared/utils/urls';
+import { GenericQuery, QueryResponse } from '../shared/models/generic.model';
 import { Person } from './person.model';
 import logger from '../shared/utils/logger';
 
@@ -13,12 +14,14 @@ import logger from '../shared/utils/logger';
 export class PersonApi {
   constructor(private readonly http: HttpClient) {}
 
-  getByQuery(): Observable<Person[]> {
-    return this.http.get<Person[]>(ApiUrls.person.getAll()).pipe(
-      tap((res) => {
-        logger.debug('getByQuery', res);
-      })
-    );
+  getByQuery(q = new GenericQuery()): Observable<QueryResponse<Person>> {
+    return this.http
+      .get<QueryResponse<Person>>(ApiUrls.person.getByQuery(q))
+      .pipe(
+        tap((res) => {
+          logger.debug('getByQuery', res);
+        })
+      );
   }
 
   getById(id: string): Observable<Person> {

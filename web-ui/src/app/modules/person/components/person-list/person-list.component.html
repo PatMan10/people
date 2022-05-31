@@ -1,6 +1,6 @@
 <div class="container">
   <h1>People</h1>
-  <ng-container *ngIf="people$ | async as people">
+  <ng-container *ngIf="payload$ | async as payload">
     <table class="table table-striped">
       <thead>
         <tr>
@@ -11,7 +11,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let person of people; let i = index">
+        <tr *ngFor="let person of payload.items; let i = index">
           <th scope="row">{{ i + 1 }}</th>
           <td>
             <a [routerLink]="urls.person.viewById(person._id)">

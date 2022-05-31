@@ -169,6 +169,9 @@ export class Email {
 }
 
 export class Person extends GenericModel {
+  @IsString()
+  readonly creator = '';
+
   @ValidateNested()
   @Type(() => Name)
   @IsObject()
