@@ -7,7 +7,7 @@ import { Urls } from '../shared/utils/const';
 import { UserController } from './user.controller';
 import { User, UserSchema } from './user.model';
 import { UserService } from './user.service';
-import { CurrentUserInterceptor } from './user.interceptors';
+import { UserInterceptor } from './user.interceptors';
 
 @Module({
   imports: [
@@ -18,7 +18,7 @@ import { CurrentUserInterceptor } from './user.interceptors';
     UserService,
     {
       provide: APP_INTERCEPTOR,
-      useClass: CurrentUserInterceptor,
+      useClass: UserInterceptor,
     },
   ],
   exports: [UserService],

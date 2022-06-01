@@ -15,7 +15,7 @@ import { GetUserDto, CreateUserDto } from '../user/user.model';
 import { Credentials } from './auth.model';
 import { Messages, Urls } from '../shared/utils/const';
 import { AuthGuard } from './auth.guard';
-import { CurrentUser } from '../user/user.decorators';
+import { User } from '../user/user.decorators';
 import { Obj } from '../shared/models/generic.model';
 
 @Controller()
@@ -24,7 +24,7 @@ export class AuthController {
 
   @Get(Urls.auth.WHO_AM_I)
   @UseGuards(AuthGuard)
-  async whoAmI(@CurrentUser() user: GetUserDto): Promise<GetUserDto> {
+  async whoAmI(@User() user: GetUserDto): Promise<GetUserDto> {
     return user;
   }
 
