@@ -61,6 +61,10 @@ export type ObjectId = Types.ObjectId;
 
 export class Obj<T = any> {
   [k: string]: T;
+
+  constructor(o?: Obj<T>) {
+    if (o) Object.keys(o).forEach(k => this[k] = o[k]);
+  }
 }
 
 export class Entity extends Obj {
@@ -82,9 +86,9 @@ export class EntityDbSchema extends Obj<Obj> {
 // QUERY MODEL
 //####################
 
-export function regex(v: Obj<string[]>): Obj<RegExp> {
-  const o = {};
-  Object.keys(v).forEach((k) => (o[k] = new RegExp(v[k].join('|'))));
+export function arrToRegex(obj: Obj<string[]>): Obj<RegExp> {
+  const o = new Obj();
+  Object.keys(obj).forEach((k) => (o[k] = new RegExp(obj[k].join('|'))));
   return o;
 }
 

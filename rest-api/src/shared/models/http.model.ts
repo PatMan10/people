@@ -15,4 +15,3 @@ export class ValidationErrorDto extends ErrorDto {
 export class GetByQueryDto<T> {
   constructor(public items: T[], public page: Page) {}
 }
-

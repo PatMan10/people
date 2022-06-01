@@ -7,13 +7,13 @@ import {
   id,
   ObjectId,
   EntityQuery,
-  regex,
+  arrToRegex,
   Page,
   Obj,
 } from '../shared/models/generic.model';
 import { Person } from './person.model';
 import logger from '../shared/utils/logger';
-import { GetByQueryDto } from "../shared/models/http.model";
+import { GetByQueryDto } from '../shared/models/http.model';
 
 @Injectable()
 export class PersonService {
@@ -27,7 +27,7 @@ export class PersonService {
     query = new EntityQuery(),
   ): Promise<GetByQueryDto<Person>> {
     const { values, sort, page } = query;
-    const filter: Obj = regex(values);
+    const filter: Obj = arrToRegex(values);
 
     if (config.ENV !== Env.TEST) filter.creator = userId;
 
@@ -45,7 +45,7 @@ export class PersonService {
     return new GetByQueryDto(filteredPeople, pageRes);
   }
 
-  getById(userId: string, _id: string | ObjectId): Promise<Person> {
+  getById(userId: string, _id: string): Promise<Person> {
     const filter: Obj = { _id };
 
     if (config.ENV !== Env.TEST) filter.creator = userId;
