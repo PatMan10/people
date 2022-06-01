@@ -7,7 +7,7 @@ import config from '../src/app/app.config';
 import { setupMiddleware } from '../src/main';
 import { AppModule } from '../src/app/app.module';
 import { Messages, Urls } from '../src/shared/utils/const';
-import { clone } from '../src/shared/models/generic.model';
+import { clone, Obj } from '../src/shared/models/generic.model';
 import {
   User,
   GetUserDto,
@@ -162,7 +162,7 @@ describe('AuthController (e2e)', () => {
       expect(payload._id).toBeDefined();
       expect(payload.handle).toBe(user.handle);
       expect(payload.email).toBe(user.email);
-      expect((payload as any).password).not.toBeDefined();
+      expect((payload as Obj).password).not.toBeDefined();
     });
   });
 });

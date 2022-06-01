@@ -12,8 +12,10 @@ import {
   Session,
 } from '@nestjs/common';
 
+import config, { Env } from '../app/app.config';
 import { Messages, Urls } from '../shared/utils/const';
 import logger from '../shared/utils/logger';
+import { Obj } from '../shared/models/generic.model';
 import { Person } from './person.model';
 import { PersonService } from './person.service';
 import { AuthGuard } from '../auth/auth.guard';
@@ -26,18 +28,19 @@ export class PersonController {
   @Get(Urls.person.GET_BY_QUERY)
   @UseGuards(AuthGuard)
   getByQuery(
-    @Session() session: any,
+    @Session() session: Obj<string>,
     @Query() query: any,
   ): Promise<QueryResponse<Person>> {
     // 200: return people
+    logger.debug(query);
     const q = query.values ? query : new GenericQuery();
-    return this.personService.getByQuery(session.userId, q);
+    return this.personService.getByQuery(session.userId, q as GenericQuery);
   }
 
   @Get(Urls.person.GET_BY_ID)
   @UseGuards(AuthGuard)
   async getById(
-    @Session() session: any,
+    @Session() session: Obj<string>,
     @Param('id') id: string,
   ): Promise<Person> {
     // 400: invalid id
@@ -53,11 +56,14 @@ export class PersonController {
 
   @Post(Urls.person.ADD)
   @UseGuards(AuthGuard)
-  add(@Session() session: any, @Body() person: Person): Promise<Person> {
+  add(
+    @Session() session: Obj<string>,
+    @Body() person: Person,
+  ): Promise<Person> {
     // 400: invalid payload
     logger.debug('person to add => ', person);
-    logger.debug(session);
-    (person as any).creator = session.userId;
+
+    if (config.ENV !== Env.TEST) (person as Obj).creator = session.userId;
 
     // 200: return saved person
     return this.personService.add(person);

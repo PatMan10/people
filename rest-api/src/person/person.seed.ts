@@ -76,7 +76,7 @@ const biggie = (): Person =>
 const logic = (): Person =>
   new Person(
     god._id,
-    new Name('robert', ['bryson'], 'hall', ['logic']),
+    new Name('sir', ['robert', 'bryson'], 'hall', ['logic']),
     '1990-01-22',
     new Contact(
       [
@@ -89,6 +89,56 @@ const logic = (): Person =>
       ],
     ),
   );
+const dax = (): Person =>
+  new Person(
+    god._id,
+    new Name('daniel', [], 'nwosu', ['dax']),
+    '1994-03-22',
+    new Contact(
+      [
+        new Phone(PhoneType.MOBILE, '0123456789'),
+        new Phone(PhoneType.WORK, '0987654321'),
+      ],
+      [
+        new Email(EmailType.PERSONAL, 'dax@me.com'),
+        new Email(EmailType.WORK, 'dax@work.com'),
+      ],
+    ),
+  );
+
+const hopsin = (): Person =>
+  new Person(
+    god._id,
+    new Name('marcus', ['jamal'], 'hopson', ['hopsin']),
+    '1985-07-18',
+    new Contact(
+      [
+        new Phone(PhoneType.MOBILE, '0123456789'),
+        new Phone(PhoneType.WORK, '0987654321'),
+      ],
+      [
+        new Email(EmailType.PERSONAL, 'hopsin@me.com'),
+        new Email(EmailType.WORK, 'hopsin@work.com'),
+      ],
+    ),
+  );
+
+const bigSean = (): Person =>
+  new Person(
+    god._id,
+    new Name('sean', ['michael', 'leonard'], 'anderson', ['big sean']),
+    '1988-02-25',
+    new Contact(
+      [
+        new Phone(PhoneType.MOBILE, '0123456789'),
+        new Phone(PhoneType.WORK, '0987654321'),
+      ],
+      [
+        new Email(EmailType.PERSONAL, 'bigsean@me.com'),
+        new Email(EmailType.WORK, 'bigsean@work.com'),
+      ],
+    ),
+  );
 
 export const getPeople = (): Person[] => [
   eminem(),
@@ -96,4 +146,7 @@ export const getPeople = (): Person[] => [
   pac(),
   biggie(),
   logic(),
+  dax(),
+  hopsin(),
+  bigSean(),
 ];

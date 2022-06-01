@@ -2,7 +2,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Injectable } from '@nestjs/common';
 import { Model } from 'mongoose';
 
-import { id, ObjectId } from '../shared/models/generic.model';
+import { id, Obj, ObjectId } from '../shared/models/generic.model';
 import { User, GetUserDto, CreateUserDto, UpdateUserDto } from './user.model';
 import { Credentials, hash, compare } from '../auth/auth.model';
 import logger from '../shared/utils/logger';
@@ -27,7 +27,7 @@ export class UserService {
   }
 
   async add(user: CreateUserDto): Promise<GetUserDto> {
-    (user as any)._id = id();
+    (user as Obj)._id = id();
 
     user.password = await hash(user.password);
 

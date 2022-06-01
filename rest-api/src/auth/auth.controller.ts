@@ -16,6 +16,7 @@ import { Credentials } from './auth.model';
 import { Messages, Urls } from '../shared/utils/const';
 import { AuthGuard } from './auth.guard';
 import { CurrentUser } from '../user/user.decorators';
+import { Obj } from '../shared/models/generic.model';
 
 @Controller()
 export class AuthController {
@@ -30,7 +31,7 @@ export class AuthController {
   @Post(Urls.auth.REGISTER)
   async register(
     @Body() user: CreateUserDto,
-    @Session() session: Record<string, any>,
+    @Session() session: Obj,
   ): Promise<GetUserDto> {
     // 400: invalid payload
 
@@ -55,7 +56,7 @@ export class AuthController {
   @HttpCode(HttpStatus.OK)
   async login(
     @Body() credentials: Credentials,
-    @Session() session: Record<string, any>,
+    @Session() session: Obj,
   ): Promise<GetUserDto> {
     // 400: invalid payload
 
@@ -76,8 +77,8 @@ export class AuthController {
   @Post(Urls.auth.LOGOUT)
   @HttpCode(HttpStatus.OK)
   @UseGuards(AuthGuard)
-  async logout(@Session() session: Record<string, any>): Promise<void> {
-    session.userId = undefined;
+  async logout(@Session() session: Obj): Promise<void> {
+    delete session.userId;
     return;
   }
 }

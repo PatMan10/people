@@ -59,11 +59,11 @@ export const json = <T>(o: T): T => Object.assign({}, o);
 
 export type ObjectId = Types.ObjectId;
 
-export class Generic<T> {
+export class Obj<T = any> {
   [k: string]: T;
 }
 
-export class GenericModel extends Generic<any> {
+export class GenericModel extends Obj {
   @IsString()
   @ApiProperty()
   readonly _id: string | ObjectId = id();
@@ -73,7 +73,7 @@ export class GenericModel extends Generic<any> {
 // DB MODEL
 //####################
 
-export class GenericModelDbSchema extends Generic<any> {
+export class GenericModelDbSchema extends Obj<Obj> {
   readonly _id = { type: Schema.Types.ObjectId };
   readonly __v = { type: Number };
 }
@@ -82,7 +82,7 @@ export class GenericModelDbSchema extends Generic<any> {
 // QUERY MODEL
 //####################
 
-export function regex(v: Generic<string[]>): Generic<RegExp> {
+export function regex(v: Obj<string[]>): Obj<RegExp> {
   const o = {};
   Object.keys(v).forEach((k) => (o[k] = new RegExp(v[k].join('|'))));
   return o;
@@ -93,19 +93,19 @@ export class PageQuery {
 }
 
 export class GenericQuery {
-  @Type(() => Generic<string[]>)
-  values: Generic<string[]>;
+  @Type(() => Obj<string[]>)
+  values: Obj<string[]>;
 
-  @Type(() => Generic<1 | -1>)
-  sort: Generic<1 | -1>;
+  @Type(() => Obj<1 | -1>)
+  sort: Obj<1 | -1>;
 
   @Type(() => PageQuery)
   page: PageQuery;
 
   constructor(
-    values = new Generic<string[]>(),
+    values = new Obj<string[]>(),
     page = new PageQuery(),
-    sort = new Generic<1 | -1>(),
+    sort = new Obj<1 | -1>(),
   ) {
     this.values = values;
     this.page = page;
