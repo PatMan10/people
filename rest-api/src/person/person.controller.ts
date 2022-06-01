@@ -26,7 +26,7 @@ import { GetUserDto } from '../user/user.model';
 @Controller()
 @UseGuards(AuthGuard)
 export class PersonController {
-  constructor(private readonly personService: PersonService) {}
+  constructor(private readonly people: PersonService) {}
 
   @Get(Urls.person.GET_BY_QUERY)
   getByQuery(
@@ -35,7 +35,7 @@ export class PersonController {
   ): Promise<GetByQueryDto<Person>> {
     // 200: return people
     const q = query.values ? query : new EntityQuery();
-    return this.personService.getByQuery(user._id.toString(), q as EntityQuery);
+    return this.people.getByQuery(user._id.toString(), q as EntityQuery);
   }
 
   @Get(Urls.person.GET_BY_ID)
@@ -45,7 +45,7 @@ export class PersonController {
   ): Promise<Person> {
     // 400: invalid id
 
-    const person = await this.personService.getById(user._id.toString(), id);
+    const person = await this.people.getById(user._id.toString(), id);
 
     // 404: not found
     if (!person) throw new NotFoundException(Messages.fail.NOT_FOUND);
@@ -62,7 +62,7 @@ export class PersonController {
     if (config.ENV !== Env.TEST) (person as Obj).creator = user._id;
 
     // 200: return saved person
-    return this.personService.add(person);
+    return this.people.add(person);
   }
 
   @Put(Urls.person.UPDATE)
@@ -74,7 +74,7 @@ export class PersonController {
     // 400: invalid payload
     logger.debug('person to update => ', person);
 
-    const updatedPerson = await this.personService.update(id, person);
+    const updatedPerson = await this.people.update(id, person);
 
     // 404: not found
     if (!updatedPerson) throw new NotFoundException(Messages.fail.NOT_FOUND);
@@ -88,7 +88,7 @@ export class PersonController {
     // 400: invalid id
     logger.debug('person id to delete => ', id);
 
-    const deletedPerson = await this.personService.delete(id);
+    const deletedPerson = await this.people.delete(id);
 
     // 404: not found
     if (!deletedPerson) throw new NotFoundException(Messages.fail.NOT_FOUND);

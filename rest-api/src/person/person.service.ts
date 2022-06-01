@@ -2,7 +2,6 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Injectable } from '@nestjs/common';
 import { Model } from 'mongoose';
 
-import config, { Env } from '../app/app.config';
 import {
   id,
   ObjectId,
@@ -29,7 +28,7 @@ export class PersonService {
     const { values, sort, page } = query;
     const filter: Obj = arrToRegex(values);
 
-    if (config.ENV !== Env.TEST) filter.creator = userId;
+    filter.creator = userId;
 
     const [totalPeople, filteredPeople] = await Promise.all([
       this.PersonModel.find(filter).count().exec(),
@@ -43,13 +42,14 @@ export class PersonService {
     const totalPages =
       totalPeople >= page.limit ? Math.ceil(totalPeople / page.limit) : 1;
     const pageRes = new Page(page.number, page.limit, totalPages);
+
     return new GetByQueryDto(filteredPeople, pageRes);
   }
 
   getById(userId: string, _id: string): Promise<Person> {
     const filter: Obj = { _id };
 
-    if (config.ENV !== Env.TEST) filter.creator = userId;
+    filter.creator = userId;
 
     return this.PersonModel.findOne(filter).exec();
   }
