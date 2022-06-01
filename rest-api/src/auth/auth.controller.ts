@@ -20,7 +20,7 @@ import { Obj } from '../shared/models/generic.model';
 
 @Controller()
 export class AuthController {
-  constructor(private readonly userService: UserService) {}
+  constructor(private readonly users: UserService) {}
 
   @Get(Urls.auth.WHO_AM_I)
   @UseGuards(AuthGuard)
@@ -36,16 +36,16 @@ export class AuthController {
     // 400: invalid payload
 
     // 400: duplicate email
-    const duplicateEmail = await this.userService.getByEmail(user.email);
+    const duplicateEmail = await this.users.getByEmail(user.email);
     if (duplicateEmail)
       throw new BadRequestException(Messages.fail.auth.DUPLICATE_EMAIL);
 
     // 400: duplicate handle
-    const duplicateHandle = await this.userService.getByHandle(user.handle);
+    const duplicateHandle = await this.users.getByHandle(user.handle);
     if (duplicateHandle)
       throw new BadRequestException(Messages.fail.auth.DUPLICATE_HANDLE);
 
-    const savedUser = await this.userService.add(user);
+    const savedUser = await this.users.add(user);
     session.userId = savedUser._id;
 
     // 201: return new user
@@ -61,13 +61,11 @@ export class AuthController {
     // 400: invalid payload
 
     // 400: invalid credentials
-    const validCredentials = await this.userService.validCredentials(
-      credentials,
-    );
+    const validCredentials = await this.users.validCredentials(credentials);
     if (!validCredentials)
       throw new BadRequestException(Messages.fail.auth.INVALID_CREDENTIALS);
 
-    const user = await this.userService.getByEmail(credentials.email);
+    const user = await this.users.getByEmail(credentials.email);
     session.userId = user._id;
 
     // 200: return user

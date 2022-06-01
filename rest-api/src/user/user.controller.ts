@@ -18,13 +18,13 @@ import { AuthGuard } from '../auth/auth.guard';
 @Controller()
 @UseGuards(AuthGuard)
 export class UserController {
-  constructor(private readonly userService: UserService) {}
+  constructor(private readonly users: UserService) {}
 
   @Get(Urls.user.GET_BY_ID)
   async getById(@Param('id') id: string): Promise<GetUserDto> {
     // 400: invalid id
 
-    const user = await this.userService.getById(id);
+    const user = await this.users.getById(id);
 
     // 404: not found
     if (!user) throw new NotFoundException(Messages.fail.NOT_FOUND);
@@ -43,16 +43,16 @@ export class UserController {
     logger.debug('user to update => ', user);
 
     // 400: duplicate email
-    const duplicateEmail = await this.userService.getByEmail(user.email);
+    const duplicateEmail = await this.users.getByEmail(user.email);
     if (duplicateEmail)
       throw new BadRequestException(Messages.fail.auth.DUPLICATE_EMAIL);
 
     // 400: duplicate handle
-    const duplicateHandle = await this.userService.getByHandle(user.handle);
+    const duplicateHandle = await this.users.getByHandle(user.handle);
     if (duplicateHandle)
       throw new BadRequestException(Messages.fail.auth.DUPLICATE_HANDLE);
 
-    const updatedUser = await this.userService.update(id, user);
+    const updatedUser = await this.users.update(id, user);
 
     // 404: not found
     if (!updatedUser) throw new NotFoundException(Messages.fail.NOT_FOUND);
@@ -66,7 +66,7 @@ export class UserController {
     // 400: invalid id
     logger.debug('user id to delete => ', id);
 
-    const deletedUser = await this.userService.delete(id);
+    const deletedUser = await this.users.delete(id);
 
     // 404: not found
     if (!deletedUser) throw new NotFoundException(Messages.fail.NOT_FOUND);
