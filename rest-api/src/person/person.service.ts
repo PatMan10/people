@@ -6,14 +6,14 @@ import config, { Env } from '../app/app.config';
 import {
   id,
   ObjectId,
-  GenericQuery,
+  EntityQuery,
   regex,
-  PageResponse,
-  QueryResponse,
+  Page,
   Obj,
 } from '../shared/models/generic.model';
 import { Person } from './person.model';
 import logger from '../shared/utils/logger';
+import { GetByQueryDto } from "../shared/models/http.model";
 
 @Injectable()
 export class PersonService {
@@ -24,8 +24,8 @@ export class PersonService {
 
   async getByQuery(
     userId: string,
-    query = new GenericQuery(),
-  ): Promise<QueryResponse<Person>> {
+    query = new EntityQuery(),
+  ): Promise<GetByQueryDto<Person>> {
     const { values, sort, page } = query;
     const filter: Obj = regex(values);
 
@@ -41,8 +41,8 @@ export class PersonService {
     ]);
     const totalPages =
       totalPeople >= page.limit ? Math.ceil(totalPeople / page.limit) : 1;
-    const pageRes = new PageResponse(page.number, page.limit, totalPages);
-    return new QueryResponse(filteredPeople, pageRes);
+    const pageRes = new Page(page.number, page.limit, totalPages);
+    return new GetByQueryDto(filteredPeople, pageRes);
   }
 
   getById(userId: string, _id: string | ObjectId): Promise<Person> {

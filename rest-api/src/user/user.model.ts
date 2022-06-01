@@ -9,8 +9,8 @@ import {
 import { Schema } from 'mongoose';
 import {
   GenericConst,
-  GenericModel,
-  GenericModelDbSchema,
+  Entity,
+  EntityDbSchema,
   Length,
   StringConst,
   ObjectId,
@@ -46,7 +46,7 @@ export enum UserRole {
   USER = 'user',
 }
 
-export class User extends GenericModel {
+export class User extends Entity {
   @IsString()
   @dLength(UserConst.HANDLE.LENGTH.MIN, UserConst.HANDLE.LENGTH.MAX)
   @Matches(UserConst.HANDLE.REGEX)
@@ -114,7 +114,7 @@ export class UpdateUserDto extends PickType(User, ['handle', 'email']) {
 // DB MODEL
 //####################
 
-export class UserDbSchema extends GenericModelDbSchema {
+export class UserDbSchema extends EntityDbSchema {
   readonly handle = {
     type: String,
     required: true,

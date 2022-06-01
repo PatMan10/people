@@ -19,7 +19,8 @@ import { Obj } from '../shared/models/generic.model';
 import { Person } from './person.model';
 import { PersonService } from './person.service';
 import { AuthGuard } from '../auth/auth.guard';
-import { GenericQuery, QueryResponse } from '../shared/models/generic.model';
+import { EntityQuery} from '../shared/models/generic.model';
+import { GetByQueryDto } from "../shared/models/http.model";
 
 @Controller()
 export class PersonController {
@@ -30,11 +31,11 @@ export class PersonController {
   getByQuery(
     @Session() session: Obj<string>,
     @Query() query: any,
-  ): Promise<QueryResponse<Person>> {
+  ): Promise<GetByQueryDto<Person>> {
     // 200: return people
     logger.debug(query);
-    const q = query.values ? query : new GenericQuery();
-    return this.personService.getByQuery(session.userId, q as GenericQuery);
+    const q = query.values ? query : new EntityQuery();
+    return this.personService.getByQuery(session.userId, q as EntityQuery);
   }
 
   @Get(Urls.person.GET_BY_ID)

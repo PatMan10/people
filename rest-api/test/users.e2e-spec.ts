@@ -16,8 +16,8 @@ import {
 } from '../src/user/user.model';
 import { getUsers } from '../src/user/user.seed';
 import {
-  ErrorResponse,
-  ValidationErrorResponse,
+  ErrorDto,
+  ValidationErrorDto,
 } from '../src/shared/models/http.model';
 
 describe('UserController (e2e)', () => {
@@ -62,7 +62,7 @@ describe('UserController (e2e)', () => {
 
     it(`400: invalid id`, async () => {
       const res = await exec('id');
-      const error: ErrorResponse = res.body;
+      const error: ErrorDto = res.body;
 
       expect(res.status).toBe(HttpStatus.BAD_REQUEST);
       expect(error.status).toBe(HttpStatus.BAD_REQUEST);
@@ -71,7 +71,7 @@ describe('UserController (e2e)', () => {
 
     it(`404: not found`, async () => {
       const res = await exec(id().toHexString());
-      const error: ErrorResponse = res.body;
+      const error: ErrorDto = res.body;
 
       expect(res.status).toBe(HttpStatus.NOT_FOUND);
       expect(error.status).toBe(HttpStatus.NOT_FOUND);
@@ -105,7 +105,7 @@ describe('UserController (e2e)', () => {
 
     it('400 invalid id', async () => {
       const res = await exec('2', new User());
-      const error: ErrorResponse = res.body;
+      const error: ErrorDto = res.body;
 
       expect(res.status).toBe(HttpStatus.BAD_REQUEST);
       expect(error.status).toBe(HttpStatus.BAD_REQUEST);
@@ -114,7 +114,7 @@ describe('UserController (e2e)', () => {
 
     it('400 invalid data', async () => {
       const res = await exec(users[0]._id.toString(), new User());
-      const error: ValidationErrorResponse = res.body;
+      const error: ValidationErrorDto = res.body;
 
       expect(res.status).toBe(HttpStatus.BAD_REQUEST);
       expect(error.status).toBe(HttpStatus.BAD_REQUEST);
@@ -127,7 +127,7 @@ describe('UserController (e2e)', () => {
       const updateUserDto = new UpdateUserDto('siya', email);
 
       const res = await exec(_id.toString(), updateUserDto);
-      const error: ErrorResponse = res.body;
+      const error: ErrorDto = res.body;
 
       expect(res.status).toBe(HttpStatus.BAD_REQUEST);
       expect(error.status).toBe(HttpStatus.BAD_REQUEST);
@@ -139,7 +139,7 @@ describe('UserController (e2e)', () => {
       const updateUserDto = new UpdateUserDto(handle, 'siya@gmail.com');
 
       const res = await exec(_id.toString(), updateUserDto);
-      const error: ErrorResponse = res.body;
+      const error: ErrorDto = res.body;
 
       expect(res.status).toBe(HttpStatus.BAD_REQUEST);
       expect(error.status).toBe(HttpStatus.BAD_REQUEST);
@@ -150,7 +150,7 @@ describe('UserController (e2e)', () => {
       const user = new User('handle', 'email@here.com', 'password');
 
       const res = await exec(user._id.toString(), user);
-      const error: ErrorResponse = res.body;
+      const error: ErrorDto = res.body;
 
       expect(res.status).toBe(HttpStatus.NOT_FOUND);
       expect(error.status).toBe(HttpStatus.NOT_FOUND);
@@ -187,7 +187,7 @@ describe('UserController (e2e)', () => {
 
     it(`400: invalid id`, async () => {
       const res = await exec('id');
-      const error: ErrorResponse = res.body;
+      const error: ErrorDto = res.body;
 
       expect(res.status).toBe(HttpStatus.BAD_REQUEST);
       expect(error.status).toBe(HttpStatus.BAD_REQUEST);
@@ -196,7 +196,7 @@ describe('UserController (e2e)', () => {
 
     it(`404: not found`, async () => {
       const res = await exec(id().toHexString());
-      const error: ErrorResponse = res.body;
+      const error: ErrorDto = res.body;
 
       expect(res.status).toBe(HttpStatus.NOT_FOUND);
       expect(error.status).toBe(HttpStatus.NOT_FOUND);

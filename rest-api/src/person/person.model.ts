@@ -14,8 +14,8 @@ import { Schema } from 'mongoose';
 
 import {
   GenericConst,
-  GenericModel,
-  GenericModelDbSchema,
+  Entity,
+  EntityDbSchema,
   Length,
   StringConst,
   ObjectId,
@@ -169,7 +169,7 @@ export class Email {
   }
 }
 
-export class Person extends GenericModel {
+export class Person extends Entity {
   @IsString()
   readonly creator: string | ObjectId;
 
@@ -206,7 +206,7 @@ export class Person extends GenericModel {
 // DB MODEL
 //####################
 
-export class PersonDbSchema extends GenericModelDbSchema {
+export class PersonDbSchema extends EntityDbSchema {
   readonly creator = { type: Schema.Types.ObjectId };
 
   readonly name = {

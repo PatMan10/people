@@ -1,7 +1,7 @@
-import { ApiProperty } from '@nestjs/swagger';
-import { IsString } from 'class-validator';
-import { Type } from 'class-transformer';
-import { Schema, Types } from 'mongoose';
+import { ApiProperty } from "@nestjs/swagger";
+import { IsString } from "class-validator";
+import { Type } from "class-transformer";
+import { Schema, Types } from "mongoose";
 
 //####################
 // CONSTRAINTS
@@ -63,7 +63,7 @@ export class Obj<T = any> {
   [k: string]: T;
 }
 
-export class GenericModel extends Obj {
+export class Entity extends Obj {
   @IsString()
   @ApiProperty()
   readonly _id: string | ObjectId = id();
@@ -73,7 +73,7 @@ export class GenericModel extends Obj {
 // DB MODEL
 //####################
 
-export class GenericModelDbSchema extends Obj<Obj> {
+export class EntityDbSchema extends Obj<Obj> {
   readonly _id = { type: Schema.Types.ObjectId };
   readonly __v = { type: Number };
 }
@@ -88,40 +88,27 @@ export function regex(v: Obj<string[]>): Obj<RegExp> {
   return o;
 }
 
-export class PageQuery {
-  constructor(public number = 1, public limit = 30) {}
+export class Page {
+  constructor(public number = 1, public limit = 30, public total?: number) {}
 }
 
-export class GenericQuery {
+export class EntityQuery {
   @Type(() => Obj<string[]>)
   values: Obj<string[]>;
 
   @Type(() => Obj<1 | -1>)
   sort: Obj<1 | -1>;
 
-  @Type(() => PageQuery)
-  page: PageQuery;
+  @Type(() => Page)
+  page: Page;
 
   constructor(
     values = new Obj<string[]>(),
-    page = new PageQuery(),
+    page = new Page(),
     sort = new Obj<1 | -1>(),
   ) {
     this.values = values;
     this.page = page;
     this.sort = sort;
   }
-}
-
-export class PageResponse extends PageQuery {
-  constructor(number: number, limit: number, public total: number) {
-    super(number, limit);
-  }
-}
-
-export class QueryResponse<T> {
- constructor(
-  public items: T[],
-  public page: PageResponse,
- ){} 
 }

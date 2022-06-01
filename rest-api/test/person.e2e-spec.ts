@@ -10,15 +10,15 @@ import { Messages, Urls } from '../src/shared/utils/const';
 import {
   clone,
   id,
-  GenericQuery,
-  QueryResponse,
+  EntityQuery,
+
 } from '../src/shared/models/generic.model';
 import { Name, Person, PersonSchema } from '../src/person/person.model';
 import { getPeople } from '../src/person/person.seed';
 import {
-  ErrorResponse,
-  ValidationErrorResponse,
-} from '../src/shared/models/http.model';
+  ErrorDto, GetByQueryDto,
+  ValidationErrorDto
+} from "../src/shared/models/http.model";
 import { god } from '../src/user/user.seed';
 
 describe('PersonController (e2e)', () => {
@@ -58,14 +58,14 @@ describe('PersonController (e2e)', () => {
       await PersonModel.deleteMany();
     });
 
-    const exec = (q = new GenericQuery()) =>
+    const exec = (q = new EntityQuery()) =>
       request(app.getHttpServer()).get(Urls.person.getByQuery(q));
 
     it(`200: return query response`, async () => {
-      const q = new GenericQuery();
+      const q = new EntityQuery();
       q.values['name.first'] = ['shawn', 'marshal'];
       const res = await exec(q);
-      const payload: QueryResponse<Person> = res.body;
+      const payload: GetByQueryDto<Person> = res.body;
 
       expect(res.status).toBe(HttpStatus.OK);
       expect(payload.items.length).toBe(2);
@@ -90,7 +90,7 @@ describe('PersonController (e2e)', () => {
 
     it(`400: invalid id`, async () => {
       const res = await exec('id');
-      const error: ErrorResponse = res.body;
+      const error: ErrorDto = res.body;
 
       expect(res.status).toBe(HttpStatus.BAD_REQUEST);
       expect(error.status).toBe(HttpStatus.BAD_REQUEST);
@@ -99,7 +99,7 @@ describe('PersonController (e2e)', () => {
 
     it(`404: not found`, async () => {
       const res = await exec(id().toHexString());
-      const error: ErrorResponse = res.body;
+      const error: ErrorDto = res.body;
 
       expect(res.status).toBe(HttpStatus.NOT_FOUND);
       expect(error.status).toBe(HttpStatus.NOT_FOUND);
@@ -129,7 +129,7 @@ describe('PersonController (e2e)', () => {
 
     it(`400: invalid payload`, async () => {
       const res = await exec(new Person(god._id));
-      const error: ValidationErrorResponse = res.body;
+      const error: ValidationErrorDto = res.body;
 
       expect(res.status).toBe(HttpStatus.BAD_REQUEST);
       expect(error.status).toBe(HttpStatus.BAD_REQUEST);
@@ -164,7 +164,7 @@ describe('PersonController (e2e)', () => {
 
     it('400 invalid id', async () => {
       const res = await exec('2', new Person(god._id));
-      const error: ErrorResponse = res.body;
+      const error: ErrorDto = res.body;
 
       expect(res.status).toBe(HttpStatus.BAD_REQUEST);
       expect(error.status).toBe(HttpStatus.BAD_REQUEST);
@@ -173,7 +173,7 @@ describe('PersonController (e2e)', () => {
 
     it('400 invalid data', async () => {
       const res = await exec(people[0]._id.toString(), new Person(god._id));
-      const error: ValidationErrorResponse = res.body;
+      const error: ValidationErrorDto = res.body;
 
       expect(res.status).toBe(HttpStatus.BAD_REQUEST);
       expect(error.status).toBe(HttpStatus.BAD_REQUEST);
@@ -188,7 +188,7 @@ describe('PersonController (e2e)', () => {
         '1234-11-12',
       );
       const res = await exec(person._id.toString(), person);
-      const error: ErrorResponse = res.body;
+      const error: ErrorDto = res.body;
 
       expect(res.status).toBe(HttpStatus.NOT_FOUND);
       expect(error.status).toBe(HttpStatus.NOT_FOUND);
@@ -228,7 +228,7 @@ describe('PersonController (e2e)', () => {
 
     it(`400: invalid id`, async () => {
       const res = await exec('id');
-      const error: ErrorResponse = res.body;
+      const error: ErrorDto = res.body;
 
       expect(res.status).toBe(HttpStatus.BAD_REQUEST);
       expect(error.status).toBe(HttpStatus.BAD_REQUEST);
@@ -237,7 +237,7 @@ describe('PersonController (e2e)', () => {
 
     it(`404: not found`, async () => {
       const res = await exec(id().toHexString());
-      const error: ErrorResponse = res.body;
+      const error: ErrorDto = res.body;
 
       expect(res.status).toBe(HttpStatus.NOT_FOUND);
       expect(error.status).toBe(HttpStatus.NOT_FOUND);
