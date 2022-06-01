@@ -19,8 +19,8 @@ import { Obj } from '../shared/models/generic.model';
 import { Person } from './person.model';
 import { PersonService } from './person.service';
 import { AuthGuard } from '../auth/auth.guard';
-import { EntityQuery} from '../shared/models/generic.model';
-import { GetByQueryDto } from "../shared/models/http.model";
+import { EntityQuery } from '../shared/models/generic.model';
+import { GetByQueryDto } from '../shared/models/http.model';
 
 @Controller()
 export class PersonController {
@@ -33,7 +33,6 @@ export class PersonController {
     @Query() query: any,
   ): Promise<GetByQueryDto<Person>> {
     // 200: return people
-    logger.debug(query);
     const q = query.values ? query : new EntityQuery();
     return this.personService.getByQuery(session.userId, q as EntityQuery);
   }

@@ -39,6 +39,7 @@ export class PersonService {
         .limit(page.limit)
         .exec(),
     ]);
+
     const totalPages =
       totalPeople >= page.limit ? Math.ceil(totalPeople / page.limit) : 1;
     const pageRes = new Page(page.number, page.limit, totalPages);

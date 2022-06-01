@@ -19,12 +19,8 @@ export const exceptionFactory = (errors: ValidationError[]): void => {
 
 @Injectable()
 export class ParseQueryPipe implements PipeTransform {
-  transform(value: any, meta: ArgumentMetadata): EntityQuery {
-    if (meta.type === 'query' && value && value.q) {
-      const q = plainToClass(EntityQuery, JSON.parse(value.q));
-      delete q.values._id;
-      return q;
-    }
+  transform(value: any, meta: ArgumentMetadata) {
+    if (meta.type === 'query' && value && value.q) return JSON.parse(value.q);
     return value;
   }
 }
