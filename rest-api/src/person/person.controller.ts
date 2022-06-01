@@ -9,7 +9,6 @@ import {
   NotFoundException,
   UseGuards,
   Query,
-  Session,
 } from '@nestjs/common';
 
 import config, { Env } from '../app/app.config';
@@ -21,31 +20,32 @@ import { PersonService } from './person.service';
 import { AuthGuard } from '../auth/auth.guard';
 import { EntityQuery } from '../shared/models/generic.model';
 import { GetByQueryDto } from '../shared/models/http.model';
+import { User } from '../user/user.decorators';
+import { GetUserDto } from '../user/user.model';
 
 @Controller()
+@UseGuards(AuthGuard)
 export class PersonController {
   constructor(private readonly personService: PersonService) {}
 
   @Get(Urls.person.GET_BY_QUERY)
-  @UseGuards(AuthGuard)
   getByQuery(
-    @Session() session: Obj<string>,
+    @User() user: GetUserDto,
     @Query() query: any,
   ): Promise<GetByQueryDto<Person>> {
     // 200: return people
     const q = query.values ? query : new EntityQuery();
-    return this.personService.getByQuery(session.userId, q as EntityQuery);
+    return this.personService.getByQuery(user._id.toString(), q as EntityQuery);
   }
 
   @Get(Urls.person.GET_BY_ID)
-  @UseGuards(AuthGuard)
   async getById(
-    @Session() session: Obj<string>,
+    @User() user: GetUserDto,
     @Param('id') id: string,
   ): Promise<Person> {
     // 400: invalid id
 
-    const person = await this.personService.getById(session.userId, id);
+    const person = await this.personService.getById(user._id.toString(), id);
 
     // 404: not found
     if (!person) throw new NotFoundException(Messages.fail.NOT_FOUND);
@@ -55,22 +55,17 @@ export class PersonController {
   }
 
   @Post(Urls.person.ADD)
-  @UseGuards(AuthGuard)
-  add(
-    @Session() session: Obj<string>,
-    @Body() person: Person,
-  ): Promise<Person> {
+  add(@User() user: GetUserDto, @Body() person: Person): Promise<Person> {
     // 400: invalid payload
     logger.debug('person to add => ', person);
 
-    if (config.ENV !== Env.TEST) (person as Obj).creator = session.userId;
+    if (config.ENV !== Env.TEST) (person as Obj).creator = user._id;
 
     // 200: return saved person
     return this.personService.add(person);
   }
 
   @Put(Urls.person.UPDATE)
-  @UseGuards(AuthGuard)
   async update(
     @Param('id') id: string,
     @Body() person: Person,
@@ -89,7 +84,6 @@ export class PersonController {
   }
 
   @Delete(Urls.person.DELETE)
-  @UseGuards(AuthGuard)
   async delete(@Param('id') id: string): Promise<Person> {
     // 400: invalid id
     logger.debug('person id to delete => ', id);
