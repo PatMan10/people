@@ -16,6 +16,7 @@ import { AuthInterceptor } from './modules/auth/auth.interceptor';
 import { AuthModule } from './modules/auth/auth.module';
 import { UserModule } from './modules/user/user.module';
 import { PersonModule } from './modules/person/person.module';
+import { HomeComponent } from './components/home/home.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { PersonModule } from './modules/person/person.module';
     ToolbarComponent,
     BackdropComponent,
     NavDrawerComponent,
+    HomeComponent,
   ],
   imports: [
     BrowserModule,
