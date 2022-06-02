@@ -1,4 +1,4 @@
-import {IsString} from 'class-validator';
+import { IsString } from 'class-validator';
 
 //####################
 // CONSTRAINTS
@@ -51,7 +51,7 @@ export class Obj<T = any> {
   [k: string]: T;
 
   constructor(o?: Obj<T>) {
-    if (o) Object.keys(o).forEach(k => this[k] = o[k]);
+    if (o) Object.keys(o).forEach((k) => (this[k] = o[k]));
   }
 }
 
@@ -83,4 +83,3 @@ export class EntityQuery {
     this.sort = sort;
   }
 }
-
