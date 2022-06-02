@@ -7,8 +7,8 @@ import { PersonDetailComponent } from './components/person-detail/person-detail.
 import { PersonFormComponent } from './components/person-form/person-form.component';
 
 const routes: Routes = [
-  { path: UiUrls.person.VIEW_BY_QUERY, component: PersonListComponent },
-  { path: UiUrls.person.VIEW_BY_ID, component: PersonDetailComponent },
+  { path: UiUrls.person.LIST, component: PersonListComponent },
+  { path: UiUrls.person.DETAIL, component: PersonDetailComponent },
   { path: UiUrls.person.ADD, component: PersonFormComponent },
   { path: UiUrls.person.EDIT, component: PersonFormComponent },
 ];

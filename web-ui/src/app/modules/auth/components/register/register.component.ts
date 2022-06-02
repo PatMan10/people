@@ -31,7 +31,7 @@ export class RegisterComponent implements OnInit {
 
     this.api.register(this.form.value).subscribe({
       next: (_user: GetUserDto) => {
-        this.router.navigate([UiUrls.person.VIEW_BY_QUERY]);
+        this.router.navigate([UiUrls.person.LIST]);
       },
       error: this.err.handleHttpError('register', undefined),
     });

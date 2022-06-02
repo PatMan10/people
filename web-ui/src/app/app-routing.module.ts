@@ -4,7 +4,7 @@ import { HomeComponent } from './components/home/home.component';
 
 import { UiUrls } from './modules/shared/utils/urls';
 
-const routes: Routes = [{ path: '', component: HomeComponent }];
+const routes: Routes = [{ path: UiUrls.INDEX, component: HomeComponent }];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

@@ -9,18 +9,14 @@
     </div>
   </div>
 
-  <nav id="nav-bar" class="nav-bar">
+  <nav class="nav-bar">
     <div *ngIf="!auth.user">
       <a [routerLink]="urls.auth.LOGIN" (click)="drawer.close()">Login</a>
       <a [routerLink]="urls.auth.REGISTER" (click)="drawer.close()">Register</a>
     </div>
-    <a [routerLink]="urls.person.VIEW_BY_QUERY" (click)="drawer.close()">People</a>
-    <a
-      *ngIf="auth.user"
-      [routerLink]="urls.auth.LOGOUT"
-      (click)="drawer.close()"
-    >
-      Logout
-    </a>
+    <div *ngIf="auth.user">
+      <a [routerLink]="urls.person.LIST" (click)="drawer.close()">People</a>
+      <a [routerLink]="urls.auth.LOGOUT" (click)="drawer.close()">Logout</a>
+    </div>
   </nav>
 </div>

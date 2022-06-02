@@ -5,6 +5,8 @@ enum Param {
 }
 
 export class UiUrls {
+  static readonly INDEX = '';
+
   static readonly auth = class {
     static readonly REGISTER = `auth/register`;
     static readonly LOGIN = `auth/login`;
@@ -17,21 +19,21 @@ export class UiUrls {
     static readonly EDIT = `users/${Param.ID}`;
     static readonly DELETE = `users/${Param.ID}`;
 
-    static getById = (id: string) => this.VIEW_BY_ID.replace(Param.ID, id);
+    static viewById = (id: string) => this.VIEW_BY_ID.replace(Param.ID, id);
     static edit = (id: string) => this.EDIT.replace(Param.ID, id);
     static delete = (id: string) => this.DELETE.replace(Param.ID, id);
   };
 
   static readonly person = class {
-    static readonly VIEW_BY_QUERY = 'people';
-    static readonly VIEW_BY_ID = `people/${Param.ID}`;
+    static readonly LIST = 'people';
+    static readonly DETAIL = `people/${Param.ID}`;
     static readonly ADD = 'add-person';
     static readonly EDIT = `edit-person/${Param.ID}`;
     static readonly DELETE = `delete-person/${Param.ID}`;
 
-    static viewByQuery = () => `/${this.VIEW_BY_QUERY}`;
+    static viewByQuery = () => `/${this.LIST}`;
     static viewById = (id: string) =>
-      `/${this.VIEW_BY_ID}`.replace(Param.ID, id);
+      `/${this.DETAIL}`.replace(Param.ID, id);
     static add = () => `/${this.ADD}`;
     static edit = (id: string) => `/${this.EDIT}`.replace(Param.ID, id);
     static delete = (id: string) => `/${this.DELETE}`.replace(Param.ID, id);

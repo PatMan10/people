@@ -9,7 +9,7 @@ import { ErrorService } from '../../../shared/services/error.service';
 export class LogoutComponent implements OnInit {
   constructor(router: Router, api: AuthApi, err: ErrorService) {
     api.logout().subscribe({
-      next: () => router.navigate([UiUrls.person.VIEW_BY_QUERY]),
+      next: () => router.navigate([UiUrls.INDEX]),
       error: err.handleHttpError('logout', undefined),
     });
   }
