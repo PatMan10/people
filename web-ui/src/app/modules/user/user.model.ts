@@ -8,7 +8,7 @@ import {
 
 import {
   GenericConst,
-  GenericModel,
+  Entity,
   Length,
   StringConst,
 } from '../shared/models/generic.model';
@@ -43,7 +43,7 @@ export enum UserRole {
   USER = 'user',
 }
 
-export class User extends GenericModel {
+export class User extends Entity {
   @IsString()
   @dLength(UserConst.HANDLE.LENGTH.MIN, UserConst.HANDLE.LENGTH.MAX)
   @Matches(UserConst.HANDLE.REGEX)

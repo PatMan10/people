@@ -1,4 +1,4 @@
-import { IsString } from 'class-validator';
+import {IsString} from 'class-validator';
 
 //####################
 // CONSTRAINTS
@@ -47,11 +47,15 @@ export const json = <T>(o: T): T => Object.assign({}, o);
 // TS MODEL
 //####################
 
-export class Generic<T> {
+export class Obj<T = any> {
   [k: string]: T;
+
+  constructor(o?: Obj<T>) {
+    if (o) Object.keys(o).forEach(k => this[k] = o[k]);
+  }
 }
 
-export class GenericModel extends Generic<any> {
+export class Entity extends Obj {
   @IsString()
   readonly _id = '';
 }
@@ -60,19 +64,19 @@ export class GenericModel extends Generic<any> {
 // QUERY MODEL
 //####################
 
-export class PageQuery {
-  constructor(public number = 1, public limit = 30) {}
+export class Page {
+  constructor(public number = 1, public limit = 30, public total?: number) {}
 }
 
-export class GenericQuery {
-  values: Generic<string[]>;
-  sort: Generic<1 | -1>;
-  page: PageQuery;
+export class EntityQuery {
+  values: Obj<string[]>;
+  sort: Obj<1 | -1>;
+  page: Page;
 
   constructor(
-    values = new Generic<string[]>(),
-    page = new PageQuery(),
-    sort = new Generic<1 | -1>()
+    values = new Obj<string[]>(),
+    page = new Page(),
+    sort = new Obj<1 | -1>()
   ) {
     this.values = values;
     this.page = page;
@@ -80,12 +84,3 @@ export class GenericQuery {
   }
 }
 
-export class PageResponse extends PageQuery {
-  constructor(number: number, limit: number, public total: number) {
-    super(number, limit);
-  }
-}
-
-export class QueryResponse<T> {
-  constructor(public items: T[], public page: PageResponse) {}
-}

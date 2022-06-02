@@ -4,9 +4,10 @@ import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
 import { ApiUrls } from '../shared/utils/urls';
-import { GenericQuery, QueryResponse } from '../shared/models/generic.model';
+import { EntityQuery} from '../shared/models/generic.model';
 import { Person } from './person.model';
 import logger from '../shared/utils/logger';
+import {GetByQueryDto} from "../shared/models/http.model";
 
 @Injectable({
   providedIn: 'root',
@@ -14,9 +15,9 @@ import logger from '../shared/utils/logger';
 export class PersonApi {
   constructor(private readonly http: HttpClient) {}
 
-  getByQuery(q = new GenericQuery()): Observable<QueryResponse<Person>> {
+  getByQuery(q = new EntityQuery()): Observable<GetByQueryDto<Person>> {
     return this.http
-      .get<QueryResponse<Person>>(ApiUrls.person.getByQuery(q))
+      .get<GetByQueryDto<Person>>(ApiUrls.person.getByQuery(q))
       .pipe(
         tap((res) => {
           logger.debug('getByQuery', res);

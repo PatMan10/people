@@ -1,4 +1,4 @@
-import { GenericQuery } from '../models/generic.model';
+import { EntityQuery } from '../models/generic.model';
 
 enum Param {
   ID = ':id',
@@ -74,7 +74,7 @@ export class ApiUrls {
     static readonly UPDATE = `/people/${Param.ID}`;
     static readonly DELETE = `/people/${Param.ID}`;
 
-    static getByQuery = (q: GenericQuery) =>
+    static getByQuery = (q: EntityQuery) =>
       ApiUrls.ROOT + this.GET_BY_QUERY + `?q=${JSON.stringify(q)}`;
     static getById = (id: string) =>
       ApiUrls.ROOT + this.GET_BY_ID.replace(Param.ID, id);

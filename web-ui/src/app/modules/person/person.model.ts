@@ -13,7 +13,7 @@ import { Type } from 'class-transformer';
 
 import {
   GenericConst,
-  GenericModel,
+  Entity,
   Length,
   StringConst,
 } from '../shared/models/generic.model';
@@ -168,7 +168,7 @@ export class Email {
   }
 }
 
-export class Person extends GenericModel {
+export class Person extends Entity {
   @IsString()
   readonly creator = '';
 

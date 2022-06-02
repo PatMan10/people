@@ -4,7 +4,7 @@ import { Observable, of } from 'rxjs';
 
 import { ModalService } from '../modals/modal.service';
 import { InfoModalData } from '../modals/info/info.modal';
-import { ErrorResponse } from '../models/http.model';
+import { ErrorDto } from '../models/http.model';
 
 @Injectable({
   providedIn: 'root',
@@ -31,7 +31,7 @@ export class ErrorService {
       // TODO: send the error to remote logging infrastructure
       console.error(httpErr); // log to console instead
 
-      const { message } = httpErr.error as ErrorResponse;
+      const { message } = httpErr.error as ErrorDto;
       this.modalService.info(
         new InfoModalData('error', `${operation} failed`, [message])
       );
