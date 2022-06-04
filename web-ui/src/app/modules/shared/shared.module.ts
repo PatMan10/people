@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+// import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import {
   ValidationErrorsExistPipe,
@@ -10,33 +10,33 @@ import {
   GetFormArrayPipe,
   EnumToArrayPipe,
 } from './pipes/form.pipes';
-import { InfoModal, GetBootstrapColorPipe } from './modals/info/info.modal';
+// import { InfoModal, GetBootstrapColorPipe } from './modals/info/info.modal';
 
 @NgModule({
   declarations: [
     // modals
-    InfoModal,
+    // InfoModal,
     // pipes
     ValidationErrorsExistPipe,
     GetValidationErrorsPipe,
     GetFormArrayPipe,
-    GetBootstrapColorPipe,
+    // GetBootstrapColorPipe,
     EnumToArrayPipe,
   ],
-  imports: [CommonModule, ReactiveFormsModule, HttpClientModule, NgbModule],
+  imports: [CommonModule, ReactiveFormsModule, HttpClientModule, /*NgbModule*/],
   exports: [
     // modules
     CommonModule,
     HttpClientModule,
     ReactiveFormsModule,
-    NgbModule,
+    // NgbModule,
     // modals
-    InfoModal,
+    // InfoModal,
     // pipes
     ValidationErrorsExistPipe,
     GetValidationErrorsPipe,
     GetFormArrayPipe,
-    GetBootstrapColorPipe,
+    // GetBootstrapColorPipe,
     EnumToArrayPipe,
   ],
 })

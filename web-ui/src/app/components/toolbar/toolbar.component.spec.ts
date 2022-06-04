@@ -11,9 +11,7 @@ describe('ToolbarComponent', () => {
       declarations: [ ToolbarComponent ]
     })
     .compileComponents();
-  });
 
-  beforeEach(() => {
     fixture = TestBed.createComponent(ToolbarComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

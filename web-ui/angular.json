@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "client": {
+    "web-ui": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -20,16 +20,18 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/client",
+            "outputPath": "dist/web-ui",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "assets": ["src/favicon.ico", "src/assets"],
-            "styles": ["src/styles.scss"],
-            "scripts": [],
-            "allowedCommonJsDependencies": ["validator"]
+            "styles": [
+              "src/styles.scss",
+              "./node_modules/@patman10/kickstart.css/dist/kickstart.css"
+            ],
+            "scripts": []
           },
           "configurations": {
             "production": {
@@ -68,10 +70,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "client:build:production"
+              "browserTarget": "web-ui:build:production"
             },
             "development": {
-              "browserTarget": "client:build:development"
+              "browserTarget": "web-ui:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -79,7 +81,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "client:build"
+            "browserTarget": "web-ui:build"
           }
         },
         "test": {
@@ -97,6 +99,5 @@
         }
       }
     }
-  },
-  "defaultProject": "client"
+  }
 }

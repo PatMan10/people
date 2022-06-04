@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { DrawerCache } from 'src/app/services/drawer.cache';
-import { UiUrls } from 'src/app/modules/shared/utils/urls';
+import { DrawerCache } from '../../services/drawer.cache';
+import { UiUrls } from '../../modules/shared/utils/urls';
 import { Drawer } from '../../app.utils';
-import { AuthCache } from 'src/app/modules/auth/auth.cache';
+import { AuthCache } from '../../modules/auth/auth.cache';
 
 @Component({
   selector: 'app-nav-drawer',

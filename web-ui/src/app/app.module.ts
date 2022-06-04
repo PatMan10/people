@@ -1,6 +1,12 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+// material ui
+import { MatIconModule } from '@angular/material/icon';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import {MatButtonModule} from "@angular/material/button";
 
 // app
 import { AppRoutingModule } from './app-routing.module';
@@ -29,6 +35,12 @@ import { HomeComponent } from './components/home/home.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
+    BrowserAnimationsModule,
+    // material ui
+    MatIconModule,
+    MatToolbarModule,
+    MatButtonModule,
+    // app
     AuthModule,
     UserModule,
     PersonModule,
