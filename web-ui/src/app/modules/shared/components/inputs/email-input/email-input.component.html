@@ -1,0 +1,7 @@
+<mat-form-field appearance="fill">
+  <mat-label>email</mat-label>
+  <input [formControl]="control" matInput placeholder="your email" />
+  <ng-container *ngIf="errors | getErs: 'email' as emailErs">
+    <mat-error *ngFor="let eMsg of emailErs">{{ eMsg }}</mat-error>
+  </ng-container>
+</mat-form-field>

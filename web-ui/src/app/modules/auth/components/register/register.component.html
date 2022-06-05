@@ -1,63 +1,21 @@
 <div class="container">
   <h1>Register</h1>
-  <form [formGroup]="form" (ngSubmit)="submit()">
-    <div class="form-floating mb-3">
-      <input
-        formControlName="handle"
-        [ngClass]="(errors | ersExist: 'handle') ? 'is-invalid' : ''"
-        id="handle"
-        name="handle"
-        type="handle"
-        class="form-control"
-        placeholder="handle"
-      />
-      <label for="handle">Handle</label>
+  <form [formGroup]="form" (ngSubmit)="submit()" class="flex-col">
+    <app-handle-input
+      formControlName="handle"
+      [errors]="errors"
+    ></app-handle-input>
 
-      <ng-container *ngIf="errors | getErs: 'handle' as handleErs">
-        <div *ngIf="handleErs.length > 0" class="invalid-feedback">
-          <span *ngFor="let eMsg of handleErs">{{ eMsg }}</span>
-        </div>
-      </ng-container>
-    </div>
+    <app-email-input
+      formControlName="email"
+      [errors]="errors"
+    ></app-email-input>
 
-    <div class="form-floating mb-3">
-      <input
-        formControlName="email"
-        [ngClass]="(errors | ersExist: 'email') ? 'is-invalid' : ''"
-        id="email"
-        name="email"
-        type="email"
-        class="form-control"
-        placeholder="email"
-      />
-      <label for="email">Email</label>
+    <app-password-input
+      formControlName="password"
+      [errors]="errors"
+    ></app-password-input>
 
-      <ng-container *ngIf="errors | getErs: 'email' as emailErs">
-        <div *ngIf="emailErs.length > 0" class="invalid-feedback">
-          <span *ngFor="let eMsg of emailErs">{{ eMsg }}</span>
-        </div>
-      </ng-container>
-    </div>
-
-    <div class="form-floating mb-3">
-      <input
-        formControlName="password"
-        [ngClass]="(errors | ersExist: 'password') ? 'is-invalid' : ''"
-        id="password"
-        name="password"
-        type="password"
-        class="form-control"
-        placeholder="password"
-      />
-      <label for="password">Password</label>
-
-      <ng-container *ngIf="errors | getErs: 'password' as passwordErs">
-        <div *ngIf="passwordErs.length > 0" class="invalid-feedback">
-          <span *ngFor="let eMsg of passwordErs">{{ eMsg }}</span>
-        </div>
-      </ng-container>
-    </div>
-
-    <button type="submit" class="btn btn-primary">Register</button>
+    <button mat-raised-button type="submit" color="primary">Register</button>
   </form>
 </div>
