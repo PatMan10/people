@@ -1,19 +1,21 @@
 <mat-toolbar color="primary">
-  <button mat-icon-button (click)="drawer.toggle()">
+  <button mat-icon-button (click)="drawerIsOpen ? closeDrawer() : openDrawer()">
     <mat-icon>menu</mat-icon>
   </button>
   <span>People</span>
   <span class="spacer"></span>
-  <button mat-icon-button class="favorite-icon" aria-label="Like">
+  <button mat-icon-button aria-label="Like">
     <mat-icon>favorite</mat-icon>
   </button>
-  <button mat-icon-button class="example-icon" aria-label="Share">
+  <button mat-icon-button aria-label="Share">
     <mat-icon>share</mat-icon>
   </button>
 </mat-toolbar>
 
-<mat-drawer-container class="example-container" autosize>
-  <mat-drawer #drawer class="example-sidenav" mode="side">
+<mat-drawer-container autosize>
+  <div *ngIf="drawerIsOpen" class="backdrop" (click)="closeDrawer()"></div>
+
+  <mat-drawer #drawer mode="over">
     <div *ngIf="auth.user" class="user">
       <div class="picture">
         <img src="../../../assets//images/anonymous.png" />
@@ -26,14 +28,14 @@
 
     <nav class="nav-bar">
       <div *ngIf="!auth.user">
-        <a [routerLink]="urls.auth.LOGIN" (click)="drawer.close()">Login</a>
-        <a [routerLink]="urls.auth.REGISTER" (click)="drawer.close()"
+        <a [routerLink]="urls.auth.LOGIN" (click)="closeDrawer()">Login</a>
+        <a [routerLink]="urls.auth.REGISTER" (click)="closeDrawer()"
           >Register</a
         >
       </div>
       <div *ngIf="auth.user">
-        <a [routerLink]="urls.person.LIST" (click)="drawer.close()">People</a>
-        <a [routerLink]="urls.auth.LOGOUT" (click)="drawer.close()">Logout</a>
+        <a [routerLink]="urls.person.LIST" (click)="closeDrawer()">People</a>
+        <a [routerLink]="urls.auth.LOGOUT" (click)="closeDrawer()">Logout</a>
       </div>
     </nav>
   </mat-drawer>
