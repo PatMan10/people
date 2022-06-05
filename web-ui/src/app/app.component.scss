@@ -1,0 +1,79 @@
+.mat-toolbar {
+  position: fixed;
+  top: 0;
+  z-index: 2;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+.mat-drawer {
+  width: 250px;
+  position: fixed;
+  top: 64px;
+  z-index: 2;
+}
+
+.nav-bar {
+  display: flex;
+  flex-direction: column;
+  overflow: visible;
+
+  a {
+    display: flex;
+    align-items: center;
+
+    height: 40px;
+
+    border-bottom: 1px solid gray;
+    color: white;
+    font-size: 1.25rem;
+    padding-left: 30px;
+    text-decoration: none;
+  }
+
+  a:hover {
+    background-color: lightgray;
+    color: #1976d2;
+  }
+}
+
+.user {
+  display: flex;
+  align-items: center;
+
+  padding: 0.75rem;
+
+  .picture {
+    display: flex;
+    align-items: center;
+
+    height: 80px;
+    width: 80px;
+
+    border-radius: 50%;
+
+    img {
+      max-height: 100%;
+      max-width: 100%;
+
+      border-radius: inherit;
+    }
+  }
+
+  .credentials {
+    span {
+      display: block;
+      margin-left: 0.5rem;
+    }
+  }
+}
+
+.main-content {
+  position: fixed;
+  top: 64px;
+
+  height: 93.4vh;
+  overflow-y: scroll;
+}

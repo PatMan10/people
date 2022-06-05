@@ -1,2 +1,44 @@
-<app-toolbar></app-toolbar>
-<router-outlet></router-outlet>
+<mat-toolbar color="primary">
+  <button mat-icon-button (click)="drawer.toggle()">
+    <mat-icon>menu</mat-icon>
+  </button>
+  <span>People</span>
+  <span class="spacer"></span>
+  <button mat-icon-button class="favorite-icon" aria-label="Like">
+    <mat-icon>favorite</mat-icon>
+  </button>
+  <button mat-icon-button class="example-icon" aria-label="Share">
+    <mat-icon>share</mat-icon>
+  </button>
+</mat-toolbar>
+
+<mat-drawer-container class="example-container" autosize>
+  <mat-drawer #drawer class="example-sidenav" mode="side">
+    <div *ngIf="auth.user" class="user">
+      <div class="picture">
+        <img src="../../../assets//images/anonymous.png" />
+      </div>
+      <div class="credentials">
+        <span>{{ auth.user.handle }}</span>
+        <span>{{ auth.user.email }}</span>
+      </div>
+    </div>
+
+    <nav class="nav-bar">
+      <div *ngIf="!auth.user">
+        <a [routerLink]="urls.auth.LOGIN" (click)="drawer.close()">Login</a>
+        <a [routerLink]="urls.auth.REGISTER" (click)="drawer.close()"
+          >Register</a
+        >
+      </div>
+      <div *ngIf="auth.user">
+        <a [routerLink]="urls.person.LIST" (click)="drawer.close()">People</a>
+        <a [routerLink]="urls.auth.LOGOUT" (click)="drawer.close()">Logout</a>
+      </div>
+    </nav>
+  </mat-drawer>
+
+  <div class="main-content">
+    <router-outlet></router-outlet>
+  </div>
+</mat-drawer-container>

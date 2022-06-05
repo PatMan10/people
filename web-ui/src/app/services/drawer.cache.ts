@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
-import {Drawer, Visibility} from "../app.utils";
+import { Drawer, Visibility } from '../app.utils';
 
 @Injectable({
   providedIn: 'root',
