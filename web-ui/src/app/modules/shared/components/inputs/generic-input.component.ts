@@ -22,6 +22,7 @@ export abstract class GenericInputComponent
   // https://blog.angular-university.io/angular-custom-form-controls/
   //
 
+  @Input() label = '';
   // name used to display error messages to user
   @Input() name = 'value';
   // errors used to show messages

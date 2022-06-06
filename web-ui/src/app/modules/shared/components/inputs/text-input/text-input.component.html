@@ -1,0 +1,7 @@
+<mat-form-field appearance="fill">
+  <mat-label>{{ label }}</mat-label>
+  <input [formControl]="control" matInput [placeholder]="name" />
+  <ng-container *ngIf="errors | getErs: name as ers">
+    <mat-error *ngFor="let eMsg of ers">{{ eMsg }}</mat-error>
+  </ng-container>
+</mat-form-field>

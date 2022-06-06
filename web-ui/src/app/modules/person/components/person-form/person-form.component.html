@@ -4,122 +4,84 @@
     <!----NAME GROUP---->
     <div formGroupName="name">
       <!----FIRST NAME---->
-      <div class="form-floating mb-3">
-        <input
-          formControlName="first"
-          [ngClass]="(errors | ersExist: 'first') ? 'is-invalid' : ''"
-          type="text"
-          class="form-control"
-          placeholder="First Name"
-        />
-        <label>First Name</label>
-
+      <mat-form-field appearance="fill">
+        <mat-label>First Name</mat-label>
+        <input formControlName="first" matInput placeholder="First Name" />
         <ng-container *ngIf="errors | getErs: 'first' as firstErs">
-          <div *ngIf="firstErs.length > 0" class="invalid-feedback">
-            <span *ngFor="let eMsg of firstErs">{{ eMsg }}</span>
-          </div>
+          <mat-error *ngFor="let eMsg of firstErs">{{ eMsg }}</mat-error>
         </ng-container>
-      </div>
+      </mat-form-field>
 
       <!----MIDDLE NAME ARRAY---->
       <div
         *ngIf="form | getArr: 'name.middle' as middleArr"
         formArrayName="middle"
-        class="d-flex flex-column align-items-center mb-3"
+        class="flex-col mb-3"
       >
-        <div
-          *ngFor="let middle of middleArr.controls; let i = index"
-          class="input-group mb-3"
-          style="align-self: stretch"
-        >
-          <input
-            [formControlName]="i"
-            [ngClass]="(errors | ersExist: 'middle') ? 'is-invalid' : ''"
-            type="text"
-            class="form-control"
-            placeholder="Middle Name"
-          />
-          <div class="input-group-append">
-            <button
-              class="btn btn-outline-danger"
-              type="button"
-              (click)="removeFromArr('name.middle', i)"
-            >
-              X
-            </button>
-          </div>
-
-          <ng-container *ngIf="errors | getErs: 'middle' as firstErs">
-            <div *ngIf="firstErs.length > 0" class="invalid-feedback">
-              <span *ngFor="let eMsg of firstErs">{{ eMsg }}</span>
-            </div>
-          </ng-container>
+        <div *ngFor="let middle of middleArr.controls; let i = index">
+          <mat-form-field appearance="fill">
+            <mat-label>Middle Name</mat-label>
+            <input
+              formControlName="middle"
+              matInput
+              type="text"
+              placeholder="Middle Name"
+            />
+            <mat-icon matSuffix (click)="removeFromArr('name.middle', i)">
+              delete
+            </mat-icon>
+            <ng-container *ngIf="errors | getErs: 'middle' as middleErs">
+              <mat-error *ngFor="let eMsg of middleErs">{{ eMsg }}</mat-error>
+            </ng-container>
+          </mat-form-field>
         </div>
         <button
-          type="button"
-          class="btn btn-outline-success"
           (click)="addToArr('name.middle')"
+          mat-raised-button
+          type="button"
+          color="accent"
         >
           Add Middle Name
         </button>
       </div>
 
       <!----LAST NAME---->
-      <div class="form-floating mb-3">
-        <input
-          formControlName="last"
-          [ngClass]="(errors | ersExist: 'last') ? 'is-invalid' : ''"
-          type="text"
-          class="form-control"
-          placeholder="Last Name"
-        />
-        <label>Last Name</label>
-
+      <mat-form-field appearance="fill">
+        <mat-label>Last Name</mat-label>
+        <input formControlName="last" matInput placeholder="Last Name" />
         <ng-container *ngIf="errors | getErs: 'last' as lastErs">
-          <div *ngIf="lastErs.length > 0" class="invalid-feedback">
-            <span *ngFor="let eMsg of lastErs">{{ eMsg }}</span>
-          </div>
+          <mat-error *ngFor="let eMsg of lastErs">{{ eMsg }}</mat-error>
         </ng-container>
-      </div>
+      </mat-form-field>
 
       <!----NICK NAME ARRAY---->
       <div
         *ngIf="form | getArr: 'name.nick' as nickArr"
         formArrayName="nick"
-        class="mb-3 d-flex flex-column align-items-center"
+        class="flex-col mb-3"
       >
-        <div
-          *ngFor="let nick of nickArr.controls; let i = index"
-          class="input-group mb-3"
-          style="align-self: stretch"
-        >
-          <input
-            [formControlName]="i"
-            [ngClass]="(errors | ersExist: 'nick') ? 'is-invalid' : ''"
-            type="text"
-            class="form-control"
-            placeholder="Nick Name"
-          />
-          <div class="input-group-append">
-            <button
-              class="btn btn-outline-danger"
-              type="button"
-              (click)="removeFromArr('name.nick', i)"
-            >
-              X
-            </button>
-          </div>
-
-          <ng-container *ngIf="errors | getErs: 'nick' as firstErs">
-            <div *ngIf="firstErs.length > 0" class="invalid-feedback">
-              <span *ngFor="let eMsg of firstErs">{{ eMsg }}</span>
-            </div>
-          </ng-container>
+        <div *ngFor="let nick of nickArr.controls; let i = index">
+          <mat-form-field appearance="fill">
+            <mat-label>Nick Name</mat-label>
+            <input
+              formControlName="nick"
+              matInput
+              type="text"
+              placeholder="Nick Name"
+            />
+            <mat-icon matSuffix (click)="removeFromArr('name.nick', i)">
+              delete
+            </mat-icon>
+            <ng-container *ngIf="errors | getErs: 'nick' as nickErs">
+              <mat-error *ngFor="let eMsg of nickErs">{{ eMsg }}</mat-error>
+            </ng-container>
+          </mat-form-field>
         </div>
         <button
-          type="button"
-          class="btn btn-outline-success"
           (click)="addToArr('name.nick')"
+          mat-raised-button
+          type="button"
+          color="accent"
         >
           Add Nick Name
         </button>
@@ -127,21 +89,15 @@
     </div>
 
     <!----BIRTHDAY---->
-    <div class="form-floating mb-3">
-      <input
-        formControlName="birthday"
-        [ngClass]="(errors | ersExist: 'birthday') ? 'is-invalid' : ''"
-        type="date"
-        class="form-control"
-      />
-      <label>Birthday</label>
-
+    <mat-form-field appearance="fill">
+      <mat-label>Birthday</mat-label>
+      <input formControlName="birthday" matInput [matDatepicker]="picker" />
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
       <ng-container *ngIf="errors | getErs: 'birthday' as birthdayErs">
-        <div *ngIf="birthdayErs.length > 0" class="invalid-feedback">
-          <span *ngFor="let eMsg of birthdayErs">{{ eMsg }}</span>
-        </div>
+        <mat-error *ngFor="let eMsg of birthdayErs">{{ eMsg }}</mat-error>
       </ng-container>
-    </div>
+    </mat-form-field>
 
     <!----CONTACT GROUP---->
     <div formGroupName="contact">

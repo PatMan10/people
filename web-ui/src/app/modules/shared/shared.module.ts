@@ -9,6 +9,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatTableModule } from '@angular/material/table';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 
 import {
   ValidationErrorsExistPipe,
@@ -19,6 +21,7 @@ import {
 import { HandleInputComponent } from './components/inputs/handle-input/handle-input.component';
 import { EmailInputComponent } from './components/inputs/email-input/email-input.component';
 import { PasswordInputComponent } from './components/inputs/password-input/password-input.component';
+// import { TextInputComponent } from './components/inputs/text-input/text-input.component';
 import { InfoDialogComponent } from './dialogs/info-dialog/info-dialog.component';
 
 @NgModule({
@@ -36,6 +39,7 @@ import { InfoDialogComponent } from './dialogs/info-dialog/info-dialog.component
     EmailInputComponent,
     PasswordInputComponent,
     InfoDialogComponent,
+    // TextInputComponent,
   ],
   imports: [
     // modules
@@ -49,6 +53,8 @@ import { InfoDialogComponent } from './dialogs/info-dialog/info-dialog.component
     MatIconModule,
     MatDialogModule,
     MatTableModule,
+    MatNativeDateModule,
+    MatDatepickerModule,
   ],
   exports: [
     // modules
@@ -62,6 +68,8 @@ import { InfoDialogComponent } from './dialogs/info-dialog/info-dialog.component
     MatIconModule,
     MatDialogModule,
     MatTableModule,
+    MatNativeDateModule,
+    MatDatepickerModule,
     // pipes
     ValidationErrorsExistPipe,
     GetValidationErrorsPipe,
@@ -71,6 +79,7 @@ import { InfoDialogComponent } from './dialogs/info-dialog/info-dialog.component
     HandleInputComponent,
     EmailInputComponent,
     PasswordInputComponent,
+    // TextInputComponent,
   ],
 })
 export class SharedModule {}
