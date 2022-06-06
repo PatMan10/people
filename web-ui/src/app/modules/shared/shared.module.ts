@@ -11,6 +11,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatTableModule } from '@angular/material/table';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatSelectModule } from '@angular/material/select';
 
 import {
   ValidationErrorsExistPipe,
@@ -55,13 +56,14 @@ import { InfoDialogComponent } from './dialogs/info-dialog/info-dialog.component
     MatTableModule,
     MatNativeDateModule,
     MatDatepickerModule,
+    MatSelectModule,
   ],
   exports: [
-    // modules
+    // angular modules
     CommonModule,
     HttpClientModule,
     ReactiveFormsModule,
-    // material ui,
+    // material ui modules
     MatInputModule,
     MatFormFieldModule,
     MatButtonModule,
@@ -70,6 +72,7 @@ import { InfoDialogComponent } from './dialogs/info-dialog/info-dialog.component
     MatTableModule,
     MatNativeDateModule,
     MatDatepickerModule,
+    MatSelectModule,
     // pipes
     ValidationErrorsExistPipe,
     GetValidationErrorsPipe,

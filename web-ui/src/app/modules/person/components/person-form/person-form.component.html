@@ -16,13 +16,13 @@
       <div
         *ngIf="form | getArr: 'name.middle' as middleArr"
         formArrayName="middle"
-        class="flex-col mb-3"
+        class="flex-col mb-2"
       >
         <div *ngFor="let middle of middleArr.controls; let i = index">
           <mat-form-field appearance="fill">
             <mat-label>Middle Name</mat-label>
             <input
-              formControlName="middle"
+              [formControlName]="i"
               matInput
               type="text"
               placeholder="Middle Name"
@@ -58,13 +58,13 @@
       <div
         *ngIf="form | getArr: 'name.nick' as nickArr"
         formArrayName="nick"
-        class="flex-col mb-3"
+        class="flex-col mb-2"
       >
         <div *ngFor="let nick of nickArr.controls; let i = index">
           <mat-form-field appearance="fill">
             <mat-label>Nick Name</mat-label>
             <input
-              formControlName="nick"
+              [formControlName]="i"
               matInput
               type="text"
               placeholder="Nick Name"
@@ -105,56 +105,45 @@
       <div
         *ngIf="form | getArr: 'contact.phone' as phoneArr"
         formArrayName="phone"
-        class="mb-3 d-flex flex-column align-items-center"
+        class="flex-col mb-3"
       >
         <div
           *ngFor="let phone of phoneArr.controls; let i = index"
-          class="input-group mb-3"
-          style="align-self: stretch"
           [formGroupName]="i"
         >
-          <div class="input-group-prepend">
-            <select
-              formControlName="type"
-              class="btn btn-outline-primary"
-              type="button"
-              style="height: 100%"
-            >
-              <option
-                *ngFor="let type of PhoneType | enumToArr"
-                [selected]="phone.value.type === type"
-              >
-                {{ type | titlecase }}
-              </option>
-            </select>
+          <div class="flex-row justify-between align-center">
+            <mat-form-field appearance="fill" style="width: 30%">
+              <mat-label>Phone Type</mat-label>
+              <mat-select formControlName="type" [value]="phone.value.type">
+                <mat-option
+                  *ngFor="let type of PhoneType | enumToArr"
+                  [value]="type"
+                >
+                  {{ type | titlecase }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="fill" style="width: 65%">
+              <mat-label>Phone Number</mat-label>
+              <input
+                formControlName="number"
+                matInput
+                type="text"
+                placeholder="Phone Number"
+              />
+              <mat-icon matSuffix (click)="removeFromArr('contact.phone', i)">
+                delete
+              </mat-icon>
+            </mat-form-field>
           </div>
-
-          <input
-            formControlName="number"
-            [ngClass]="(errors | ersExist: 'phone') ? 'is-invalid' : ''"
-            type="text"
-            class="form-control"
-            placeholder="Phone Number"
-          />
-          <div class="input-group-append">
-            <button
-              class="btn btn-outline-danger"
-              type="button"
-              (click)="removeFromArr('contact.phone', i)"
-            >
-              X
-            </button>
-          </div>
-
-          <ng-container *ngIf="errors | getErs: 'phone' as phoneErs">
-            <div *ngIf="phoneErs.length > 0" class="invalid-feedback">
-              <span *ngFor="let eMsg of phoneErs">{{ eMsg }}</span>
-            </div>
+          <ng-container *ngIf="errors | getErs: 'number' as numberErs">
+            <mat-error *ngFor="let eMsg of numberErs">{{ eMsg }}</mat-error>
           </ng-container>
         </div>
         <button
+          mat-raised-button
           type="button"
-          class="btn btn-outline-success"
+          color="accent"
           (click)="addToArr('contact.phone')"
         >
           Add Phone
@@ -165,56 +154,45 @@
       <div
         *ngIf="form | getArr: 'contact.email' as emailArr"
         formArrayName="email"
-        class="mb-3 d-flex flex-column align-items-center"
+        class="flex-col mb-3"
       >
         <div
           *ngFor="let email of emailArr.controls; let i = index"
-          class="input-group mb-3"
-          style="align-self: stretch"
           [formGroupName]="i"
         >
-          <div class="input-group-prepend">
-            <select
-              formControlName="type"
-              class="btn btn-outline-primary"
-              type="button"
-              style="height: 100%"
-            >
-              <option
-                *ngFor="let type of EmailType | enumToArr"
-                [selected]="email.value.type === type"
-              >
-                {{ type | titlecase }}
-              </option>
-            </select>
+          <div class="flex-row justify-between align-center">
+            <mat-form-field appearance="fill" style="width: 30%">
+              <mat-label>Email Type</mat-label>
+              <mat-select formControlName="type" [value]="email.value.type">
+                <mat-option
+                  *ngFor="let type of EmailType | enumToArr"
+                  [value]="type"
+                >
+                  {{ type | titlecase }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="fill" style="width: 65%">
+              <mat-label>Email Address</mat-label>
+              <input
+                formControlName="address"
+                matInput
+                type="text"
+                placeholder="Email Address"
+              />
+              <mat-icon matSuffix (click)="removeFromArr('contact.email', i)">
+                delete
+              </mat-icon>
+            </mat-form-field>
           </div>
-
-          <input
-            formControlName="address"
-            [ngClass]="(errors | ersExist: 'email') ? 'is-invalid' : ''"
-            type="text"
-            class="form-control"
-            placeholder="Email Address"
-          />
-          <div class="input-group-append">
-            <button
-              class="btn btn-outline-danger"
-              type="button"
-              (click)="removeFromArr('contact.email', i)"
-            >
-              X
-            </button>
-          </div>
-
-          <ng-container *ngIf="errors | getErs: 'email' as emailErs">
-            <div *ngIf="emailErs.length > 0" class="invalid-feedback">
-              <span *ngFor="let eMsg of emailErs">{{ eMsg }}</span>
-            </div>
+          <ng-container *ngIf="errors | getErs: 'address' as addressErs">
+            <mat-error *ngFor="let eMsg of addressErs">{{ eMsg }}</mat-error>
           </ng-container>
         </div>
         <button
+          mat-raised-button
           type="button"
-          class="btn btn-outline-success"
+          color="accent"
           (click)="addToArr('contact.email')"
         >
           Add Email
@@ -222,7 +200,7 @@
       </div>
     </div>
 
-    <button type="submit" class="btn btn-primary">
+    <button mat-raised-button type="submit" color="primary">
       {{ btnText }}
     </button>
   </form>
