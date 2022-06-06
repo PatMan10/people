@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { Person } from '../../person.model';
 import { PersonApi } from '../../person.api';
 import { UiUrls } from '../../../shared/utils/urls';
-import {GetByQueryDto} from "../../../shared/models/http.model";
+import { GetByQueryDto } from '../../../shared/models/http.model';
 
 @Component({
   selector: 'app-person-list',
@@ -14,6 +14,7 @@ import {GetByQueryDto} from "../../../shared/models/http.model";
 export class PersonListComponent implements OnInit {
   readonly urls = UiUrls;
   payload$: Observable<GetByQueryDto<Person>>;
+  columns = ['first name', 'last name', 'birthday'];
 
   constructor(api: PersonApi) {
     this.payload$ = api.getByQuery();

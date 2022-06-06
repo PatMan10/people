@@ -2,13 +2,13 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
-// import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 // material ui
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatTableModule } from '@angular/material/table';
 
 import {
   ValidationErrorsExistPipe,
@@ -20,7 +20,6 @@ import { HandleInputComponent } from './components/inputs/handle-input/handle-in
 import { EmailInputComponent } from './components/inputs/email-input/email-input.component';
 import { PasswordInputComponent } from './components/inputs/password-input/password-input.component';
 import { InfoDialogComponent } from './dialogs/info-dialog/info-dialog.component';
-// import { InfoModal, GetBootstrapColorPipe } from './modals/info/info.modal';
 
 @NgModule({
   declarations: [
@@ -39,14 +38,17 @@ import { InfoDialogComponent } from './dialogs/info-dialog/info-dialog.component
     InfoDialogComponent,
   ],
   imports: [
+    // modules
     CommonModule,
     ReactiveFormsModule,
-    HttpClientModule /*NgbModule*/,
+    HttpClientModule,
+    // material ui,
     MatInputModule,
     MatFormFieldModule,
     MatButtonModule,
     MatIconModule,
     MatDialogModule,
+    MatTableModule,
   ],
   exports: [
     // modules
@@ -58,13 +60,12 @@ import { InfoDialogComponent } from './dialogs/info-dialog/info-dialog.component
     MatFormFieldModule,
     MatButtonModule,
     MatIconModule,
-    // modals
-    // InfoModal,
+    MatDialogModule,
+    MatTableModule,
     // pipes
     ValidationErrorsExistPipe,
     GetValidationErrorsPipe,
     GetFormArrayPipe,
-    // GetBootstrapColorPipe,
     EnumToArrayPipe,
     // inputs
     HandleInputComponent,
