@@ -8,20 +8,6 @@
 // Be sure that you only ever include this mixin once!
 @include mat.core();
 
-// Define a light theme
-$light-primary: mat.define-palette(mat.$indigo-palette);
-$light-accent: mat.define-palette(mat.$pink-palette);
-$light-warn: mat.define-palette(mat.$red-palette);
-$light-theme: mat.define-light-theme(
-  (
-    color: (
-      primary: $light-primary,
-      accent: $light-accent,
-      warn: $light-warn,
-    ),
-  )
-);
-
 // Define a dark theme
 $dark-primary: mat.define-palette(mat.$pink-palette);
 $dark-accent: mat.define-palette(mat.$blue-grey-palette);
@@ -32,6 +18,20 @@ $dark-theme: mat.define-dark-theme(
       primary: $dark-primary,
       accent: $dark-accent,
       warn: $dark-warn,
+    ),
+  )
+);
+
+// Define a light theme
+$light-primary: mat.define-palette(mat.$deep-purple-palette);
+$light-accent: mat.define-palette(mat.$amber-palette);
+$light-warn: mat.define-palette(mat.$red-palette);
+$light-theme: mat.define-light-theme(
+  (
+    color: (
+      primary: $light-primary,
+      accent: $light-accent,
+      warn: $light-warn,
     ),
   )
 );
@@ -59,7 +59,5 @@ $dark-theme: mat.define-dark-theme(
 html,
 body {
   height: 100%;
-}
-body {
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
