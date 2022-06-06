@@ -2,15 +2,15 @@ import { Injectable } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 
-// import { ModalService } from '../modals/modal.service';
-// import { InfoModalData } from '../modals/info/info.modal';
+import { DialogService } from '../dialogs/dialog.service';
+import { InfoDialogData } from '../dialogs/info-dialog/info-dialog.component';
 import { ErrorDto } from '../models/http.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ErrorService {
-  constructor(/*private readonly modalService: ModalService*/) {}
+  constructor(private readonly dialog: DialogService) {}
 
   //####################
   // ERROR HANDLING OPERATOR
@@ -32,9 +32,7 @@ export class ErrorService {
       console.error(httpErr); // log to console instead
 
       const { message } = httpErr.error as ErrorDto;
-      /*this.modalService.info(
-        new InfoModalData('error', `${operation} failed`, [message])
-      );*/
+      this.dialog.info(new InfoDialogData(`${operation} failed`, [message]));
 
       // Let the app keep running by returning an empty result.
       return of(result);

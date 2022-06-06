@@ -1,0 +1,9 @@
+<h1 mat-dialog-title>{{ data.title | titlecase }}</h1>
+
+<div mat-dialog-content>
+  <p *ngFor="let msg of data.message">{{ msg }}</p>
+</div>
+
+<div mat-dialog-actions>
+  <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Ok</button>
+</div>

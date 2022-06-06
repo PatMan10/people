@@ -8,6 +8,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { MatDialogModule } from '@angular/material/dialog';
 
 import {
   ValidationErrorsExistPipe,
@@ -18,6 +19,7 @@ import {
 import { HandleInputComponent } from './components/inputs/handle-input/handle-input.component';
 import { EmailInputComponent } from './components/inputs/email-input/email-input.component';
 import { PasswordInputComponent } from './components/inputs/password-input/password-input.component';
+import { InfoDialogComponent } from './dialogs/info-dialog/info-dialog.component';
 // import { InfoModal, GetBootstrapColorPipe } from './modals/info/info.modal';
 
 @NgModule({
@@ -34,6 +36,7 @@ import { PasswordInputComponent } from './components/inputs/password-input/passw
     HandleInputComponent,
     EmailInputComponent,
     PasswordInputComponent,
+    InfoDialogComponent,
   ],
   imports: [
     CommonModule,
@@ -43,6 +46,7 @@ import { PasswordInputComponent } from './components/inputs/password-input/passw
     MatFormFieldModule,
     MatButtonModule,
     MatIconModule,
+    MatDialogModule,
   ],
   exports: [
     // modules
