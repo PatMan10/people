@@ -11,7 +11,7 @@
       <span>{{ person.birthday }}</span>
     </div>
 
-    <div class="detail-group">
+    <div *ngIf="person.contact.phone.length > 0" class="detail-group">
       <label>Phone: </label>
       <div *ngFor="let phone of person.contact.phone" class="phone">
         <span class="type">{{ phone.type }}:</span>
@@ -19,7 +19,7 @@
       </div>
     </div>
 
-    <div class="detail-group">
+    <div *ngIf="person.contact.email.length > 0" class="detail-group">
       <label>Email: </label>
       <div *ngFor="let email of person.contact.email" class="email">
         <span class="type">{{ email.type }}:</span>
@@ -28,10 +28,15 @@
     </div>
 
     <div class="detail-group">
-      <a [routerLink]="urls.person.edit(person._id)" class="btn btn-primary">
+      <a
+        [routerLink]="urls.person.edit(person._id)"
+        mat-raised-button
+        color="primary"
+      >
         Edit
       </a>
-      <button class="btn btn-danger" (click)="delete(person._id)">
+
+      <button (click)="delete(person._id)" mat-raised-button color="warn">
         Delete
       </button>
     </div>

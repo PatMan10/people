@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable, of } from 'rxjs';
+import { of } from 'rxjs';
 import { Person } from 'src/app/modules/person/person.model';
 import { PersonApi } from 'src/app/modules/person/person.api';
 import { UiUrls } from 'src/app/modules/shared/utils/urls';
