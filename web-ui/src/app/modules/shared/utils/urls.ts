@@ -32,8 +32,7 @@ export class UiUrls {
     static readonly DELETE = `delete-person/${Param.ID}`;
 
     static viewByQuery = () => `/${this.LIST}`;
-    static viewById = (id: string) =>
-      `/${this.DETAIL}`.replace(Param.ID, id);
+    static viewById = (id: string) => `/${this.DETAIL}`.replace(Param.ID, id);
     static add = () => `/${this.ADD}`;
     static edit = (id: string) => `/${this.EDIT}`.replace(Param.ID, id);
     static delete = (id: string) => `/${this.DELETE}`.replace(Param.ID, id);
