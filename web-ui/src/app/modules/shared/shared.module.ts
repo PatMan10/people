@@ -27,8 +27,8 @@ import { InfoDialogComponent } from './dialogs/info-dialog/info-dialog.component
 
 @NgModule({
   declarations: [
-    // modals
-    // InfoModal,
+    // dialogs
+    InfoDialogComponent,
     // pipes
     ValidationErrorsExistPipe,
     GetValidationErrorsPipe,
@@ -39,7 +39,6 @@ import { InfoDialogComponent } from './dialogs/info-dialog/info-dialog.component
     HandleInputComponent,
     EmailInputComponent,
     PasswordInputComponent,
-    InfoDialogComponent,
     // TextInputComponent,
   ],
   imports: [

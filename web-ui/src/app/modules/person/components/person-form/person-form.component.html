@@ -16,7 +16,7 @@
       <div
         *ngIf="form | getArr: 'name.middle' as middleArr"
         formArrayName="middle"
-        class="flex-col mb-2"
+        class="flex-column mb-2"
       >
         <div *ngFor="let middle of middleArr.controls; let i = index">
           <mat-form-field appearance="fill">
@@ -58,7 +58,7 @@
       <div
         *ngIf="form | getArr: 'name.nick' as nickArr"
         formArrayName="nick"
-        class="flex-col mb-2"
+        class="flex-column mb-2"
       >
         <div *ngFor="let nick of nickArr.controls; let i = index">
           <mat-form-field appearance="fill">
@@ -105,7 +105,7 @@
       <div
         *ngIf="form | getArr: 'contact.phone' as phoneArr"
         formArrayName="phone"
-        class="flex-col mb-3"
+        class="flex-column mb-3"
       >
         <div
           *ngFor="let phone of phoneArr.controls; let i = index"
@@ -154,7 +154,7 @@
       <div
         *ngIf="form | getArr: 'contact.email' as emailArr"
         formArrayName="email"
-        class="flex-col mb-3"
+        class="flex-column mb-3"
       >
         <div
           *ngFor="let email of emailArr.controls; let i = index"

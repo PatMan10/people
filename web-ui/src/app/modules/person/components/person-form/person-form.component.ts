@@ -72,7 +72,6 @@ export class PersonFormComponent implements OnInit {
 
   async submit() {
     this.errors = await validateForm(Person, this.form.value);
-    console.log(this.errors);
 
     if (this.errors.length > 0) return;
 
