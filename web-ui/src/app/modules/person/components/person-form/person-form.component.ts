@@ -8,6 +8,7 @@ import { PersonApi } from '../../person.api';
 import { UiUrls } from '../../../shared/utils/urls';
 import { buildFormGroup, validateForm } from '../../../shared/utils/form';
 import { ErrorService } from 'src/app/modules/shared/services/error.service';
+import { clone, dateToApiFormat } from '../../../shared/models/generic.model';
 
 type ArrayPath =
   | 'name.middle'
@@ -71,11 +72,14 @@ export class PersonFormComponent implements OnInit {
   }
 
   async submit() {
-    this.errors = await validateForm(Person, this.form.value);
+    const payload = clone(this.form.value);
+    payload.birthday = dateToApiFormat(payload.birthday);
+
+    this.errors = await validateForm(Person, payload);
 
     if (this.errors.length > 0) return;
 
-    this.api.save(this.form.value).subscribe({
+    this.api.save(payload).subscribe({
       next: () => {
         this.router.navigate([UiUrls.person.LIST]);
       },

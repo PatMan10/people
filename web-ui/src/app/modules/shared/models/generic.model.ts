@@ -43,6 +43,9 @@ export const clone = <T>(o: T): T =>
 
 export const json = <T>(o: T): T => Object.assign({}, o);
 
+export const dateToApiFormat = (d: Date) =>
+  d.toLocaleString().substring(0, 10).split('/').join('-');
+
 //####################
 // TS MODEL
 //####################
