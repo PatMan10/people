@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { UiUrls } from '../shared/utils/urls';
+import { UiUrls } from '../../utils/urls';
 import { PersonListComponent } from './components/person-list/person-list.component';
 import { PersonDetailComponent } from './components/person-detail/person-detail.component';
 import { PersonFormComponent } from './components/person-form/person-form.component';

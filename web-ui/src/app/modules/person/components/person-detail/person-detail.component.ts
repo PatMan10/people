@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { of } from 'rxjs';
 import { Person } from 'src/app/modules/person/person.model';
 import { PersonApi } from 'src/app/modules/person/person.api';
-import { UiUrls } from 'src/app/modules/shared/utils/urls';
+import { UiUrls } from 'src/app/utils/urls';
 import { ErrorService } from 'src/app/modules/shared/services/error.service';
 
 @Component({
@@ -30,7 +30,7 @@ export class PersonDetailComponent implements OnInit {
   delete(id: string) {
     this.api.delete(id).subscribe({
       next: () => {
-        this.router.navigate([UiUrls.person.viewByQuery()]);
+        this.router.navigate([UiUrls.person.list()]);
       },
       error: this.err.handleHttpError('delete person', new Person()),
     });

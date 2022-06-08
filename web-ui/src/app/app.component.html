@@ -18,7 +18,7 @@
   <mat-drawer #drawer mode="over">
     <div *ngIf="auth.user" class="user">
       <div class="picture">
-        <img src="../../../assets//images/anonymous.png" />
+        <img src="../../../assets/images/anonymous.png" alt="User Pic" />
       </div>
       <div class="credentials">
         <span>{{ auth.user.handle }}</span>
@@ -28,14 +28,14 @@
 
     <nav class="nav-bar">
       <div *ngIf="!auth.user">
-        <a [routerLink]="urls.auth.LOGIN" (click)="closeDrawer()">Login</a>
-        <a [routerLink]="urls.auth.REGISTER" (click)="closeDrawer()"
+        <a [routerLink]="urls.auth.login()" (click)="closeDrawer()">Login</a>
+        <a [routerLink]="urls.auth.register()" (click)="closeDrawer()"
           >Register</a
         >
       </div>
       <div *ngIf="auth.user">
-        <a [routerLink]="urls.person.LIST" (click)="closeDrawer()">People</a>
-        <a [routerLink]="urls.auth.LOGOUT" (click)="closeDrawer()">Logout</a>
+        <a [routerLink]="urls.person.list()" (click)="closeDrawer()">People</a>
+        <a [routerLink]="urls.auth.logout()" (click)="closeDrawer()">Logout</a>
       </div>
     </nav>
   </mat-drawer>

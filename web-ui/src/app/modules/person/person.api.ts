@@ -3,10 +3,10 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
-import { ApiUrls } from '../shared/utils/urls';
+import { ApiUrls } from '../../utils/urls';
 import { EntityQuery} from '../shared/models/generic.model';
 import { Person } from './person.model';
-import logger from '../shared/utils/logger';
+import logger from '../../utils/logger';
 import {GetByQueryDto} from "../shared/models/http.model";
 
 @Injectable({

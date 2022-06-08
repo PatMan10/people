@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ValidationError } from 'class-validator';
 
-import { UiUrls } from '../../../shared/utils/urls';
+import { UiUrls } from '../../../../utils/urls';
 import { Credentials } from '../../auth.model';
 import { AuthApi } from '../../auth.api';
 import { buildFormGroup, validateForm } from '../../../shared/utils/form';
@@ -32,7 +32,7 @@ export class LoginComponent implements OnInit {
 
     this.api.login(this.form.value).subscribe({
       next: (_user: GetUserDto) => {
-        this.router.navigate([UiUrls.person.LIST]);
+        this.router.navigate([UiUrls.person.list()]);
       },
       error: this.err.handleHttpError('login', undefined),
     });

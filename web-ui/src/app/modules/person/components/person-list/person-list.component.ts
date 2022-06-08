@@ -3,7 +3,7 @@ import { Observable } from 'rxjs';
 
 import { Person } from '../../person.model';
 import { PersonApi } from '../../person.api';
-import { UiUrls } from '../../../shared/utils/urls';
+import { UiUrls } from '../../../../utils/urls';
 import { GetByQueryDto } from '../../../shared/models/http.model';
 
 @Component({

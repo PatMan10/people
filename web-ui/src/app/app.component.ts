@@ -1,7 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 
 import { AuthCache } from './modules/auth/auth.cache';
-import { UiUrls } from './modules/shared/utils/urls';
+import { UiUrls } from './utils/urls';
 
 @Component({
   selector: 'app-root',

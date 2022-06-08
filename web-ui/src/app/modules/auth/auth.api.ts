@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, tap } from 'rxjs';
 
-import { ApiUrls } from '../shared/utils/urls';
+import { ApiUrls } from '../../utils/urls';
 import { CreateUserDto, GetUserDto } from '../user/user.model';
 import { AuthCache } from './auth.cache';
 import { Credentials } from './auth.model';

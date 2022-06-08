@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { UiUrls } from '../../modules/shared/utils/urls';
+import { UiUrls } from '../../utils/urls';
 
 @Component({
   selector: 'app-home',

@@ -5,7 +5,7 @@ import { ValidationError } from 'class-validator';
 
 import { Person, Phone, Email, PhoneType, EmailType } from '../../person.model';
 import { PersonApi } from '../../person.api';
-import { UiUrls } from '../../../shared/utils/urls';
+import { UiUrls } from '../../../../utils/urls';
 import { buildFormGroup, validateForm } from '../../../shared/utils/form';
 import { ErrorService } from 'src/app/modules/shared/services/error.service';
 import { clone, dateToApiFormat } from '../../../shared/models/generic.model';
@@ -81,7 +81,7 @@ export class PersonFormComponent implements OnInit {
 
     this.api.save(payload).subscribe({
       next: () => {
-        this.router.navigate([UiUrls.person.LIST]);
+        this.router.navigate([UiUrls.person.list()]);
       },
       error: this.err.handleHttpError('save person', new Person()),
     });

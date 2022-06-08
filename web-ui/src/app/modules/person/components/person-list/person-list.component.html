@@ -1,7 +1,7 @@
 <div class="container">
   <div class="flex-row justify-between align-center my-2">
     <h1>People</h1>
-    <a [routerLink]="urls.person.ADD" mat-raised-button color="primary">
+    <a [routerLink]="urls.person.add()" mat-raised-button color="primary">
       Add
     </a>
   </div>
@@ -14,7 +14,7 @@
       <ng-container matColumnDef="first name">
         <th mat-header-cell *matHeaderCellDef>First Name</th>
         <td mat-cell *matCellDef="let person">
-          <a [routerLink]="urls.person.viewById(person._id)">
+          <a [routerLink]="urls.person.detail(person._id)">
             {{ person.name.first }}
           </a>
         </td>
