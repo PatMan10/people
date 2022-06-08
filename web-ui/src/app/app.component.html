@@ -28,18 +28,40 @@
       </div>
     </div>
 
-    <nav class="nav-bar">
-      <div *ngIf="!auth.user">
-        <a [routerLink]="urls.auth.login()" (click)="closeDrawer()">Login</a>
-        <a [routerLink]="urls.auth.register()" (click)="closeDrawer()"
-          >Register</a
+    <mat-nav-list>
+      <ng-container *ngIf="!auth.user">
+        <a
+          [routerLink]="urls.auth.login()"
+          (click)="closeDrawer()"
+          mat-list-item
         >
-      </div>
-      <div *ngIf="auth.user">
-        <a [routerLink]="urls.person.list()" (click)="closeDrawer()">People</a>
-        <a [routerLink]="urls.auth.logout()" (click)="closeDrawer()">Logout</a>
-      </div>
-    </nav>
+          Login
+        </a>
+        <a
+          [routerLink]="urls.auth.register()"
+          (click)="closeDrawer()"
+          mat-list-item
+        >
+          Register
+        </a>
+      </ng-container>
+      <ng-container *ngIf="auth.user">
+        <a
+          [routerLink]="urls.person.list()"
+          (click)="closeDrawer()"
+          mat-list-item
+        >
+          People
+        </a>
+        <a
+          [routerLink]="urls.auth.logout()"
+          (click)="closeDrawer()"
+          mat-list-item
+        >
+          Logout
+        </a>
+      </ng-container>
+    </mat-nav-list>
   </mat-drawer>
 
   <div class="main-content">
