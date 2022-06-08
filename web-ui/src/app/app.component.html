@@ -16,13 +16,15 @@
   <div *ngIf="drawerIsOpen" class="backdrop" (click)="closeDrawer()"></div>
 
   <mat-drawer #drawer mode="over">
-    <div *ngIf="auth.user" class="user">
+    <div *ngIf="auth.user as user" class="user">
       <div class="picture">
         <img src="../../../assets/images/anonymous.png" alt="User Pic" />
       </div>
       <div class="credentials">
-        <span>{{ auth.user.handle }}</span>
-        <span>{{ auth.user.email }}</span>
+        <a [routerLink]="urls.user.detail(user._id)" (click)="closeDrawer()">
+          <span>{{ auth.user.handle }}</span>
+          <span>{{ auth.user.email }}</span>
+        </a>
       </div>
     </div>
 

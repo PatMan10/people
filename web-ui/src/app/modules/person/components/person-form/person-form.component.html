@@ -1,207 +1,211 @@
-<div class="container">
-  <h1 class="my-2">{{ title }}</h1>
-  <form [formGroup]="form" (ngSubmit)="submit()">
-    <!----NAME GROUP---->
-    <div formGroupName="name">
-      <!----FIRST NAME---->
+<div class="page container">
+  <header>
+    <h1>{{ title }}</h1>
+  </header>
+  <main>
+    <form [formGroup]="form" (ngSubmit)="submit()">
+      <!----NAME GROUP---->
+      <div formGroupName="name">
+        <!----FIRST NAME---->
+        <mat-form-field appearance="fill">
+          <mat-label>First Name</mat-label>
+          <input formControlName="first" matInput placeholder="First Name" />
+          <ng-container *ngIf="errors | getErs: 'first' as firstErs">
+            <mat-error *ngFor="let eMsg of firstErs">{{ eMsg }}</mat-error>
+          </ng-container>
+        </mat-form-field>
+
+        <!----MIDDLE NAME ARRAY---->
+        <div
+          *ngIf="form | getArr: 'name.middle' as middleArr"
+          formArrayName="middle"
+          class="flex-column mb-2"
+        >
+          <div *ngFor="let middle of middleArr.controls; let i = index">
+            <mat-form-field appearance="fill">
+              <mat-label>Middle Name</mat-label>
+              <input
+                [formControlName]="i"
+                matInput
+                type="text"
+                placeholder="Middle Name"
+              />
+              <mat-icon matSuffix (click)="removeFromArr('name.middle', i)">
+                delete
+              </mat-icon>
+              <ng-container *ngIf="errors | getErs: 'middle' as middleErs">
+                <mat-error *ngFor="let eMsg of middleErs">{{ eMsg }}</mat-error>
+              </ng-container>
+            </mat-form-field>
+          </div>
+          <button
+            (click)="addToArr('name.middle')"
+            mat-raised-button
+            type="button"
+            color="accent"
+          >
+            Add Middle Name
+          </button>
+        </div>
+
+        <!----LAST NAME---->
+        <mat-form-field appearance="fill">
+          <mat-label>Last Name</mat-label>
+          <input formControlName="last" matInput placeholder="Last Name" />
+          <ng-container *ngIf="errors | getErs: 'last' as lastErs">
+            <mat-error *ngFor="let eMsg of lastErs">{{ eMsg }}</mat-error>
+          </ng-container>
+        </mat-form-field>
+
+        <!----NICK NAME ARRAY---->
+        <div
+          *ngIf="form | getArr: 'name.nick' as nickArr"
+          formArrayName="nick"
+          class="flex-column mb-2"
+        >
+          <div *ngFor="let nick of nickArr.controls; let i = index">
+            <mat-form-field appearance="fill">
+              <mat-label>Nick Name</mat-label>
+              <input
+                [formControlName]="i"
+                matInput
+                type="text"
+                placeholder="Nick Name"
+              />
+              <mat-icon matSuffix (click)="removeFromArr('name.nick', i)">
+                delete
+              </mat-icon>
+              <ng-container *ngIf="errors | getErs: 'nick' as nickErs">
+                <mat-error *ngFor="let eMsg of nickErs">{{ eMsg }}</mat-error>
+              </ng-container>
+            </mat-form-field>
+          </div>
+          <button
+            (click)="addToArr('name.nick')"
+            mat-raised-button
+            type="button"
+            color="accent"
+          >
+            Add Nick Name
+          </button>
+        </div>
+      </div>
+
+      <!----BIRTHDAY---->
       <mat-form-field appearance="fill">
-        <mat-label>First Name</mat-label>
-        <input formControlName="first" matInput placeholder="First Name" />
-        <ng-container *ngIf="errors | getErs: 'first' as firstErs">
-          <mat-error *ngFor="let eMsg of firstErs">{{ eMsg }}</mat-error>
+        <mat-label>Birthday</mat-label>
+        <input formControlName="birthday" matInput [matDatepicker]="picker" />
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+        <ng-container *ngIf="errors | getErs: 'birthday' as birthdayErs">
+          <mat-error *ngFor="let eMsg of birthdayErs">{{ eMsg }}</mat-error>
         </ng-container>
       </mat-form-field>
 
-      <!----MIDDLE NAME ARRAY---->
-      <div
-        *ngIf="form | getArr: 'name.middle' as middleArr"
-        formArrayName="middle"
-        class="flex-column mb-2"
-      >
-        <div *ngFor="let middle of middleArr.controls; let i = index">
-          <mat-form-field appearance="fill">
-            <mat-label>Middle Name</mat-label>
-            <input
-              [formControlName]="i"
-              matInput
-              type="text"
-              placeholder="Middle Name"
-            />
-            <mat-icon matSuffix (click)="removeFromArr('name.middle', i)">
-              delete
-            </mat-icon>
-            <ng-container *ngIf="errors | getErs: 'middle' as middleErs">
-              <mat-error *ngFor="let eMsg of middleErs">{{ eMsg }}</mat-error>
-            </ng-container>
-          </mat-form-field>
-        </div>
-        <button
-          (click)="addToArr('name.middle')"
-          mat-raised-button
-          type="button"
-          color="accent"
-        >
-          Add Middle Name
-        </button>
-      </div>
-
-      <!----LAST NAME---->
-      <mat-form-field appearance="fill">
-        <mat-label>Last Name</mat-label>
-        <input formControlName="last" matInput placeholder="Last Name" />
-        <ng-container *ngIf="errors | getErs: 'last' as lastErs">
-          <mat-error *ngFor="let eMsg of lastErs">{{ eMsg }}</mat-error>
-        </ng-container>
-      </mat-form-field>
-
-      <!----NICK NAME ARRAY---->
-      <div
-        *ngIf="form | getArr: 'name.nick' as nickArr"
-        formArrayName="nick"
-        class="flex-column mb-2"
-      >
-        <div *ngFor="let nick of nickArr.controls; let i = index">
-          <mat-form-field appearance="fill">
-            <mat-label>Nick Name</mat-label>
-            <input
-              [formControlName]="i"
-              matInput
-              type="text"
-              placeholder="Nick Name"
-            />
-            <mat-icon matSuffix (click)="removeFromArr('name.nick', i)">
-              delete
-            </mat-icon>
-            <ng-container *ngIf="errors | getErs: 'nick' as nickErs">
-              <mat-error *ngFor="let eMsg of nickErs">{{ eMsg }}</mat-error>
-            </ng-container>
-          </mat-form-field>
-        </div>
-        <button
-          (click)="addToArr('name.nick')"
-          mat-raised-button
-          type="button"
-          color="accent"
-        >
-          Add Nick Name
-        </button>
-      </div>
-    </div>
-
-    <!----BIRTHDAY---->
-    <mat-form-field appearance="fill">
-      <mat-label>Birthday</mat-label>
-      <input formControlName="birthday" matInput [matDatepicker]="picker" />
-      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-      <mat-datepicker #picker></mat-datepicker>
-      <ng-container *ngIf="errors | getErs: 'birthday' as birthdayErs">
-        <mat-error *ngFor="let eMsg of birthdayErs">{{ eMsg }}</mat-error>
-      </ng-container>
-    </mat-form-field>
-
-    <!----CONTACT GROUP---->
-    <div formGroupName="contact">
-      <!----PHONE ARRAY---->
-      <div
-        *ngIf="form | getArr: 'contact.phone' as phoneArr"
-        formArrayName="phone"
-        class="flex-column mb-3"
-      >
+      <!----CONTACT GROUP---->
+      <div formGroupName="contact">
+        <!----PHONE ARRAY---->
         <div
-          *ngFor="let phone of phoneArr.controls; let i = index"
-          [formGroupName]="i"
+          *ngIf="form | getArr: 'contact.phone' as phoneArr"
+          formArrayName="phone"
+          class="flex-column mb-3"
         >
-          <div class="flex-row justify-between align-center">
-            <mat-form-field appearance="fill" style="width: 30%">
-              <mat-label>Phone Type</mat-label>
-              <mat-select formControlName="type" [value]="phone.value.type">
-                <mat-option
-                  *ngFor="let type of PhoneType | enumToArr"
-                  [value]="type"
-                >
-                  {{ type | titlecase }}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
-            <mat-form-field appearance="fill" style="width: 65%">
-              <mat-label>Phone Number</mat-label>
-              <input
-                formControlName="number"
-                matInput
-                type="text"
-                placeholder="Phone Number"
-              />
-              <mat-icon matSuffix (click)="removeFromArr('contact.phone', i)">
-                delete
-              </mat-icon>
-            </mat-form-field>
+          <div
+            *ngFor="let phone of phoneArr.controls; let i = index"
+            [formGroupName]="i"
+          >
+            <div class="flex-row justify-between align-center">
+              <mat-form-field appearance="fill" style="width: 30%">
+                <mat-label>Phone Type</mat-label>
+                <mat-select formControlName="type" [value]="phone.value.type">
+                  <mat-option
+                    *ngFor="let type of PhoneType | enumToArr"
+                    [value]="type"
+                  >
+                    {{ type | titlecase }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+              <mat-form-field appearance="fill" style="width: 65%">
+                <mat-label>Phone Number</mat-label>
+                <input
+                  formControlName="number"
+                  matInput
+                  type="text"
+                  placeholder="Phone Number"
+                />
+                <mat-icon matSuffix (click)="removeFromArr('contact.phone', i)">
+                  delete
+                </mat-icon>
+              </mat-form-field>
+            </div>
+            <ng-container *ngIf="errors | getErs: 'number' as numberErs">
+              <mat-error *ngFor="let eMsg of numberErs">{{ eMsg }}</mat-error>
+            </ng-container>
           </div>
-          <ng-container *ngIf="errors | getErs: 'number' as numberErs">
-            <mat-error *ngFor="let eMsg of numberErs">{{ eMsg }}</mat-error>
-          </ng-container>
+          <button
+            mat-raised-button
+            type="button"
+            color="accent"
+            (click)="addToArr('contact.phone')"
+          >
+            Add Phone
+          </button>
         </div>
-        <button
-          mat-raised-button
-          type="button"
-          color="accent"
-          (click)="addToArr('contact.phone')"
-        >
-          Add Phone
-        </button>
-      </div>
 
-      <!----EMAIL ARRAY---->
-      <div
-        *ngIf="form | getArr: 'contact.email' as emailArr"
-        formArrayName="email"
-        class="flex-column mb-3"
-      >
+        <!----EMAIL ARRAY---->
         <div
-          *ngFor="let email of emailArr.controls; let i = index"
-          [formGroupName]="i"
+          *ngIf="form | getArr: 'contact.email' as emailArr"
+          formArrayName="email"
+          class="flex-column mb-3"
         >
-          <div class="flex-row justify-between align-center">
-            <mat-form-field appearance="fill" style="width: 30%">
-              <mat-label>Email Type</mat-label>
-              <mat-select formControlName="type" [value]="email.value.type">
-                <mat-option
-                  *ngFor="let type of EmailType | enumToArr"
-                  [value]="type"
-                >
-                  {{ type | titlecase }}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
-            <mat-form-field appearance="fill" style="width: 65%">
-              <mat-label>Email Address</mat-label>
-              <input
-                formControlName="address"
-                matInput
-                type="text"
-                placeholder="Email Address"
-              />
-              <mat-icon matSuffix (click)="removeFromArr('contact.email', i)">
-                delete
-              </mat-icon>
-            </mat-form-field>
+          <div
+            *ngFor="let email of emailArr.controls; let i = index"
+            [formGroupName]="i"
+          >
+            <div class="flex-row justify-between align-center">
+              <mat-form-field appearance="fill" style="width: 30%">
+                <mat-label>Email Type</mat-label>
+                <mat-select formControlName="type" [value]="email.value.type">
+                  <mat-option
+                    *ngFor="let type of EmailType | enumToArr"
+                    [value]="type"
+                  >
+                    {{ type | titlecase }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+              <mat-form-field appearance="fill" style="width: 65%">
+                <mat-label>Email Address</mat-label>
+                <input
+                  formControlName="address"
+                  matInput
+                  type="text"
+                  placeholder="Email Address"
+                />
+                <mat-icon matSuffix (click)="removeFromArr('contact.email', i)">
+                  delete
+                </mat-icon>
+              </mat-form-field>
+            </div>
+            <ng-container *ngIf="errors | getErs: 'address' as addressErs">
+              <mat-error *ngFor="let eMsg of addressErs">{{ eMsg }}</mat-error>
+            </ng-container>
           </div>
-          <ng-container *ngIf="errors | getErs: 'address' as addressErs">
-            <mat-error *ngFor="let eMsg of addressErs">{{ eMsg }}</mat-error>
-          </ng-container>
+          <button
+            mat-raised-button
+            type="button"
+            color="accent"
+            (click)="addToArr('contact.email')"
+          >
+            Add Email
+          </button>
         </div>
-        <button
-          mat-raised-button
-          type="button"
-          color="accent"
-          (click)="addToArr('contact.email')"
-        >
-          Add Email
-        </button>
       </div>
-    </div>
 
-    <button mat-raised-button type="submit" color="primary">
-      {{ btnText }}
-    </button>
-  </form>
+      <button mat-raised-button type="submit" color="primary">
+        {{ btnText }}
+      </button>
+    </form>
+  </main>
 </div>

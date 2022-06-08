@@ -1,16 +1,20 @@
-<div class="container">
-  <h1>Login</h1>
-  <form [formGroup]="form" (ngSubmit)="submit()" class="flex-col">
-    <app-email-input
-      formControlName="email"
-      [errors]="errors"
-    ></app-email-input>
+<div class="page container">
+  <header>
+    <h1>Login</h1>
+  </header>
+  <main>
+    <form [formGroup]="form" (ngSubmit)="submit()" class="flex-col">
+      <app-email-input
+        formControlName="email"
+        [errors]="errors"
+      ></app-email-input>
 
-    <app-password-input
-      formControlName="password"
-      [errors]="errors"
-    ></app-password-input>
+      <app-password-input
+        formControlName="password"
+        [errors]="errors"
+      ></app-password-input>
 
-    <button mat-raised-button type="submit" color="primary">Login</button>
-  </form>
+      <button mat-raised-button type="submit" color="primary">Login</button>
+    </form>
+  </main>
 </div>
