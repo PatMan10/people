@@ -1,15 +1,45 @@
-<mat-toolbar color="primary">
+<mat-toolbar color="primary" class="flex-row justify-between">
   <button mat-icon-button (click)="drawerIsOpen ? closeDrawer() : openDrawer()">
     <mat-icon>menu</mat-icon>
   </button>
   <span>People</span>
-  <span class="spacer"></span>
-  <button mat-icon-button aria-label="Like">
-    <mat-icon>favorite</mat-icon>
+  <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Change Theme">
+    <mat-icon>format_color_fill</mat-icon>
   </button>
-  <button mat-icon-button aria-label="Share">
-    <mat-icon>share</mat-icon>
-  </button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item (click)="changeTheme('dark-theme-1')">
+      <mat-icon>{{
+        theme === "dark-theme-1"
+          ? "radio_button_checked"
+          : "radio_button_unchecked"
+      }}</mat-icon>
+      <span>Pink & Blue-grey</span>
+    </button>
+    <button mat-menu-item (click)="changeTheme('dark-theme-2')">
+      <mat-icon>{{
+        theme === "dark-theme-2"
+          ? "radio_button_checked"
+          : "radio_button_unchecked"
+      }}</mat-icon>
+      <span>Purple & Green</span>
+    </button>
+    <button mat-menu-item (click)="changeTheme('light-theme-1')">
+      <mat-icon>{{
+        theme === "light-theme-1"
+          ? "radio_button_checked"
+          : "radio_button_unchecked"
+      }}</mat-icon>
+      <span>Deep Purple & Amber</span>
+    </button>
+    <button mat-menu-item (click)="changeTheme('light-theme-2')">
+      <mat-icon>{{
+        theme === "light-theme-2"
+          ? "radio_button_checked"
+          : "radio_button_unchecked"
+      }}</mat-icon>
+      <span>Indigo & Pink</span>
+    </button>
+  </mat-menu>
 </mat-toolbar>
 
 <mat-drawer-container autosize>

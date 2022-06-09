@@ -13,10 +13,22 @@ export class AppComponent {
   @ViewChild('drawer')
   drawer: any;
 
+  private readonly body: HTMLElement;
+  theme = 'dark-theme-1';
+
   showFiller = false;
   drawerIsOpen = false;
 
-  constructor(public readonly auth: AuthCache) {}
+  constructor(public readonly auth: AuthCache) {
+    this.body = document.getElementById('body') as HTMLElement;
+    this.body.classList.add(this.theme);
+  }
+
+  changeTheme(t: string) {
+    this.body.classList.remove(this.theme);
+    this.theme = t;
+    this.body.classList.add(t);
+  }
 
   openDrawer() {
     this.drawerIsOpen = true;

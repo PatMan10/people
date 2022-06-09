@@ -18,7 +18,7 @@ $dark-theme-1: mat.define-dark-theme(
 
 // Define purple dark theme
 $dark-primary-2: mat.define-palette(mat.$purple-palette);
-$dark-accent-2: mat.define-palette(mat.$pink-palette);
+$dark-accent-2: mat.define-palette(mat.$green-palette);
 $dark-warn-2: mat.define-palette(mat.$red-palette);
 $dark-theme-2: mat.define-dark-theme(
   (
@@ -59,26 +59,18 @@ $light-theme-2: mat.define-light-theme(
 );
 
 .dark-theme-1 {
-  @include mat.core-theme($dark-theme-1);
-  @include mat.button-theme($dark-theme-1);
   @include mat.all-component-themes($dark-theme-1);
 }
 
 .dark-theme-2 {
-  @include mat.core-theme($dark-theme-2);
-  @include mat.button-theme($dark-theme-2);
   @include mat.all-component-themes($dark-theme-2);
 }
 
 .light-theme-1 {
-  @include mat.core-color($light-theme-1);
-  @include mat.button-color($light-theme-1);
   @include mat.all-component-themes($light-theme-1);
 }
 
 .light-theme-2 {
-  @include mat.core-color($light-theme-2);
-  @include mat.button-color($light-theme-2);
   @include mat.all-component-themes($light-theme-2);
 }
 

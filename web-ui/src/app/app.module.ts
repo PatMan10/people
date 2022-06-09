@@ -6,7 +6,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 // material ui
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSidenavModule } from '@angular/material/sidenav';
-import { MatListModule } from '@angular/material/list';
 
 // app
 import { AppRoutingModule } from './app-routing.module';
@@ -30,7 +29,6 @@ import { PersonModule } from './modules/person/person.module';
     // material ui
     MatToolbarModule,
     MatSidenavModule,
-    MatListModule,
     // app
     AuthModule,
     UserModule,
