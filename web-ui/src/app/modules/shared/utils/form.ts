@@ -35,13 +35,11 @@ export function extractErrorMessages(
   for (let i = 0; i < errors.length; i++) {
     const { property: prop, constraints } = errors[i];
     topProps.push(prop);
-    if (prop === property && constraints) {
-      return Object.values(constraints);
-    }
+    if (prop === property && constraints) return Object.values(constraints);
   }
 
   for (let i = 0; i < errors.length; i++) {
-    const { property: prop, children } = errors[i];
+    const { children } = errors[i];
 
     if (children && children.length > 0) {
       const erMsgs = extractErrorMessages(property, children, count + 1);
