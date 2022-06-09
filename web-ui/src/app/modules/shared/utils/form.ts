@@ -28,18 +28,25 @@ export function validateForm(
 
 export function extractErrorMessages(
   property: string,
-  errors: ValidationError[]
+  errors: ValidationError[],
+  count = 0
 ): string[] {
+  const topProps = [];
   for (let i = 0; i < errors.length; i++) {
     const { property: prop, constraints } = errors[i];
-    if (prop === property && constraints) return Object.values(constraints);
+    topProps.push(prop);
+    if (prop === property && constraints) {
+      return Object.values(constraints);
+    }
   }
 
   for (let i = 0; i < errors.length; i++) {
-    const { children } = errors[i];
+    const { property: prop, children } = errors[i];
 
-    if (children && children.length > 0)
-      return extractErrorMessages(property, children);
+    if (children && children.length > 0) {
+      const erMsgs = extractErrorMessages(property, children, count + 1);
+      if (erMsgs.length > 0) return erMsgs;
+    }
   }
 
   return [];
