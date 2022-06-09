@@ -14,5 +14,5 @@ export class InfoDialogComponent {
 }
 
 export class InfoDialogData {
-  constructor(readonly title: string = '', readonly message: string[] = []) {}
+  constructor(readonly title: string, readonly message: string[]) {}
 }

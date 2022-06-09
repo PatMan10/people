@@ -24,6 +24,7 @@ type ArrayPath =
 export class PersonFormComponent implements OnInit {
   readonly PhoneType = PhoneType;
   readonly EmailType = EmailType;
+  readonly urls = UiUrls;
 
   id: string | null = null;
   title = 'Add Person';

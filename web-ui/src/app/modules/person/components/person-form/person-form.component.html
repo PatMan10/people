@@ -203,9 +203,20 @@
         </div>
       </div>
 
-      <button mat-raised-button type="submit" color="primary">
-        {{ btnText }}
-      </button>
+      <div>
+        <a
+          [routerLink]="urls.person.list()"
+          mat-raised-button
+          color="accent"
+          class="mr-2"
+        >
+          Cancel
+        </a>
+
+        <button mat-raised-button type="submit" color="primary">
+          {{ btnText }}
+        </button>
+      </div>
     </form>
   </main>
 </div>

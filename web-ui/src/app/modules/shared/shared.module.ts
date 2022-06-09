@@ -26,6 +26,7 @@ import { EmailInputComponent } from './components/inputs/email-input/email-input
 import { PasswordInputComponent } from './components/inputs/password-input/password-input.component';
 // import { TextInputComponent } from './components/inputs/text-input/text-input.component';
 import { InfoDialogComponent } from './dialogs/info-dialog/info-dialog.component';
+import { ConfirmDialogComponent } from './dialogs/confirm-dialog/confirm-dialog.component';
 
 @NgModule({
   declarations: [
@@ -41,6 +42,7 @@ import { InfoDialogComponent } from './dialogs/info-dialog/info-dialog.component
     HandleInputComponent,
     EmailInputComponent,
     PasswordInputComponent,
+    ConfirmDialogComponent,
     // TextInputComponent,
   ],
   imports: [
