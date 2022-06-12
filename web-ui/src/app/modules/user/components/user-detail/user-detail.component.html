@@ -3,6 +3,30 @@
     <h1>User Details</h1>
   </header>
   <main>
-    <p>User detail main content.</p>
+    <ng-container *ngIf="user$ | async as user">
+      <div class="detail-group">
+        <label>Handle: </label>
+        <span>{{ user.handle }}</span>
+      </div>
+
+      <div class="detail-group">
+        <label>Email: </label>
+        <span>{{ user.email }}</span>
+      </div>
+
+      <div class="detail-group">
+        <a
+          [routerLink]="urls.user.edit(user._id)"
+          mat-raised-button
+          color="primary"
+        >
+          Edit
+        </a>
+
+        <button (click)="delete(user._id)" mat-raised-button color="warn">
+          Delete
+        </button>
+      </div>
+    </ng-container>
   </main>
 </div>

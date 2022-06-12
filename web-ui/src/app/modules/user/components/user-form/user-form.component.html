@@ -1,8 +1,19 @@
 <div class="page container">
   <header>
-    <h1>Edit User</h1>
+    <h1>Update Profile</h1>
   </header>
   <main>
-    <p>Edit User main content.</p>
+    <form [formGroup]="form" (ngSubmit)="submit()">
+      <app-handle-input
+        formControlName="handle"
+        [errors]="errors"
+      ></app-handle-input>
+
+      <app-email-input
+        formControlName="email"
+        [errors]="errors"
+      ></app-email-input>
+      <button mat-raised-button type="submit" color="primary">Save</button>
+    </form>
   </main>
 </div>

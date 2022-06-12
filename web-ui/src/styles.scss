@@ -92,3 +92,22 @@ body {
     margin: 2rem 0;
   }
 }
+
+.detail-group {
+  margin-bottom: 20px;
+
+  label {
+    font-size: 1.25rem;
+    font-weight: bold;
+  }
+
+  span {
+    font-size: 1.25rem;
+    display: block;
+  }
+
+  button,
+  a {
+    margin: 0 10px 0 0;
+  }
+}

@@ -3,12 +3,24 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FormArray, FormControl } from '@angular/forms';
 import { ValidationError } from 'class-validator';
 
-import { Person, Phone, Email, PhoneType, EmailType } from '../../person.model';
-import { PersonApi } from '../../person.api';
-import { UiUrls } from '../../../../utils/urls';
-import { buildFormGroup, validateForm } from '../../../shared/utils/form';
+import {
+  Person,
+  Phone,
+  Email,
+  PhoneType,
+  EmailType,
+} from 'src/app/modules/person/person.model';
+import { PersonApi } from 'src/app/modules/person/person.api';
+import { UiUrls } from 'src/app/utils/urls';
+import {
+  buildFormGroup,
+  validateForm,
+} from 'src/app/modules/shared/utils/form';
 import { ErrorService } from 'src/app/modules/shared/services/error.service';
-import { clone, dateToApiFormat } from '../../../shared/models/generic.model';
+import {
+  clone,
+  dateToApiFormat,
+} from 'src/app/modules/shared/models/generic.model';
 
 type ArrayPath =
   | 'name.middle'

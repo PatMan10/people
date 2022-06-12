@@ -17,7 +17,9 @@ export class AuthApi {
   ) {}
 
   register(user: CreateUserDto): Observable<GetUserDto> {
-    return this.http.post<GetUserDto>(ApiUrls.auth.register(), user);
+    return this.http
+      .post<GetUserDto>(ApiUrls.auth.register(), user)
+      .pipe(tap((payload) => (this.cache.user = payload)));
   }
 
   login(credentials: Credentials): Observable<GetUserDto> {

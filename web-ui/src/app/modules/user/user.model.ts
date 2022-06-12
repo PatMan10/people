@@ -73,7 +73,7 @@ export class User extends Entity {
 export class GetUserDto {
   readonly _id: string = '';
 
-  constructor(public handle = '', public email = '', public password = '') {}
+  constructor(public handle = '', public email = '') {}
 }
 
 export class CreateUserDto {
