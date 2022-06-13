@@ -26,9 +26,12 @@ export class UiUrls {
     static readonly EDIT = `users/edit/${Param.ID}`;
     static readonly DELETE = `users/delete/${Param.ID}`;
 
-    static readonly detail = (id: string) => this.DETAIL.replace(Param.ID, id);
-    static readonly edit = (id: string) => this.EDIT.replace(Param.ID, id);
-    static readonly delete = (id: string) => this.DELETE.replace(Param.ID, id);
+    static readonly detail = (id: string) =>
+      `/${this.DETAIL}`.replace(Param.ID, id);
+    static readonly edit = (id: string) =>
+      `/${this.EDIT}`.replace(Param.ID, id);
+    static readonly delete = (id: string) =>
+      `/${this.DELETE}`.replace(Param.ID, id);
   };
 
   static readonly person = class {

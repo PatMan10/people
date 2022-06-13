@@ -35,7 +35,7 @@ export abstract class GenericInputComponent
   onTouched = () => {};
 
   writeValue(v: string | number | boolean) {
-    this.control.setValue(v);
+    if (v) this.control.setValue(v);
   }
 
   registerOnChange(onChange: any) {

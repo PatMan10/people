@@ -14,6 +14,7 @@ import logger from '../shared/utils/logger';
 import { GetUserDto, UpdateUserDto } from './user.model';
 import { UserService } from './user.service';
 import { AuthGuard } from '../auth/auth.guard';
+import { User } from './user.decorators';
 
 @Controller()
 @UseGuards(AuthGuard)
@@ -35,24 +36,33 @@ export class UserController {
 
   @Put(Urls.user.UPDATE)
   async update(
+    @User() user: GetUserDto,
     @Param('id') id: string,
-    @Body() user: UpdateUserDto,
+    @Body() payload: UpdateUserDto,
   ): Promise<GetUserDto> {
     // 400: invalid id
     // 400: invalid payload
-    logger.debug('user to update => ', user);
+    logger.debug('user to update => ', payload);
 
     // 400: duplicate email
-    const duplicateEmail = await this.users.getByEmail(user.email);
-    if (duplicateEmail)
+    let dbUser = await this.users.getByEmail(payload.email);
+    if (
+      dbUser &&
+      dbUser.email === payload.email &&
+      dbUser._id.toString() !== user._id.toString()
+    )
       throw new BadRequestException(Messages.fail.auth.DUPLICATE_EMAIL);
 
     // 400: duplicate handle
-    const duplicateHandle = await this.users.getByHandle(user.handle);
-    if (duplicateHandle)
+    dbUser = await this.users.getByHandle(payload.handle);
+    if (
+      dbUser &&
+      dbUser.handle === payload.handle &&
+      dbUser._id.toString() !== user._id.toString()
+    )
       throw new BadRequestException(Messages.fail.auth.DUPLICATE_HANDLE);
 
-    const updatedUser = await this.users.update(id, user);
+    const updatedUser = await this.users.update(id, payload);
 
     // 404: not found
     if (!updatedUser) throw new NotFoundException(Messages.fail.NOT_FOUND);

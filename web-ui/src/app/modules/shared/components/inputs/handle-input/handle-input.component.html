@@ -1,6 +1,11 @@
 <mat-form-field appearance="fill">
   <mat-label>handle</mat-label>
-  <input [formControl]="control" matInput placeholder="your handle" />
+  <input
+    [formControl]="control"
+    (blur)="onTouched()"
+    matInput
+    placeholder="your handle"
+  />
   <ng-container *ngIf="errors | getErs: 'handle' as handleErs">
     <mat-error *ngFor="let eMsg of handleErs">{{ eMsg }}</mat-error>
   </ng-container>
