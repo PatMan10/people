@@ -30,19 +30,18 @@
         </div>
       </div>
 
-      <div class="detail-group">
-        <a
-          [routerLink]="urls.person.edit(person._id)"
-          mat-raised-button
-          color="primary"
-        >
-          Edit
-        </a>
+      <a
+        [routerLink]="urls.person.edit(person._id)"
+        mat-raised-button
+        color="primary"
+        class="mr-2"
+      >
+        Edit
+      </a>
 
-        <button (click)="delete(person._id)" mat-raised-button color="warn">
-          Delete
-        </button>
-      </div>
+      <button (click)="delete(person._id)" mat-raised-button color="warn">
+        Delete
+      </button>
     </ng-container>
   </main>
 </div>

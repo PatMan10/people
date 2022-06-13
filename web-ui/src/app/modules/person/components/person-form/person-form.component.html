@@ -5,7 +5,7 @@
   <main>
     <form [formGroup]="form" (ngSubmit)="submit()">
       <!----NAME GROUP---->
-      <div formGroupName="name">
+      <ng-container formGroupName="name">
         <!----FIRST NAME---->
         <mat-form-field appearance="fill">
           <mat-label>First Name</mat-label>
@@ -89,7 +89,7 @@
             Add Nick Name
           </button>
         </div>
-      </div>
+      </ng-container>
 
       <!----BIRTHDAY---->
       <mat-form-field appearance="fill">
@@ -103,7 +103,7 @@
       </mat-form-field>
 
       <!----CONTACT GROUP---->
-      <div formGroupName="contact">
+      <ng-container formGroupName="contact">
         <!----PHONE ARRAY---->
         <div
           *ngIf="form | getArr: 'contact.phone' as phoneArr"
@@ -201,22 +201,20 @@
             Add Email
           </button>
         </div>
-      </div>
+      </ng-container>
 
-      <div>
-        <a
-          [routerLink]="urls.person.list()"
-          mat-raised-button
-          color="accent"
-          class="mr-2"
-        >
-          Cancel
-        </a>
+      <a
+        [routerLink]="id ? urls.person.detail(id) : urls.person.list()"
+        mat-raised-button
+        color="accent"
+        class="mr-2"
+      >
+        Cancel
+      </a>
 
-        <button mat-raised-button type="submit" color="primary">
-          {{ btnText }}
-        </button>
-      </div>
+      <button mat-raised-button type="submit" color="primary">
+        {{ btnText }}
+      </button>
     </form>
   </main>
 </div>

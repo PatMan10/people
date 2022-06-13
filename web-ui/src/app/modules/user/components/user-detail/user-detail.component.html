@@ -14,19 +14,18 @@
         <span>{{ user.email }}</span>
       </div>
 
-      <div class="detail-group">
-        <a
-          [routerLink]="urls.user.edit(user._id)"
-          mat-raised-button
-          color="primary"
-        >
-          Edit
-        </a>
+      <a
+        [routerLink]="urls.user.edit(user._id)"
+        mat-raised-button
+        color="primary"
+        class="mr-2"
+      >
+        Edit
+      </a>
 
-        <button (click)="delete(user._id)" mat-raised-button color="warn">
-          Delete
-        </button>
-      </div>
+      <button (click)="delete(user._id)" mat-raised-button color="warn">
+        Delete
+      </button>
     </ng-container>
   </main>
 </div>
