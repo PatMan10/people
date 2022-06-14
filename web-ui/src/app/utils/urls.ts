@@ -88,7 +88,7 @@ export class ApiUrls {
     static readonly UPDATE = `/people/${Param.ID}`;
     static readonly DELETE = `/people/${Param.ID}`;
 
-    static readonly getByQuery = (q: EntityQuery) =>
+    static readonly getByQuery = (q = new EntityQuery()) =>
       ApiUrls.ROOT + this.GET_BY_QUERY + `?q=${JSON.stringify(q)}`;
     static readonly getById = (id: string) =>
       ApiUrls.ROOT + this.GET_BY_ID.replace(Param.ID, id);

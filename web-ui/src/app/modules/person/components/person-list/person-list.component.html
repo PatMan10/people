@@ -1,9 +1,14 @@
 <div class="page container">
   <header class="flex-row justify-between align-center">
     <h1>People</h1>
-    <a [routerLink]="urls.person.add()" mat-raised-button color="primary">
-      Add
-    </a>
+    <div>
+      <button (click)="filter()" mat-raised-button color="accent" class="mr-2">
+        Filter
+      </button>
+      <a [routerLink]="urls.person.add()" mat-raised-button color="primary">
+        Add
+      </a>
+    </div>
   </header>
   <main>
     <ng-container *ngIf="payload$ | async as payload">
