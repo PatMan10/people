@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { ValidationError } from 'class-validator';
 
 import { UiUrls } from '../../../../utils/urls';
-import { CreateUserDto, GetUserDto } from '../../../user/user.model';
+import { CreateUserDto } from '../../../user/user.model';
 import { AuthApi } from '../../auth.api';
 import { buildFormGroup, validateForm } from '../../../shared/utils/form';
 import { ErrorService } from 'src/app/modules/shared/services/error.service';
@@ -26,11 +26,12 @@ export class RegisterComponent implements OnInit {
   ngOnInit(): void {}
 
   async submit() {
-    this.errors = await validateForm(CreateUserDto, this.form.value);
+    const payload = this.form.value;
+    this.errors = await validateForm(CreateUserDto, payload);
     if (this.errors.length > 0) return;
 
-    this.api.register(this.form.value).subscribe({
-      next: (_user: GetUserDto) => {
+    this.api.register(payload).subscribe({
+      next: () => {
         this.router.navigate([UiUrls.person.list()]);
       },
       error: this.err.handleHttpError('register', undefined),

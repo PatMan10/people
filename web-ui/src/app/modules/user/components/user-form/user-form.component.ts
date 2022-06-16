@@ -32,7 +32,7 @@ export class UserFormComponent implements OnInit {
     const id = route.snapshot.paramMap.get('id') as string;
     this.id = id;
     api.getById(id).subscribe((u) => {
-      this.form = buildFormGroup(u);
+      this.form.patchValue(u);
     });
   }
 

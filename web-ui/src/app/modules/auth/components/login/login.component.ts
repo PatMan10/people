@@ -7,7 +7,6 @@ import { Credentials } from '../../auth.model';
 import { AuthApi } from '../../auth.api';
 import { buildFormGroup, validateForm } from '../../../shared/utils/form';
 import { ErrorService } from 'src/app/modules/shared/services/error.service';
-import { GetUserDto } from 'src/app/modules/user/user.model';
 
 @Component({
   selector: 'app-login',
@@ -27,11 +26,12 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {}
 
   async submit() {
-    this.errors = await validateForm(Credentials, this.form.value);
+    const payload = this.form.value;
+    this.errors = await validateForm(Credentials, payload);
     if (this.errors.length > 0) return;
 
-    this.api.login(this.form.value).subscribe({
-      next: (_user: GetUserDto) => {
+    this.api.login(payload).subscribe({
+      next: () => {
         this.router.navigate([UiUrls.person.list()]);
       },
       error: this.err.handleHttpError('login', undefined),

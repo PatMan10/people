@@ -31,7 +31,8 @@
               "src/styles.scss",
               "./node_modules/@patman10/kickstart.css/dist/kickstart.css"
             ],
-            "scripts": []
+            "scripts": [],
+            "allowedCommonJsDependencies": ["validator"]
           },
           "configurations": {
             "production": {
