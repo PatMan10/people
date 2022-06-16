@@ -6,8 +6,15 @@ import { Person } from '../../person.model';
 import { PersonApi } from '../../person.api';
 import { UiUrls } from '../../../../utils/urls';
 import { GetByQueryDto } from '../../../shared/models/http.model';
-import { PersonFilterDialogComponent } from '../person-filter-dialog/person-filter-dialog.component';
-import { EntityQuery, Obj } from '../../../shared/models/generic.model';
+import {
+  PersonFilterDialog,
+  PersonQueryValues,
+} from '../person-filter/person-filter.dialog';
+import {
+  dateToApiFormat,
+  EntityQuery,
+  Obj,
+} from '../../../shared/models/generic.model';
 
 @Component({
   selector: 'app-person-list',
@@ -18,6 +25,7 @@ export class PersonListComponent implements OnInit {
   readonly urls = UiUrls;
   payload$: Observable<GetByQueryDto<Person>>;
   columns = ['first name', 'last name', 'birthday'];
+  queryValues = new PersonQueryValues();
 
   constructor(
     private readonly dialog: MatDialog,
@@ -29,17 +37,23 @@ export class PersonListComponent implements OnInit {
   ngOnInit(): void {}
 
   filter() {
-    const dialogRef = this.dialog.open(PersonFilterDialogComponent, {
+    const dialogRef = this.dialog.open(PersonFilterDialog, {
       width: '450px',
+      data: this.queryValues,
     });
-    dialogRef.afterClosed().subscribe((filter: Obj<string>) => {
+    dialogRef.afterClosed().subscribe((pqValues: PersonQueryValues) => {
+      if (!pqValues) return;
+
+      const { birthday } = pqValues;
+      if (birthday) pqValues.birthday = dateToApiFormat(new Date(birthday));
+
+      this.queryValues = pqValues;
       const values = new Obj<string[]>();
-      Object.keys(filter)
-        .filter((k) => filter[k])
-        .forEach((k) => (values[k] = filter[k].split(',')));
+      Object.keys(pqValues)
+        .filter((k) => pqValues[k])
+        .forEach((k) => (values[k] = pqValues[k].split(',')));
 
       const q = new EntityQuery(values);
-      console.log(q);
       this.payload$ = this.api.getByQuery(q);
     });
   }

@@ -3,7 +3,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 
 import { DialogService } from '../dialogs/dialog.service';
-import { InfoDialogData } from '../dialogs/info-dialog/info-dialog.component';
+import { InfoDialogData } from '../dialogs/info/info.dialog';
 import { ErrorDto } from '../models/http.model';
 
 @Injectable({

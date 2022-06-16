@@ -1,0 +1,109 @@
+<h1 mat-dialog-title>Person Filter</h1>
+
+<div mat-dialog-content>
+  <mat-accordion>
+    <form [formGroup]="form" class="flex-column">
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>Name</mat-panel-title>
+        </mat-expansion-panel-header>
+        <!----FIRST NAME---->
+        <mat-form-field appearance="fill">
+          <mat-label>First</mat-label>
+          <input formControlName="name.first" matInput placeholder="First" />
+        </mat-form-field>
+
+        <!----MIDDLE NAME---->
+        <mat-form-field appearance="fill">
+          <mat-label>Middle</mat-label>
+          <input formControlName="name.middle" matInput placeholder="Middle" />
+        </mat-form-field>
+
+        <!----LAST NAME---->
+        <mat-form-field appearance="fill">
+          <mat-label>Last</mat-label>
+          <input formControlName="name.last" matInput placeholder="Last" />
+        </mat-form-field>
+
+        <!----NICK NAME---->
+        <mat-form-field appearance="fill">
+          <mat-label>Nick</mat-label>
+          <input formControlName="name.nick" matInput placeholder="Nick" />
+        </mat-form-field>
+      </mat-expansion-panel>
+
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>Phone</mat-panel-title>
+        </mat-expansion-panel-header>
+        <!----PHONE TYPE---->
+        <mat-form-field appearance="fill">
+          <mat-label>Type</mat-label>
+          <input
+            formControlName="contact.phone.type"
+            matInput
+            placeholder="Type"
+          />
+        </mat-form-field>
+
+        <!----PHONE NUMBER---->
+        <mat-form-field appearance="fill">
+          <mat-label>Number</mat-label>
+          <input
+            formControlName="contact.phone.number"
+            matInput
+            placeholder="Number"
+          />
+        </mat-form-field>
+      </mat-expansion-panel>
+
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>Email</mat-panel-title>
+        </mat-expansion-panel-header>
+        <!----EMAIL TYPE---->
+        <mat-form-field appearance="fill">
+          <mat-label>Type</mat-label>
+          <input
+            formControlName="contact.email.type"
+            matInput
+            placeholder="Type"
+          />
+        </mat-form-field>
+
+        <!----EMAIL NUMBER---->
+        <mat-form-field appearance="fill">
+          <mat-label>Address</mat-label>
+          <input
+            formControlName="contact.email.address"
+            matInput
+            placeholder="Address"
+          />
+        </mat-form-field>
+      </mat-expansion-panel>
+
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>Birthday</mat-panel-title>
+        </mat-expansion-panel-header>
+        <!----BIRTHDAY---->
+        <mat-form-field appearance="fill">
+          <mat-label>Birthday</mat-label>
+          <input formControlName="birthday" matInput [matDatepicker]="picker" />
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="picker"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+      </mat-expansion-panel>
+    </form>
+  </mat-accordion>
+</div>
+
+<div mat-dialog-actions>
+  <button (click)="close()" mat-button cdkFocusInitial color="primary">
+    Ok
+  </button>
+  <button (click)="clear()" mat-button color="accent">Clear</button>
+</div>

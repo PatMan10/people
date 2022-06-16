@@ -14,6 +14,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatSelectModule } from '@angular/material/select';
 import { MatListModule } from '@angular/material/list';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 import {
   ValidationErrorsExistPipe,
@@ -25,13 +26,13 @@ import { HandleInputComponent } from './components/inputs/handle-input/handle-in
 import { EmailInputComponent } from './components/inputs/email-input/email-input.component';
 import { PasswordInputComponent } from './components/inputs/password-input/password-input.component';
 // import { TextInputComponent } from './components/inputs/text-input/text-input.component';
-import { InfoDialogComponent } from './dialogs/info-dialog/info-dialog.component';
-import { ConfirmDialogComponent } from './dialogs/confirm-dialog/confirm-dialog.component';
+import { InfoDialog } from './dialogs/info/info.dialog';
+import { ConfirmDialog } from './dialogs/confirm/confirm.dialog';
 
 @NgModule({
   declarations: [
     // dialogs
-    InfoDialogComponent,
+    InfoDialog,
     // pipes
     ValidationErrorsExistPipe,
     GetValidationErrorsPipe,
@@ -42,7 +43,7 @@ import { ConfirmDialogComponent } from './dialogs/confirm-dialog/confirm-dialog.
     HandleInputComponent,
     EmailInputComponent,
     PasswordInputComponent,
-    ConfirmDialogComponent,
+    ConfirmDialog,
     // TextInputComponent,
   ],
   imports: [
@@ -62,6 +63,7 @@ import { ConfirmDialogComponent } from './dialogs/confirm-dialog/confirm-dialog.
     MatSelectModule,
     MatListModule,
     MatMenuModule,
+    MatExpansionModule,
   ],
   exports: [
     // angular modules
@@ -80,6 +82,7 @@ import { ConfirmDialogComponent } from './dialogs/confirm-dialog/confirm-dialog.
     MatSelectModule,
     MatListModule,
     MatMenuModule,
+    MatExpansionModule,
     // pipes
     ValidationErrorsExistPipe,
     GetValidationErrorsPipe,

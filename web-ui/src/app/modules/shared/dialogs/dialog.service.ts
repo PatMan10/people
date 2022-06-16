@@ -4,12 +4,12 @@ import { Observable } from 'rxjs';
 
 import {
   InfoDialogData,
-  InfoDialogComponent,
-} from './info-dialog/info-dialog.component';
+  InfoDialog,
+} from './info/info.dialog';
 import {
   ConfirmDialogData,
-  ConfirmDialogComponent,
-} from './confirm-dialog/confirm-dialog.component';
+  ConfirmDialog,
+} from './confirm/confirm.dialog';
 
 @Injectable({
   providedIn: 'root',
@@ -18,7 +18,7 @@ export class DialogService {
   constructor(public dialog: MatDialog) {}
 
   info(data: InfoDialogData): void {
-    this.dialog.open(InfoDialogComponent, {
+    this.dialog.open(InfoDialog, {
       width: '450px',
       data,
     });
@@ -26,7 +26,7 @@ export class DialogService {
 
   confirm(data: ConfirmDialogData): Observable<boolean> {
     return this.dialog
-      .open(ConfirmDialogComponent, {
+      .open(ConfirmDialog, {
         width: '450px',
         data,
       })

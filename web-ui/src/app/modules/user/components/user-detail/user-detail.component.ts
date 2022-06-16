@@ -7,7 +7,7 @@ import { UserApi } from 'src/app/modules/user/user.api';
 import { UiUrls } from 'src/app/utils/urls';
 import { ErrorService } from 'src/app/modules/shared/services/error.service';
 import { DialogService } from 'src/app/modules/shared/dialogs/dialog.service';
-import { ConfirmDialogData } from 'src/app/modules/shared/dialogs/confirm-dialog/confirm-dialog.component';
+import { ConfirmDialogData } from 'src/app/modules/shared/dialogs/confirm/confirm.dialog';
 
 @Component({
   selector: 'app-user-detail',
